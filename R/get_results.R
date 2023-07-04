@@ -1,11 +1,4 @@
 library(tidyverse)
-library(dplyr)
-library(fpCompare)
-library(ggplot2)
-library(lubridate)
-library(magrittr)
-library(qicharts2)
-library(rlang)
 library(scales)
 
 devtools::install_github("HorridTom/autospc", ref = "naive3-argument-103")
