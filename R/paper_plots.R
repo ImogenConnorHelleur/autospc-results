@@ -440,7 +440,7 @@ plot_steps_facet <- function(){
     mutate(step = "Baseline established and display limits extended")
   
   data2 <- data3 %>%
-    mutate(step = "Rule 2 break identified")
+    mutate(step = "Rule 2 break identified*")
   
   data3 <- data4 %>%
     mutate(step = "Control limits are recalculated")
@@ -449,7 +449,7 @@ plot_steps_facet <- function(){
     mutate(step = "Next rule 2 break identified")
   
   data5 <- data6 %>%
-    mutate(step = "Candidate limits show rule 2 break back to original")
+    mutate(step = "Candidate limits show rule 2 break back to original*")
   
   data6 <- data7 %>%
     mutate(step = "Candidate limits rejected")
@@ -457,11 +457,14 @@ plot_steps_facet <- function(){
   data <- bind_rows(data1, data2, data3, data4, data5, data6)
   
   data$step <- factor(data$step, levels = c("Baseline established and display limits extended",
-                                            "Rule 2 break identified",
+                                            "Rule 2 break identified*",
                                             "Control limits are recalculated",
                                             "Next rule 2 break identified",
-                                            "Candidate limits show rule 2 break back to original",
+                                            "Candidate limits show rule 2 break back to original*",
                                             "Candidate limits rejected"))
+  
+  strip <- strip_themed(background_x = elem_list_rect(fill = c("grey", "#FF00FF", "grey",
+                                                               "grey", "#FF00FF", "grey")))
   
   plot <-  ggplot2::ggplot(data, 
                            ggplot2::aes(x = x, y = y)) +
@@ -481,12 +484,14 @@ plot_steps_facet <- function(){
     ggplot2::ggtitle("Algorithm steps", subtitle = "Royal Hospital For Children Glasgow") +
     ggplot2::labs(x = "Month",
                   y = "Average daily attendances per month",
+                  caption = "*these visualisations of intermediate steps are not possible outputs from the algorithm. \nThey have just been shown here for illustration purposes.",
                   size = 10) +
     ggplot2::scale_y_continuous(#limits = c(ylimlow, ylimhigh),
                                 breaks = scales::breaks_pretty(),
                                 labels = scales::number_format(accuracy = 1,
                                                                big.mark = ",")) +
-    facet_wrap(vars(step))
+    facet_wrap2(vars(step), strip = strip)#+
+    #theme(strip.background =element_rect(fill=c("red", "green", "orange", "yellow", "blue", "purple")))
   
   plot <- autospc::format_SPC(cht = plot, 
                      df = data, 
@@ -518,6 +523,8 @@ plot_approaches_facet <- function(){
                                             "Naive 2: first period extended to end",
                                             "Naive 3: recalculation at every rule 2 break"))
   
+  strip <- strip_themed(background_x = elem_list_rect(fill = c("grey", "#FF00FF", "#FF00FF",
+                                                               "#FF00FF")))
   plot <-  ggplot2::ggplot(data, 
                            ggplot2::aes(x = x, y = y)) +
     ggplot2::geom_line(colour = "black",
@@ -541,7 +548,7 @@ plot_approaches_facet <- function(){
       breaks = scales::breaks_pretty(),
       labels = scales::number_format(accuracy = 1,
                                      big.mark = ",")) +
-    facet_wrap(vars(step))
+    facet_wrap2(vars(step), strip = strip)
   
   plot <- autospc::format_SPC(cht = plot, 
                      df = data, 
