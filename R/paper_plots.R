@@ -1,5 +1,6 @@
 library(tidyverse)
 library(autospc)
+library(ggh4x)
 
 perf_series_df <- readRDS("data/perf_series_df.rds")
 
@@ -463,8 +464,8 @@ plot_steps_facet <- function(){
                                             "Candidate limits show rule 2 break back to original*",
                                             "Candidate limits rejected"))
   
-  strip <- strip_themed(background_x = elem_list_rect(fill = c("grey", "#FF00FF", "grey",
-                                                               "grey", "#FF00FF", "grey")))
+  strip <- strip_themed(background_x = elem_list_rect(fill = c("#CACC90", "#F4EBBE", "#CACC90",
+                                                               "#CACC90", "#F4EBBE", "#CACC90")))
   
   plot <-  ggplot2::ggplot(data, 
                            ggplot2::aes(x = x, y = y)) +
@@ -472,14 +473,14 @@ plot_steps_facet <- function(){
                        linewidth = 0.5) +
     ggplot2::geom_point(colour = "black", size = 2) +
     ggplot2::theme(panel.grid.major.y = ggplot2::element_blank(),
-                   panel.grid.major.x = ggplot2::element_line(colour = "grey80"),
+                   panel.grid.major.x = ggplot2::element_line(colour = "#CACC9080"),
                    panel.grid.minor = ggplot2::element_blank(),
                    panel.background = ggplot2::element_blank(),
                    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1, vjust = 1.0, size = 14),
                    axis.text.y = ggplot2::element_text(size = 14), axis.title = ggplot2::element_text(size = 14),
                    plot.title = ggplot2::element_text(size = 20, hjust = 0),
                    plot.subtitle = ggplot2::element_text(size = 16, face = "italic"),
-                   axis.line = ggplot2::element_line(colour = "grey60"),
+                   axis.line = ggplot2::element_line(colour = "#CACC9060"),
                    plot.caption = ggplot2::element_text(size = 10, hjust = 0.5)) +
     ggplot2::ggtitle("Algorithm steps", subtitle = "Royal Hospital For Children Glasgow") +
     ggplot2::labs(x = "Month",
@@ -523,22 +524,22 @@ plot_approaches_facet <- function(){
                                             "Naive 2: first period extended to end",
                                             "Naive 3: recalculation at every rule 2 break"))
   
-  strip <- strip_themed(background_x = elem_list_rect(fill = c("grey", "#FF00FF", "#FF00FF",
-                                                               "#FF00FF")))
+  strip <- strip_themed(background_x = elem_list_rect(fill = c("#CACC90", "#F4EBBE", "#F4EBBE",
+                                                               "#F4EBBE")))
   plot <-  ggplot2::ggplot(data, 
                            ggplot2::aes(x = x, y = y)) +
     ggplot2::geom_line(colour = "black",
                        linewidth = 0.5) +
     ggplot2::geom_point(colour = "black", size = 2) +
     ggplot2::theme(panel.grid.major.y = ggplot2::element_blank(),
-                   panel.grid.major.x = ggplot2::element_line(colour = "grey80"),
+                   panel.grid.major.x = ggplot2::element_line(colour = "#CACC9080"),
                    panel.grid.minor = ggplot2::element_blank(),
                    panel.background = ggplot2::element_blank(),
                    axis.text.x = ggplot2::element_text(angle = 45, hjust = 1, vjust = 1.0, size = 14),
                    axis.text.y = ggplot2::element_text(size = 14), axis.title = ggplot2::element_text(size = 14),
                    plot.title = ggplot2::element_text(size = 20, hjust = 0),
                    plot.subtitle = ggplot2::element_text(size = 16, face = "italic"),
-                   axis.line = ggplot2::element_line(colour = "grey60"),
+                   axis.line = ggplot2::element_line(colour = "#CACC9060"),
                    plot.caption = ggplot2::element_text(size = 10, hjust = 0.5)) +
     ggplot2::ggtitle("Approaches", subtitle = "Royal Hospital For Children Glasgow") +
     ggplot2::labs(x = "Month",
