@@ -1,7 +1,10 @@
+timestamp <- gsub(":","-",paste(strsplit(x = toString(Sys.time()),split = " ")[[1]], collapse = "-"))
+commit <- stringr::str_sub(system("git rev-parse HEAD", intern=TRUE), 1, 8)
+
 library(tidyverse)
 library(scales)
 
-devtools::install_github("HorridTom/autospc", ref = "naive3-argument-103")
+#devtools::install_github("HorridTom/autospc", ref = "naive3-argument-103")
 library(autospc)
 
 source("R/get_perf_series_df.R")
@@ -10,11 +13,16 @@ source("R/results_functions.R")
 AE_Data <- readRDS("data/AE_Data.RDS")
 AE_Data_Scot <- readRDS("data/AE_Data_Scot.RDS")
 
-#ONLY COMMENTED OUT BECAUSE IT'S SLOW!
-# perf_series_df <- make_perf_series_data_frame(data = AE_Data,
-#                                               data_scot = AE_Data_Scot,
-#                                               measureArg = "All",
-#                                               onlyProvsReportingArg = TRUE)
+if(FALSE) { # SLOW
+  perf_series_df <- make_perf_series_data_frame(data = AE_Data,
+                                                data_scot = AE_Data_Scot,
+                                                measureArg = "All",
+                                                onlyProvsReportingArg = TRUE)
+} else {
+  perf_series_df <- readRDS(file.path("data",
+                                      "perf_series_df.rds"))
+  
+}
 
 ##Monthly C algorithm###############################################################################
 
@@ -39,7 +47,11 @@ for(c in codes$Code){
   
 }
 
-saveRDS(limits_table_output_Monthly_C_algorithm, "R/Results/outputs_20230618/limits_table_output_Monthly_C_algorithm.rds")
+saveRDS(limits_table_output_Monthly_C_algorithm,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Monthly_C_algorithm_",
+                         timestamp,"_",commit,".rds")))
 
 ##Weekly C algorithm###############################################################################
 
@@ -64,7 +76,11 @@ for(c in codes$Code){
   
 }
 
-saveRDS(limits_table_output_Weekly_C_algorithm, "R/Results/outputs_20230618/limits_table_output_Weekly_C_algorithm.rds")
+saveRDS(limits_table_output_Weekly_C_algorithm,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Weekly_C_algorithm_",
+                         timestamp,"_",commit,".rds")))
 
 ##Monthly P algorithm###############################################################################
 
@@ -106,7 +122,11 @@ for(c in codes$Code){
 
 
 }
-saveRDS(limits_table_output_Monthly_P_algorithm, "R/Results/outputs_20230618/limits_table_output_Monthly_P_algorithm.rds")
+saveRDS(limits_table_output_Monthly_P_algorithm,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Monthly_P_algorithm_",
+                         timestamp,"_",commit,".rds")))
 
 ##Weekly P algorithm###############################################################################
 
@@ -130,7 +150,11 @@ for(c in codes$Code){
   limits_table_output_Weekly_P_algorithm <- bind_rows(limits_table_output_Weekly_P_algorithm, df_out)
   
 }
-saveRDS(limits_table_output_Weekly_P_algorithm, "R/Results/outputs_20230618/limits_table_output_Weekly_P_algorithm.rds")
+saveRDS(limits_table_output_Weekly_P_algorithm,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Weekly_P_algorithm_",
+                         timestamp,"_",commit,".rds")))
 
 
 
@@ -159,7 +183,11 @@ for(c in codes$Code){
   
 }
 
-saveRDS(limits_table_output_Monthly_C_naive1, "R/Results/outputs_20230618/limits_table_output_Monthly_C_naive1.rds")
+saveRDS(limits_table_output_Monthly_C_naive1,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Monthly_C_naive1_",
+                         timestamp,"_",commit,".rds")))
 
 ##Weekly C naive1###############################################################################
 
@@ -184,7 +212,11 @@ for(c in codes$Code){
   
 }
 
-saveRDS(limits_table_output_Weekly_C_naive1, "R/Results/outputs_20230618/limits_table_output_Weekly_C_naive1.rds")
+saveRDS(limits_table_output_Weekly_C_naive1,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Weekly_C_naive1_",
+                         timestamp,"_",commit,".rds")))
 
 ##Monthly P naive1###############################################################################
 
@@ -208,7 +240,11 @@ for(c in codes$Code){
   limits_table_output_Monthly_P_naive1 <- bind_rows(limits_table_output_Monthly_P_naive1, df_out)
   
 }
-saveRDS(limits_table_output_Monthly_P_naive1, "R/Results/outputs_20230618/limits_table_output_Monthly_P_naive1.rds")
+saveRDS(limits_table_output_Monthly_P_naive1,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Monthly_P_naive1_",
+                         timestamp,"_",commit,".rds")))
 
 ##Weekly P naive1###############################################################################
 
@@ -232,7 +268,11 @@ for(c in codes$Code){
   limits_table_output_Weekly_P_naive1 <- bind_rows(limits_table_output_Weekly_P_naive1, df_out)
   
 }
-saveRDS(limits_table_output_Weekly_P_naive1, "R/Results/outputs_20230618/limits_table_output_Weekly_P_naive1.rds")
+saveRDS(limits_table_output_Weekly_P_naive1,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Weekly_P_naive1_",
+                         timestamp,"_",commit,".rds")))
 
 
 
@@ -261,7 +301,11 @@ for(c in codes$Code){
   
 }
 
-saveRDS(limits_table_output_Monthly_C_naive2, "R/Results/outputs_20230618/limits_table_output_Monthly_C_naive2.rds")
+saveRDS(limits_table_output_Monthly_C_naive2,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Monthly_C_naive2_",
+                         timestamp,"_",commit,".rds")))
 
 ##Weekly C naive2###############################################################################
 
@@ -286,7 +330,11 @@ for(c in codes$Code){
   
 }
 
-saveRDS(limits_table_output_Weekly_C_naive2, "R/Results/outputs_20230618/limits_table_output_Weekly_C_naive2.rds")
+saveRDS(limits_table_output_Weekly_C_naive2,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Weekly_C_naive2_",
+                         timestamp,"_",commit,".rds")))
 
 ##Monthly P naive2###############################################################################
 
@@ -311,7 +359,11 @@ for(c in codes$Code){
   
   
 }
-saveRDS(limits_table_output_Monthly_P_naive2, "R/Results/outputs_20230618/limits_table_output_Monthly_P_naive2.rds")
+saveRDS(limits_table_output_Monthly_P_naive2,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Monthly_P_naive2_",
+                         timestamp,"_",commit,".rds")))
 
 ##Weekly P naive2###############################################################################
 
@@ -335,7 +387,11 @@ for(c in codes$Code){
   limits_table_output_Weekly_P_naive2 <- bind_rows(limits_table_output_Weekly_P_naive2, df_out)
   
 }
-saveRDS(limits_table_output_Weekly_P_naive2, "R/Results/outputs_20230618/limits_table_output_Weekly_P_naive2.rds")
+saveRDS(limits_table_output_Weekly_P_naive2,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Weekly_P_naive2_",
+                         timestamp,"_",commit,".rds")))
 
 ################################################################################
 ##Monthly C naive3###############################################################################
@@ -362,7 +418,11 @@ for(c in codes$Code){
   
 }
 
-saveRDS(limits_table_output_Monthly_C_naive3, "R/Results/outputs_20230618/limits_table_output_Monthly_C_naive3.rds")
+saveRDS(limits_table_output_Monthly_C_naive3,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Monthly_C_naive3_",
+                         timestamp,"_",commit,".rds")))
 
 ##Weekly C naive3###############################################################################
 
@@ -388,7 +448,11 @@ for(c in codes$Code){
   
 }
 
-saveRDS(limits_table_output_Weekly_C_naive3, "R/Results/outputs_20230618/limits_table_output_Weekly_C_naive3.rds")
+saveRDS(limits_table_output_Weekly_C_naive3,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Weekly_C_naive3_",
+                         timestamp,"_",commit,".rds")))
 
 ##Monthly P naive3###############################################################################
 
@@ -414,7 +478,11 @@ for(c in codes$Code){
   
   
 }
-saveRDS(limits_table_output_Monthly_P_naive3, "R/Results/outputs_20230618/limits_table_output_Monthly_P_naive3.rds")
+saveRDS(limits_table_output_Monthly_P_naive3,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Monthly_P_naive3_",
+                         timestamp,"_",commit,".rds")))
 
 ##Weekly P naive3###############################################################################
 
@@ -439,7 +507,11 @@ for(c in codes$Code){
   limits_table_output_Weekly_P_naive3 <- bind_rows(limits_table_output_Weekly_P_naive3, df_out)
   
 }
-saveRDS(limits_table_output_Weekly_P_naive3, "R/Results/outputs_20230618/limits_table_output_Weekly_P_naive3.rds")
+saveRDS(limits_table_output_Weekly_P_naive3,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Weekly_P_naive3_",
+                         timestamp,"_",commit,".rds")))
 
 
 
@@ -481,6 +553,28 @@ results_summary_list_P_naive1 <- get_results_summary(limits_table_output_P_naive
 results_summary_list_P_naive2 <- get_results_summary(limits_table_output_P_naive2)
 results_summary_list_P_naive3 <- get_results_summary(limits_table_output_P_naive3)
 
+################################################################################
+results_summary_list_C_algoritm_w <- get_results_summary(limits_table_output_Weekly_C_algorithm)
+results_summary_list_C_naive1_w <- get_results_summary(limits_table_output_Weekly_C_naive1)
+results_summary_list_C_naive2_w <- get_results_summary(limits_table_output_Weekly_C_naive2)
+results_summary_list_C_naive3_w <- get_results_summary(limits_table_output_Weekly_C_naive3)
+
+results_summary_list_P_algoritm_w <- get_results_summary(limits_table_output_Weekly_P_algorithm)
+results_summary_list_P_naive1_w <- get_results_summary(limits_table_output_Weekly_P_naive1)
+results_summary_list_P_naive2_w <- get_results_summary(limits_table_output_Weekly_P_naive2)
+results_summary_list_P_naive3_w <- get_results_summary(limits_table_output_Weekly_P_naive3)
+
+results_summary_list_C_algoritm_m <- get_results_summary(limits_table_output_Monthly_C_algorithm)
+results_summary_list_C_naive1_m <- get_results_summary(limits_table_output_Monthly_C_naive1)
+results_summary_list_C_naive2_m <- get_results_summary(limits_table_output_Monthly_C_naive2)
+results_summary_list_C_naive3_m <- get_results_summary(limits_table_output_Monthly_C_naive3)
+
+results_summary_list_P_algoritm_m <- get_results_summary(limits_table_output_Monthly_P_algorithm)
+results_summary_list_P_naive1_m <- get_results_summary(limits_table_output_Monthly_P_naive1)
+results_summary_list_P_naive2_m <- get_results_summary(limits_table_output_Monthly_P_naive2)
+results_summary_list_P_naive3_m <- get_results_summary(limits_table_output_Monthly_P_naive3)
+################################################################################
+
 full_results_C_algorithm <- results_summary_list_C_algoritm[[1]] %>%
   mutate(results_set = "C algorithm")
 full_results_C_naive1 <- results_summary_list_C_naive1[[1]] %>%
@@ -517,6 +611,44 @@ summary_results_P_naive2 <- results_summary_list_P_naive2[[2]] %>%
 summary_results_P_naive3 <- results_summary_list_P_naive3[[2]] %>%
   mutate(results_set = "P naive3")
 
+################################################################################
+summary_results_C_algorithm_w <- results_summary_list_C_algoritm_w[[2]] %>%
+  mutate(results_set = "C algorithm weekly")
+summary_results_C_naive1_w <- results_summary_list_C_naive1_w[[2]] %>%
+  mutate(results_set = "C naive1 weekly")
+summary_results_C_naive2_w <- results_summary_list_C_naive2_w[[2]] %>%
+  mutate(results_set = "C naive2 weekly")
+summary_results_C_naive3_w <- results_summary_list_C_naive3_w[[2]] %>%
+  mutate(results_set = "C naive3 weekly")
+
+summary_results_P_algorithm_w <- results_summary_list_P_algoritm_w[[2]] %>%
+  mutate(results_set = "P algorithm weekly")
+summary_results_P_naive1_w <- results_summary_list_P_naive1_w[[2]] %>%
+  mutate(results_set = "P naive1 weekly")
+summary_results_P_naive2_w <- results_summary_list_P_naive2_w[[2]] %>%
+  mutate(results_set = "P naive2 weekly")
+summary_results_P_naive3_w <- results_summary_list_P_naive3_w[[2]] %>%
+  mutate(results_set = "P naive3 weekly")
+
+summary_results_C_algorithm_m <- results_summary_list_C_algoritm_m[[2]] %>%
+  mutate(results_set = "C algorithm monthly")
+summary_results_C_naive1_m <- results_summary_list_C_naive1_m[[2]] %>%
+  mutate(results_set = "C naive1 monthly")
+summary_results_C_naive2_m <- results_summary_list_C_naive2_m[[2]] %>%
+  mutate(results_set = "C naive2 monthly")
+summary_results_C_naive3_m <- results_summary_list_C_naive3_m[[2]] %>%
+  mutate(results_set = "C naive3 monthly")
+
+summary_results_P_algorithm_m <- results_summary_list_P_algoritm_m[[2]] %>%
+  mutate(results_set = "P algorithm monthly")
+summary_results_P_naive1_m <- results_summary_list_P_naive1_m[[2]] %>%
+  mutate(results_set = "P naive1 monthly")
+summary_results_P_naive2_m <- results_summary_list_P_naive2_m[[2]] %>%
+  mutate(results_set = "P naive2 monthly")
+summary_results_P_naive3_m <- results_summary_list_P_naive3_m[[2]] %>%
+  mutate(results_set = "P naive3 monthly")
+################################################################################
+
 summary_results_all <- bind_rows(summary_results_C_algorithm,
                                  summary_results_C_naive1,
                                  summary_results_C_naive2,
@@ -525,6 +657,24 @@ summary_results_all <- bind_rows(summary_results_C_algorithm,
                                  summary_results_P_naive1,
                                  summary_results_P_naive2,
                                  summary_results_P_naive3) %>%
+  select(results_set, num_charts, everything())
+
+summary_results_all_wm <- bind_rows(summary_results_C_algorithm_w,
+                                    summary_results_C_naive1_w,
+                                    summary_results_C_naive2_w,
+                                    summary_results_C_naive3_w,
+                                    summary_results_P_algorithm_w,
+                                    summary_results_P_naive1_w,
+                                    summary_results_P_naive2_w,
+                                    summary_results_P_naive3_w,
+                                    summary_results_C_algorithm_m,
+                                    summary_results_C_naive1_m,
+                                    summary_results_C_naive2_m,
+                                    summary_results_C_naive3_m,
+                                    summary_results_P_algorithm_m,
+                                    summary_results_P_naive1_m,
+                                    summary_results_P_naive2_m,
+                                    summary_results_P_naive3_m) %>%
   select(results_set, num_charts, everything())
 
 full_results_all <- bind_rows(full_results_C_algorithm,
@@ -537,6 +687,46 @@ full_results_all <- bind_rows(full_results_C_algorithm,
                               full_results_P_naive3) %>%
   select(results_set, everything())
 
- 
-writexl::write_xlsx(full_results_all, "R/Results/outputs_20230618/full_results/full_results_all3.xlsx")
-writexl::write_xlsx(summary_results_all, "R/Results/outputs_20230618/full_results/summary_results_all.xlsx")
+
+
+saveRDS(full_results_all,
+        file.path("data",
+                  "outputs",
+                  "full_results",
+                  paste0("full_results_all3_",
+                         timestamp,"_",commit,".rds")))
+
+writexl::write_xlsx(full_results_all,
+                    file.path("data",
+                              "outputs",
+                              "full_results",
+                              paste0("full_results_all3_",
+                                     timestamp,"_",commit,".xlsx")))
+
+saveRDS(summary_results_all,
+        file.path("data",
+                  "outputs",
+                  "full_results",
+                  paste0("summary_results_all3_",
+                         timestamp,"_",commit,".rds")))
+
+writexl::write_xlsx(summary_results_all,
+                    file.path("data",
+                              "outputs",
+                              "full_results",
+                              paste0("summary_results_all3_",
+                                     timestamp,"_",commit,".xlsx")))
+
+saveRDS(summary_results_all_wm,
+        file.path("data",
+                  "outputs",
+                  "full_results",
+                  paste0("summary_results_all3_wm_",
+                         timestamp,"_",commit,".rds")))
+
+writexl::write_xlsx(summary_results_all_wm,
+                    file.path("data",
+                              "outputs",
+                              "full_results",
+                              paste0("summary_results_all3_wm_",
+                                     timestamp,"_",commit,".xlsx")))
