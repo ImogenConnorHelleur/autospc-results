@@ -4,7 +4,7 @@ commit <- stringr::str_sub(system("git rev-parse HEAD", intern=TRUE), 1, 8)
 library(tidyverse)
 library(scales)
 
-#devtools::install_github("HorridTom/autospc", ref = "naive3-argument-103")
+#devtools::install_github("HorridTom/autospc", ref = "naive3-argument-103b")
 library(autospc)
 
 source("R/get_perf_series_df.R")

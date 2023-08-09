@@ -83,26 +83,27 @@
     },
     "autospc": {
       "Package": "autospc",
-      "Version": "0.0.0.9007",
+      "Version": "0.0.0.9008",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "autospc",
       "RemoteUsername": "HorridTom",
-      "RemoteRef": "naive3-argument-103",
-      "RemoteSha": "18980e73b29992d8492bf4375e0c0abeba11be59",
+      "RemoteRef": "naive3-argument-103b",
+      "RemoteSha": "35c59e4235f30c8ee0d60c03a5d08ffd63dd7cf2",
       "Requirements": [
         "R",
         "dplyr",
         "fpCompare",
         "ggplot2",
+        "lifecycle",
         "lubridate",
         "magrittr",
         "qicharts2",
         "rlang",
         "scales"
       ],
-      "Hash": "f61f0f2859eeca027bdd8c3b036b443e"
+      "Hash": "372b19d7bae17b47801f26a1afa5819f"
     },
     "backports": {
       "Package": "backports",
@@ -287,10 +288,10 @@
     },
     "cpp11": {
       "Package": "cpp11",
-      "Version": "0.4.4",
+      "Version": "0.4.5",
       "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "3f7d8664d7324406cd10cd650ad85e5f"
+      "Repository": "RSPM",
+      "Hash": "f07821e9b0aada6c999d4692e22a2ea7"
     },
     "crayon": {
       "Package": "crayon",
