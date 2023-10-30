@@ -2,11 +2,79 @@ library(tidyverse)
 library(autospc)
 library(ggh4x)
 
+save_plots <- TRUE
+
 perf_series_df <- readRDS("data/perf_series_df.rds")
 
 G513H_data <- filter(perf_series_df, Code == "G513H", weeklyOrMonthly == "Monthly")
 G513H_data_weekly <- filter(perf_series_df, Code == "G513H", weeklyOrMonthly == "Weekly")
 
+# Simulate data for figure 1
+
+set.seed(1234L)
+
+simulated_data <- tibble(x = seq.Date(from = as.Date("2023-01-01"),
+                                      by = 7L,
+                                      length.out = 44L),
+                         y = rpois(44L, 30L)) %>% 
+  mutate(y = if_else(row_number() %in% c(32, 33, 34, 35, 38), y + 8, y),
+         y = if_else(row_number() %in% c(42), y-2, y))
+
+
+# Plot charts
+
+pA <- plot_auto_SPC(df = head(simulated_data, 21),
+                    periodMin = 21,
+                    runRuleLength = 8,
+                    maxNoOfExclusions = 3,
+                    highlightExclusions = TRUE,
+                    title = "Example C-Chart",
+                    subtitle = "Simulated Data",
+                    plotChart = TRUE,
+                    writeTable = FALSE,
+                    noRegrets = TRUE,
+                    chartType = "C'",
+                    x_break = 28,
+                    x_pad_end = as.Date("2023-12-01"),
+                    extend_limits_to = as.Date("2023-09-01"),
+                    override_y_lim = 60,
+                    includeAnnotations = FALSE)
+
+
+pB <- plot_auto_SPC(df = head(simulated_data, 26),
+                    periodMin = 21,
+                    runRuleLength = 8,
+                    maxNoOfExclusions = 3,
+                    highlightExclusions = TRUE,
+                    title = "Example C-Chart",
+                    subtitle = "Simulated Data",
+                    plotChart = TRUE,
+                    writeTable = FALSE,
+                    noRegrets = TRUE,
+                    chartType = "C'",
+                    x_break = 28,
+                    x_pad_end = as.Date("2023-12-01"),
+                    extend_limits_to = as.Date("2023-10-08"),
+                    override_y_lim = 60,
+                    includeAnnotations = FALSE)
+
+
+pC <- plot_auto_SPC(df = head(simulated_data, 44),
+                    periodMin = 21,
+                    runRuleLength = 8,
+                    maxNoOfExclusions = 3,
+                    highlightExclusions = TRUE,
+                    title = "Example C-Chart",
+                    subtitle = "Simulated Data",
+                    plotChart = TRUE,
+                    writeTable = FALSE,
+                    noRegrets = TRUE,
+                    chartType = "C'",
+                    x_break = 28,
+                    x_pad_end = as.Date("2023-12-01"),
+                    extend_limits_to = as.Date("2023-12-01"),
+                    override_y_lim = 60,
+                    includeAnnotations = FALSE)
 
 
 p1 <- plot_auto_SPC(df = head(G513H_data, 21),
@@ -222,6 +290,58 @@ p_naive3 <- plot_auto_SPC(df = G513H_data,
 
 
 
+
+dataA <- plot_auto_SPC(df = head(simulated_data, 21),
+                    periodMin = 21,
+                    runRuleLength = 8,
+                    maxNoOfExclusions = 3,
+                    highlightExclusions = TRUE,
+                    title = "Example C-Chart",
+                    subtitle = "Simulated Data",
+                    plotChart = FALSE,
+                    writeTable = FALSE,
+                    noRegrets = TRUE,
+                    chartType = "C'",
+                    x_break = 28,
+                    x_pad_end = as.Date("2023-12-01"),
+                    extend_limits_to = as.Date("2023-09-01"),
+                    override_y_lim = 60,
+                    includeAnnotations = FALSE)
+
+dataB <- plot_auto_SPC(df = head(simulated_data, 26),
+                       periodMin = 21,
+                       runRuleLength = 8,
+                       maxNoOfExclusions = 3,
+                       highlightExclusions = TRUE,
+                       title = "Example C-Chart",
+                       subtitle = "Simulated Data",
+                       plotChart = FALSE,
+                       writeTable = FALSE,
+                       noRegrets = TRUE,
+                       chartType = "C'",
+                       x_break = 28,
+                       x_pad_end = as.Date("2023-12-01"),
+                       extend_limits_to = as.Date("2023-10-08"),
+                       override_y_lim = 60,
+                       includeAnnotations = FALSE)
+
+dataC <- plot_auto_SPC(df = head(simulated_data, 44),
+                       periodMin = 21,
+                       runRuleLength = 8,
+                       maxNoOfExclusions = 3,
+                       highlightExclusions = TRUE,
+                       title = "Example C-Chart",
+                       subtitle = "Simulated Data",
+                       plotChart = FALSE,
+                       writeTable = FALSE,
+                       noRegrets = TRUE,
+                       chartType = "C'",
+                       x_break = 28,
+                       x_pad_end = as.Date("2023-12-01"),
+                       extend_limits_to = as.Date("2023-12-01"),
+                       override_y_lim = 60,
+                       includeAnnotations = FALSE)
+
 data1 <- plot_auto_SPC(df = head(G513H_data, 21),
                     periodMin = 21,
                     runRuleLength = 8,
@@ -434,6 +554,70 @@ data_naive3 <- plot_auto_SPC(df = G513H_data,
                           includeAnnotations = FALSE,
                           development_recalc_at_every_break = TRUE)
 
+
+
+################################################################################
+plot_figure_1 <- function(){
+  
+  data1 <- dataA %>%
+    mutate(step = "Control limits formed using baseline data, and extended")
+  
+  data2 <- dataB %>%
+    mutate(step = "Additional data added to chart")
+  
+  data3 <- dataC %>%
+    mutate(step = "Further data added to chart")
+  
+  data <- bind_rows(data1, data2, data3)
+  
+  data$step <- factor(data$step, levels = c("(a) Control limits formed using baseline data, and extended",
+                                            "(b) Additional data added to chart",
+                                            "(c) Further data added to chart"))
+  
+  strip <- strip_themed(background_x = elem_list_rect(fill = c("#CACC90", "#CACC90", "#CACC90")))
+  
+  plot <-  ggplot2::ggplot(data, 
+                           ggplot2::aes(x = x, y = y)) +
+    ggplot2::geom_line(colour = "black",
+                       linewidth = 0.5) +
+    ggplot2::geom_point(colour = "black", size = 2) +
+    ggplot2::theme(panel.grid.major.y = ggplot2::element_blank(),
+                   panel.grid.major.x = ggplot2::element_line(colour = "#CACC9080"),
+                   panel.grid.minor = ggplot2::element_blank(),
+                   panel.background = ggplot2::element_blank(),
+                   axis.text.x = ggplot2::element_text(angle = 45,
+                                                       hjust = 1,
+                                                       vjust = 1.0,
+                                                       size = 14),
+                   axis.text.y = ggplot2::element_text(size = 14),
+                   axis.title = ggplot2::element_text(size = 14),
+                   plot.title = ggplot2::element_text(size = 20, hjust = 0),
+                   plot.subtitle = ggplot2::element_text(size = 16, face = "italic"),
+                   axis.line = ggplot2::element_line(colour = "#CACC9060"),
+                   plot.caption = ggplot2::element_text(size = 10, hjust = 0.5)) +
+    ggplot2::ggtitle("Example Control Chart (C-Chart)", subtitle = "Simulated Data") +
+    ggplot2::labs(x = "Week",
+                  y = "Number of attendances",
+                  size = 10) +
+    ggplot2::scale_y_continuous(#limits = c(ylimlow, ylimhigh),
+      breaks = scales::breaks_pretty(),
+      labels = scales::number_format(accuracy = 1,
+                                     big.mark = ",")) +
+    ggplot2::scale_x_date(
+      breaks = scales::date_breaks(width = "4 weeks")) +
+    facet_wrap2(vars(step),
+                strip = strip,
+                ncol = 1L)
+  
+  plot <- autospc:::format_SPC(cht = plot, 
+                               df = data, 
+                               r1_col = "orange", 
+                               r2_col = "steelblue3", ymin, ymax)
+  plot
+  
+}
+
+
 ################################################################################
 plot_steps_facet <- function(){
   
@@ -494,7 +678,7 @@ plot_steps_facet <- function(){
     facet_wrap2(vars(step), strip = strip)#+
     #theme(strip.background =element_rect(fill=c("red", "green", "orange", "yellow", "blue", "purple")))
   
-  plot <- autospc::format_SPC(cht = plot, 
+  plot <- autospc:::format_SPC(cht = plot, 
                      df = data, 
                      r1_col = "orange", 
                      r2_col = "steelblue3", ymin, ymax)
@@ -551,10 +735,39 @@ plot_approaches_facet <- function(){
                                      big.mark = ",")) +
     facet_wrap2(vars(step), strip = strip)
   
-  plot <- autospc::format_SPC(cht = plot, 
+  plot <- autospc:::format_SPC(cht = plot, 
                      df = data, 
                      r1_col = "orange", 
                      r2_col = "steelblue3", ymin, ymax)
   plot
+  
+}
+
+p_fig1 <- plot_figure_1()
+p_steps <- plot_steps_facet()
+p_approaches <- plot_approaches_facet()
+
+if(save_plots) {
+  
+  ggsave(file.path("plots", "pA.png"), plot = pA)
+  ggsave(file.path("plots", "pB.png"), plot = pB)
+  ggsave(file.path("plots", "pC.png"), plot = pC)
+  ggsave(file.path("plots", "p1.png"), plot = p1)
+  ggsave(file.path("plots", "p2.png"), plot = p2)
+  ggsave(file.path("plots", "p3.png"), plot = p3)
+  ggsave(file.path("plots", "p4.png"), plot = p4)
+  ggsave(file.path("plots", "p5.png"), plot = p5)
+  ggsave(file.path("plots", "p6.png"), plot = p6)
+  ggsave(file.path("plots", "p7.png"), plot = p7)
+  ggsave(file.path("plots", "p_naive1.png"), plot = p_naive1)
+  ggsave(file.path("plots", "p_naive2.png"), plot = p_naive2)
+  ggsave(file.path("plots", "p_naive3.png"), plot = p_naive3)
+  ggsave(file.path("plots", "p_algorithm.png"), plot = p_algorithm)
+  ggsave(file.path("plots", "p_fig1.png"), plot = p_fig1,
+         width = 10, height = 10, units = "in")
+  ggsave(file.path("plots", "p_steps.png"), plot = p_steps,
+         width = 12, height = 7, units = "in")
+  ggsave(file.path("plots", "p_approaches.png"), plot = p_approaches,
+         width = 10, height = 7, units = "in")
   
 }
