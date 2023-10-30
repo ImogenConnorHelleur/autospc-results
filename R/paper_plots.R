@@ -560,13 +560,13 @@ data_naive3 <- plot_auto_SPC(df = G513H_data,
 plot_figure_1 <- function(){
   
   data1 <- dataA %>%
-    mutate(step = "Control limits formed using baseline data, and extended")
+    mutate(step = "(a) Control limits formed using baseline data, and extended")
   
   data2 <- dataB %>%
-    mutate(step = "Additional data added to chart")
+    mutate(step = "(b) Additional data added to chart")
   
   data3 <- dataC %>%
-    mutate(step = "Further data added to chart")
+    mutate(step = "(c) Further data added to chart")
   
   data <- bind_rows(data1, data2, data3)
   
