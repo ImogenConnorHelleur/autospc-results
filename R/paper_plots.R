@@ -16,9 +16,9 @@ set.seed(1234L)
 simulated_data <- tibble(x = seq.Date(from = as.Date("2023-01-01"),
                                       by = 7L,
                                       length.out = 44L),
-                         y = rpois(44L, 30L)) %>% 
-  mutate(y = if_else(row_number() %in% c(32, 33, 34, 35, 38), y + 8, y),
-         y = if_else(row_number() %in% c(42), y-2, y))
+                         y = rpois(44L, 200L)) %>% 
+  mutate(y = if_else(row_number() %in% c(35:38, 41), y + 25, y),
+         y = if_else(row_number() %in% c(42), y, y))
 
 
 # Plot charts
@@ -109,7 +109,7 @@ p2 <- plot_auto_SPC(df = head(G513H_data, 30),
                     x = Month_Start,
                     y = daily_ave_att,
                     x_break = 210,
-                    x_pad_end = as.Date("2023-03-01"),
+                    x_pad_end = as.Date("2023-06-01"),
                     override_y_lim = 300,
                     includeAnnotations = FALSE)
 
@@ -357,6 +357,7 @@ data1 <- plot_auto_SPC(df = head(G513H_data, 21),
                     y = daily_ave_att,
                     x_break = 210,
                     x_pad_end = as.Date("2023-03-01"),
+                    extend_limits_to = as.Date("2018-06-01"),
                     override_y_lim = 300,
                     includeAnnotations = FALSE)
 
@@ -375,6 +376,7 @@ data2 <- plot_auto_SPC(df = head(G513H_data, 30),
                     y = daily_ave_att,
                     x_break = 210,
                     x_pad_end = as.Date("2023-03-01"),
+                    extend_limits_to = as.Date("2018-06-01"),
                     override_y_lim = 300,
                     includeAnnotations = FALSE)
 
@@ -394,6 +396,7 @@ data3 <- plot_auto_SPC(df = head(G513H_data, 54),
                     y = daily_ave_att,
                     x_break = 210,
                     x_pad_end = as.Date("2023-03-01"),
+                    extend_limits_to = as.Date("2020-06-01"),
                     noRecals = TRUE,
                     override_y_lim = 300,
                     includeAnnotations = FALSE)
@@ -413,6 +416,7 @@ data4 <- plot_auto_SPC(df = head(G513H_data, 54),
                     y = daily_ave_att,
                     x_break = 210,
                     x_pad_end = as.Date("2023-03-01"),
+                    extend_limits_to = as.Date("2022-01-01"),
                     noRecals = FALSE,
                     override_y_lim = 300,
                     includeAnnotations = FALSE)
@@ -433,6 +437,7 @@ data5 <- plot_auto_SPC(df = head(G513H_data, 74),
                     y = daily_ave_att,
                     x_break = 210,
                     x_pad_end = as.Date("2023-03-01"),
+                    extend_limits_to = as.Date("2022-01-01"),
                     noRecals = FALSE,
                     override_y_lim = 300,
                     includeAnnotations = FALSE)
@@ -559,20 +564,24 @@ data_naive3 <- plot_auto_SPC(df = G513H_data,
 ################################################################################
 plot_figure_1 <- function(){
   
+  panel_captions <- c("(a) Control limits formed using baseline data (calculation period), and extended (display period)",
+                      "(b) Additional data added to chart",
+                      "(c) Further data added to chart")
+  
   data1 <- dataA %>%
-    mutate(step = "(a) Control limits formed using baseline data, and extended")
+    mutate(step = panel_captions[1])
   
   data2 <- dataB %>%
-    mutate(step = "(b) Additional data added to chart")
+    mutate(step = panel_captions[2])
   
   data3 <- dataC %>%
-    mutate(step = "(c) Further data added to chart")
+    mutate(step = panel_captions[3])
   
   data <- bind_rows(data1, data2, data3)
   
-  data$step <- factor(data$step, levels = c("(a) Control limits formed using baseline data, and extended",
-                                            "(b) Additional data added to chart",
-                                            "(c) Further data added to chart"))
+  data$step <- factor(data$step, levels = c(panel_captions[1],
+                                            panel_captions[2],
+                                            panel_captions[3]))
   
   strip <- strip_themed(background_x = elem_list_rect(fill = c("#CACC90", "#CACC90", "#CACC90")))
   
@@ -595,11 +604,11 @@ plot_figure_1 <- function(){
                    plot.subtitle = ggplot2::element_text(size = 16, face = "italic"),
                    axis.line = ggplot2::element_line(colour = "#CACC9060"),
                    plot.caption = ggplot2::element_text(size = 10, hjust = 0.5)) +
-    ggplot2::ggtitle("Example Control Chart (C-Chart)", subtitle = "Simulated Data") +
+    ggplot2::ggtitle("Example Control Chart (C-Chart)", subtitle = "Simulated A&E Attendance Data") +
     ggplot2::labs(x = "Week",
                   y = "Number of attendances",
                   size = 10) +
-    ggplot2::scale_y_continuous(#limits = c(ylimlow, ylimhigh),
+    ggplot2::scale_y_continuous(limits = c(150, 250),
       breaks = scales::breaks_pretty(),
       labels = scales::number_format(accuracy = 1,
                                      big.mark = ",")) +
@@ -619,34 +628,43 @@ plot_figure_1 <- function(){
 
 
 ################################################################################
-plot_steps_facet <- function(){
+plot_steps_facet <- function(all_steps = TRUE){
+  
+  panel_captions <- c("(a) Baseline established and display limits extended",
+                      "(b) Shift rule (rule 2) break identified",
+                      "(c) Control limits are recalculated",
+                      "(d) Shift rule (rule 2) break identified",
+                      "(e) Candidate limits: shift back towards original",
+                      "(f) Candidate limits rejected")
   
   data1 <- data2 %>%
-    mutate(step = "Baseline established and display limits extended")
+    mutate(step = panel_captions[1])
   
   data2 <- data3 %>%
-    mutate(step = "Rule 2 break identified*")
+    mutate(step = panel_captions[2])
   
   data3 <- data4 %>%
-    mutate(step = "Control limits are recalculated")
+    mutate(step = panel_captions[3])
   
   data4 <- data5 %>%
-    mutate(step = "Next rule 2 break identified")
+    mutate(step = panel_captions[4])
   
   data5 <- data6 %>%
-    mutate(step = "Candidate limits show rule 2 break back to original*")
+    mutate(step = panel_captions[5])
   
   data6 <- data7 %>%
-    mutate(step = "Candidate limits rejected")
+    mutate(step = panel_captions[6])
   
-  data <- bind_rows(data1, data2, data3, data4, data5, data6)
+  data <- bind_rows(data1, data2, data3, data4)
   
-  data$step <- factor(data$step, levels = c("Baseline established and display limits extended",
-                                            "Rule 2 break identified*",
-                                            "Control limits are recalculated",
-                                            "Next rule 2 break identified",
-                                            "Candidate limits show rule 2 break back to original*",
-                                            "Candidate limits rejected"))
+  plot_title <- "Re-establishing control limits after a shift"
+  
+  if(all_steps) {
+    data <- bind_rows(data, data5, data6)
+    plot_title <- "Algorithm steps"
+  }
+  
+  data$step <- factor(data$step, levels = panel_captions)
   
   strip <- strip_themed(background_x = elem_list_rect(fill = c("#CACC90", "#F4EBBE", "#CACC90",
                                                                "#CACC90", "#F4EBBE", "#CACC90")))
@@ -666,16 +684,18 @@ plot_steps_facet <- function(){
                    plot.subtitle = ggplot2::element_text(size = 16, face = "italic"),
                    axis.line = ggplot2::element_line(colour = "#CACC9060"),
                    plot.caption = ggplot2::element_text(size = 10, hjust = 0.5)) +
-    ggplot2::ggtitle("Algorithm steps", subtitle = "Royal Hospital For Children Glasgow") +
+    ggplot2::ggtitle(plot_title,
+                     subtitle = "Royal Hospital For Children Glasgow") +
     ggplot2::labs(x = "Month",
                   y = "Average daily attendances per month",
-                  caption = "*these visualisations of intermediate steps are not possible outputs from the algorithm. \nThey have just been shown here for illustration purposes.",
                   size = 10) +
     ggplot2::scale_y_continuous(#limits = c(ylimlow, ylimhigh),
                                 breaks = scales::breaks_pretty(),
                                 labels = scales::number_format(accuracy = 1,
                                                                big.mark = ",")) +
-    facet_wrap2(vars(step), strip = strip)#+
+    facet_wrap2(vars(step),
+                strip = strip,
+                ncol = 2L)#+
     #theme(strip.background =element_rect(fill=c("red", "green", "orange", "yellow", "blue", "purple")))
   
   plot <- autospc:::format_SPC(cht = plot, 
@@ -744,6 +764,7 @@ plot_approaches_facet <- function(){
 }
 
 p_fig1 <- plot_figure_1()
+p_fig2 <- plot_steps_facet(all_steps = FALSE)
 p_steps <- plot_steps_facet()
 p_approaches <- plot_approaches_facet()
 
@@ -765,6 +786,8 @@ if(save_plots) {
   ggsave(file.path("plots", "p_algorithm.png"), plot = p_algorithm)
   ggsave(file.path("plots", "p_fig1.png"), plot = p_fig1,
          width = 10, height = 10, units = "in")
+  ggsave(file.path("plots", "p_fig2.png"), plot = p_fig2,
+         width = 10, height = 7, units = "in")
   ggsave(file.path("plots", "p_steps.png"), plot = p_steps,
          width = 12, height = 7, units = "in")
   ggsave(file.path("plots", "p_approaches.png"), plot = p_approaches,
