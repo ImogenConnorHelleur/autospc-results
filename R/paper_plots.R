@@ -709,24 +709,26 @@ plot_steps_facet <- function(all_steps = TRUE){
 ################################################################################
 plot_approaches_facet <- function(){
   
+  panel_captions <- c("(a) Algorithm",
+                      "(b) Whole period as calculation period",
+                      "(c) Baseline calculation period extended to end",
+                      "(d) Recalculation at every shift rule (rule 2) break")
+  
   data_algorithm <- data_algorithm %>%
-    mutate(step = "Algorithm")
+    mutate(step = panel_captions[1])
   
   data_naive1 <- data_naive1 %>%
-    mutate(step = "Naive 1: whole period as calculation period")
+    mutate(step = panel_captions[2])
   
   data_naive2 <- data_naive2 %>%
-    mutate(step = "Naive 2: first period extended to end")
+    mutate(step = panel_captions[3])
   
   data_naive3 <- data_naive3 %>%
-    mutate(step = "Naive 3: recalculation at every rule 2 break")
+    mutate(step = panel_captions[4])
   
   data <- bind_rows(data_algorithm, data_naive1, data_naive2, data_naive3)
   
-  data$step <- factor(data$step, levels = c("Algorithm",
-                                            "Naive 1: whole period as calculation period",
-                                            "Naive 2: first period extended to end",
-                                            "Naive 3: recalculation at every rule 2 break"))
+  data$step <- factor(data$step, levels = panel_captions)
   
   strip <- strip_themed(background_x = elem_list_rect(fill = c("#CACC90", "#F4EBBE", "#F4EBBE",
                                                                "#F4EBBE")))
@@ -745,7 +747,8 @@ plot_approaches_facet <- function(){
                    plot.subtitle = ggplot2::element_text(size = 16, face = "italic"),
                    axis.line = ggplot2::element_line(colour = "#CACC9060"),
                    plot.caption = ggplot2::element_text(size = 10, hjust = 0.5)) +
-    ggplot2::ggtitle("Approaches", subtitle = "Royal Hospital For Children Glasgow") +
+    ggplot2::ggtitle("Approaches to Partitioning Control Chart Limits",
+                     subtitle = "Royal Hospital For Children Glasgow") +
     ggplot2::labs(x = "Month",
                   y = "Average daily attendances per month",
                   size = 10) +
