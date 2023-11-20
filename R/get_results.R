@@ -1,5 +1,15 @@
-timestamp <- gsub(":","-",paste(strsplit(x = toString(Sys.time()),split = " ")[[1]], collapse = "-"))
-commit <- stringr::str_sub(system("git rev-parse HEAD", intern=TRUE), 1, 8)
+if(FALSE) { # Use timestamp and SHA in filenames?
+  # TRUE - use if not committing outputs to git
+  timestamp <- gsub(":","-",paste(strsplit(x = toString(Sys.time()),split = " ")[[1]], collapse = "-"))
+  commit <- stringr::str_sub(system("git rev-parse HEAD", intern=TRUE), 1, 8)
+  filename_suffix <- paste0("_",
+                            timestamp,
+                            "_",
+                            commit)
+} else {
+  # FALSE - use if committing outputs to git
+  filename_suffix <- ""
+}
 
 library(tidyverse)
 library(scales)
@@ -50,8 +60,8 @@ for(c in codes$Code){
 saveRDS(limits_table_output_Monthly_C_algorithm,
         file.path("data",
                   "outputs",
-                  paste0("limits_table_output_Monthly_C_algorithm_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("limits_table_output_Monthly_C_algorithm",
+                         filename_suffix,".rds")))
 
 ##Weekly C algorithm###############################################################################
 
@@ -79,8 +89,8 @@ for(c in codes$Code){
 saveRDS(limits_table_output_Weekly_C_algorithm,
         file.path("data",
                   "outputs",
-                  paste0("limits_table_output_Weekly_C_algorithm_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("limits_table_output_Weekly_C_algorithm",
+                         filename_suffix,".rds")))
 
 ##Monthly P algorithm###############################################################################
 
@@ -125,8 +135,8 @@ for(c in codes$Code){
 saveRDS(limits_table_output_Monthly_P_algorithm,
         file.path("data",
                   "outputs",
-                  paste0("limits_table_output_Monthly_P_algorithm_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("limits_table_output_Monthly_P_algorithm",
+                         filename_suffix,".rds")))
 
 ##Weekly P algorithm###############################################################################
 
@@ -153,8 +163,8 @@ for(c in codes$Code){
 saveRDS(limits_table_output_Weekly_P_algorithm,
         file.path("data",
                   "outputs",
-                  paste0("limits_table_output_Weekly_P_algorithm_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("limits_table_output_Weekly_P_algorithm",
+                         filename_suffix,".rds")))
 
 
 
@@ -186,8 +196,8 @@ for(c in codes$Code){
 saveRDS(limits_table_output_Monthly_C_naive1,
         file.path("data",
                   "outputs",
-                  paste0("limits_table_output_Monthly_C_naive1_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("limits_table_output_Monthly_C_naive1",
+                         filename_suffix,".rds")))
 
 ##Weekly C naive1###############################################################################
 
@@ -215,8 +225,8 @@ for(c in codes$Code){
 saveRDS(limits_table_output_Weekly_C_naive1,
         file.path("data",
                   "outputs",
-                  paste0("limits_table_output_Weekly_C_naive1_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("limits_table_output_Weekly_C_naive1",
+                         filename_suffix,".rds")))
 
 ##Monthly P naive1###############################################################################
 
@@ -243,8 +253,8 @@ for(c in codes$Code){
 saveRDS(limits_table_output_Monthly_P_naive1,
         file.path("data",
                   "outputs",
-                  paste0("limits_table_output_Monthly_P_naive1_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("limits_table_output_Monthly_P_naive1",
+                         filename_suffix,".rds")))
 
 ##Weekly P naive1###############################################################################
 
@@ -271,8 +281,8 @@ for(c in codes$Code){
 saveRDS(limits_table_output_Weekly_P_naive1,
         file.path("data",
                   "outputs",
-                  paste0("limits_table_output_Weekly_P_naive1_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("limits_table_output_Weekly_P_naive1",
+                         filename_suffix,".rds")))
 
 
 
@@ -304,8 +314,8 @@ for(c in codes$Code){
 saveRDS(limits_table_output_Monthly_C_naive2,
         file.path("data",
                   "outputs",
-                  paste0("limits_table_output_Monthly_C_naive2_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("limits_table_output_Monthly_C_naive2",
+                         filename_suffix,".rds")))
 
 ##Weekly C naive2###############################################################################
 
@@ -333,8 +343,8 @@ for(c in codes$Code){
 saveRDS(limits_table_output_Weekly_C_naive2,
         file.path("data",
                   "outputs",
-                  paste0("limits_table_output_Weekly_C_naive2_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("limits_table_output_Weekly_C_naive2",
+                         filename_suffix,".rds")))
 
 ##Monthly P naive2###############################################################################
 
@@ -362,8 +372,8 @@ for(c in codes$Code){
 saveRDS(limits_table_output_Monthly_P_naive2,
         file.path("data",
                   "outputs",
-                  paste0("limits_table_output_Monthly_P_naive2_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("limits_table_output_Monthly_P_naive2",
+                         filename_suffix,".rds")))
 
 ##Weekly P naive2###############################################################################
 
@@ -390,8 +400,8 @@ for(c in codes$Code){
 saveRDS(limits_table_output_Weekly_P_naive2,
         file.path("data",
                   "outputs",
-                  paste0("limits_table_output_Weekly_P_naive2_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("limits_table_output_Weekly_P_naive2",
+                         filename_suffix,".rds")))
 
 ################################################################################
 ##Monthly C naive3###############################################################################
@@ -421,8 +431,8 @@ for(c in codes$Code){
 saveRDS(limits_table_output_Monthly_C_naive3,
         file.path("data",
                   "outputs",
-                  paste0("limits_table_output_Monthly_C_naive3_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("limits_table_output_Monthly_C_naive3",
+                         filename_suffix,".rds")))
 
 ##Weekly C naive3###############################################################################
 
@@ -451,8 +461,8 @@ for(c in codes$Code){
 saveRDS(limits_table_output_Weekly_C_naive3,
         file.path("data",
                   "outputs",
-                  paste0("limits_table_output_Weekly_C_naive3_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("limits_table_output_Weekly_C_naive3",
+                         filename_suffix,".rds")))
 
 ##Monthly P naive3###############################################################################
 
@@ -481,8 +491,8 @@ for(c in codes$Code){
 saveRDS(limits_table_output_Monthly_P_naive3,
         file.path("data",
                   "outputs",
-                  paste0("limits_table_output_Monthly_P_naive3_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("limits_table_output_Monthly_P_naive3",
+                         filename_suffix,".rds")))
 
 ##Weekly P naive3###############################################################################
 
@@ -510,8 +520,8 @@ for(c in codes$Code){
 saveRDS(limits_table_output_Weekly_P_naive3,
         file.path("data",
                   "outputs",
-                  paste0("limits_table_output_Weekly_P_naive3_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("limits_table_output_Weekly_P_naive3",
+                         filename_suffix,".rds")))
 
 
 
@@ -693,40 +703,40 @@ saveRDS(full_results_all,
         file.path("data",
                   "outputs",
                   "full_results",
-                  paste0("full_results_all3_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("full_results_all3",
+                         filename_suffix,".rds")))
 
 writexl::write_xlsx(full_results_all,
                     file.path("data",
                               "outputs",
                               "full_results",
-                              paste0("full_results_all3_",
-                                     timestamp,"_",commit,".xlsx")))
+                              paste0("full_results_all3",
+                                     filename_suffix,".xlsx")))
 
 saveRDS(summary_results_all,
         file.path("data",
                   "outputs",
                   "full_results",
-                  paste0("summary_results_all3_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("summary_results_all3",
+                         filename_suffix,".rds")))
 
 writexl::write_xlsx(summary_results_all,
                     file.path("data",
                               "outputs",
                               "full_results",
-                              paste0("summary_results_all3_",
-                                     timestamp,"_",commit,".xlsx")))
+                              paste0("summary_results_all3",
+                                     filename_suffix,".xlsx")))
 
 saveRDS(summary_results_all_wm,
         file.path("data",
                   "outputs",
                   "full_results",
-                  paste0("summary_results_all3_wm_",
-                         timestamp,"_",commit,".rds")))
+                  paste0("summary_results_all3_wm",
+                         filename_suffix,".rds")))
 
 writexl::write_xlsx(summary_results_all_wm,
                     file.path("data",
                               "outputs",
                               "full_results",
-                              paste0("summary_results_all3_wm_",
-                                     timestamp,"_",commit,".xlsx")))
+                              paste0("summary_results_all3_wm",
+                                     filename_suffix,".xlsx")))
