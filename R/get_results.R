@@ -10,6 +10,13 @@ source("R/results_functions.R")
 AE_Data <- readRDS("data/AE_Data.RDS")
 AE_Data_Scot <- readRDS("data/AE_Data_Scot.RDS")
 
+#change Nat_Code to make it distinct from Lothian Reg_Code (S)
+AE_Data <- AE_Data %>%
+  mutate(Nat_Code = if_else(Nat_Code == "S", "Sc", Nat_Code))
+
+AE_Data_Scot <- AE_Data_Scot %>%
+  mutate(Nat_Code = if_else(Nat_Code == "S", "Sc", Nat_Code))
+
 #ONLY COMMENTED OUT BECAUSE IT'S SLOW!
 # perf_series_df <- make_perf_series_data_frame(data = AE_Data,
 #                                               data_scot = AE_Data_Scot,
