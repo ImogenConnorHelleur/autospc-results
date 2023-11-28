@@ -1,0 +1,202 @@
+---
+title: "Results Analysis"
+author: "Tom Woodcock"
+date: "2023-11-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r package-dependencies}
+library(tidyverse)
+```
+
+```{r load-data}
+full_results_all <- readRDS(file.path("..",
+                                      "data",
+                                      "outputs",
+                                      "full_results",
+                                      "full_results_all3.rds")) %>% 
+  separate_wider_delim(results_set, delim = " ", names = c("chart_type",
+                                                           "approach"))
+```
+
+
+```{r}
+full_results_all %>% 
+  group_by(weeklyOrMonthly) %>% 
+  summarise(max_n = max(n), min_n = min(n))
+```
+
+
+```{r}
+df <- full_results_all %>% 
+    group_by(weeklyOrMonthly) %>% 
+    mutate(mean_x = mean(n),
+           median_x = median(n))
+
+num_points_hist <- df %>% 
+  ggplot(aes(x = n)) +
+  geom_histogram(aes(y = after_stat(density*10)),
+                 binwidth = 10,
+                 colour = see::palette_okabeito(palette = "full")(4)[3],
+                 fill = see::palette_okabeito(palette = "full")(4)[3],
+                 alpha = 0.33) +
+  facet_wrap(~ weeklyOrMonthly) +
+  geom_vline(aes(xintercept=median_x),
+             colour = see::palette_okabeito(palette = "full")(4)[3],
+             linetype = "solid",
+             linewidth = 0.5) +
+  scale_x_continuous(limits = c(0, NA),
+                     oob = scales::oob_keep) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(x = "Number of points on chart",
+       y = "Percentage of charts") +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  )
+
+num_points_hist
+```
+
+
+```{r}
+my_hist <- function(df,
+                    x,
+                    binwidth = 1,
+                    show_mean = FALSE,
+                    xlab,
+                    x_perc = FALSE) {
+  
+  df <- df %>% 
+    group_by(weeklyOrMonthly,
+             approach) %>% 
+    mutate(mean_x = mean({{ x }}),
+           median_x = median({{ x }}))
+  
+  plt <- df %>% 
+    ggplot(aes(x = {{ x }},
+               fill = approach)) +
+    geom_histogram(aes(y = after_stat(density*binwidth),
+                       colour = approach),
+                   position = "identity",
+                   alpha = 0.33,
+                   binwidth = binwidth) +
+    facet_wrap(~ weeklyOrMonthly) +
+    geom_vline(aes(xintercept=median_x,
+                   colour = approach),
+               linetype = "solid", linewidth = 0.5) +
+    scale_y_continuous(labels = scales::percent) +
+    # colScale +
+    # fillScale +
+    see::scale_color_okabeito(guide = "none") +
+    see::scale_fill_okabeito(name = "Approach") +
+    labs(x = xlab,
+         y = "Percentage of charts") +
+    theme(
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank()
+    )
+  
+  if(show_mean) {
+    plt <- plt + geom_vline(aes(xintercept=mean_x,
+                                colour = approach),
+                            linetype = "dashed", linewidth = 0.5)
+  }
+  
+  if(x_perc) {
+    plt <- plt +
+      scale_x_continuous(limits = c(0, NA),
+                         labels = scales::percent,
+                         oob = scales::oob_keep)
+  } else {
+    plt <- plt +
+      scale_x_continuous(limits = c(0, NA),
+                         oob = scales::oob_keep)
+  }
+  
+  return(plt)
+}
+```
+
+
+```{r}
+num_recalcs_hist <- my_hist(full_results_all %>%
+          filter(!(approach %in% c("naive1", "naive2"))),
+        x = num_recalcs,
+        xlab = "Number of times limits re-established",
+        binwidth = 1)
+
+num_recalcs_hist
+```
+
+```{r}
+prop_recalcs_hist <- my_hist(full_results_all %>%
+          filter(!(approach %in% c("naive1", "naive2"))),
+        x = num_actual_recals_by_potential_recals,
+        xlab = paste0("Number of times limits re-established,\n",
+                      "as a proportion of the maximum possible"),
+        x_perc = TRUE,
+        binwidth = 0.05)
+
+prop_recalcs_hist
+```
+
+```{r}
+r2_pts_hist <- my_hist(full_results_all %>%
+          filter(!(approach %in% c("naive1", "naive2"))),
+        x = num_rule2_points,
+        xlab = "Number of points within shift rule breaks",
+        binwidth = 5)
+
+r2_pts_hist
+```
+
+```{r}
+r2_brks_hist <- my_hist(full_results_all %>%
+          filter(!(approach %in% c("naive1", "naive2"))),
+        x = num_rule2_breaks,
+        xlab = "Number of shift rule breaks",
+        binwidth = 1)
+
+r2_brks_hist
+```
+
+```{r}
+r1_pts_hist <- my_hist(full_results_all %>%
+          filter(!(approach %in% c("naive1", "naive2"))),
+        x = num_rule1_points,
+        xlab = "Number of points outside the control limits",
+        binwidth = 5)
+
+r1_pts_hist
+```
+
+```{r fig.width = 5, fig.height=15}
+combined_results <- ggpubr::ggarrange(num_points_hist,
+                  num_recalcs_hist,
+                  prop_recalcs_hist,
+                  r2_brks_hist,
+                  r2_pts_hist,
+                  r1_pts_hist,
+                  ncol = 1,
+                  common.legend = TRUE,
+                  legend = "bottom",
+                  labels = "auto")
+
+combined_results
+```
+
+```{r}
+ggsave(file.path("..", "plots", "combined_results.png"),
+       plot = combined_results,
+       width = 5,
+       height = 15,
+       units = "in")
+```
+
+
+
