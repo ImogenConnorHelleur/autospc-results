@@ -35,6 +35,15 @@ if(FALSE) { # SLOW
                                                 data_scot = AE_Data_Scot,
                                                 measureArg = "All",
                                                 onlyProvsReportingArg = TRUE)
+  
+  perf_series_df_filename <- paste0("perf_series_df",
+                                    filename_suffix,
+                                    ".rds")
+  
+  saveRDS(perf_series_df,
+          file.path("data",
+                    perf_series_df_filename))
+  
 } else {
   perf_series_df <- readRDS(file.path("data",
                                       "perf_series_df.rds"))
