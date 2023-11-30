@@ -711,40 +711,40 @@ saveRDS(full_results_all,
         file.path("data",
                   "outputs",
                   "full_results",
-                  paste0("full_results_all3",
+                  paste0("full_results_all",
                          filename_suffix,".rds")))
 
 writexl::write_xlsx(full_results_all,
                     file.path("data",
                               "outputs",
                               "full_results",
-                              paste0("full_results_all3",
+                              paste0("full_results_all",
                                      filename_suffix,".xlsx")))
 
 saveRDS(summary_results_all,
         file.path("data",
                   "outputs",
                   "full_results",
-                  paste0("summary_results_all3",
+                  paste0("summary_results_all",
                          filename_suffix,".rds")))
 
 writexl::write_xlsx(summary_results_all,
                     file.path("data",
                               "outputs",
                               "full_results",
-                              paste0("summary_results_all3",
+                              paste0("summary_results_all",
                                      filename_suffix,".xlsx")))
 
 saveRDS(summary_results_all_wm,
         file.path("data",
                   "outputs",
                   "full_results",
-                  paste0("summary_results_all3_wm",
+                  paste0("summary_results_all_wm",
                          filename_suffix,".rds")))
 
 writexl::write_xlsx(summary_results_all_wm,
                     file.path("data",
                               "outputs",
                               "full_results",
-                              paste0("summary_results_all3_wm",
+                              paste0("summary_results_all_wm",
                                      filename_suffix,".xlsx")))
