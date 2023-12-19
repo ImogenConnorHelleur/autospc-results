@@ -3,6 +3,9 @@ title: "Results Analysis"
 author: "Tom Woodcock"
 date: "2023-11-27"
 output: html_document
+params:
+  save_results: TRUE
+  excluded_approaches: !r c("naive1", "naive2")
 ---
 
 ```{r setup, include=FALSE}
@@ -12,15 +15,29 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r package-dependencies}
 library(tidyverse)
 ```
+```{r}
+print(params$excluded_approaches)
+```
+
 
 ```{r load-data}
 full_results_all <- readRDS(file.path("..",
                                       "data",
                                       "outputs",
                                       "full_results",
-                                      "full_results_all3.rds")) %>% 
+                                      "full_results_all.rds")) %>% 
   separate_wider_delim(results_set, delim = " ", names = c("chart_type",
                                                            "approach"))
+```
+
+```{r}
+full_results_all <- full_results_all %>%
+  mutate(approach = case_when(
+    approach == "algorithm" ~ "Algorithm",
+    approach == "naive3" ~ "On Shift Rule Break",
+    TRUE ~ approach
+  ))
+
 ```
 
 
@@ -125,7 +142,7 @@ my_hist <- function(df,
 
 ```{r}
 num_recalcs_hist <- my_hist(full_results_all %>%
-          filter(!(approach %in% c("naive1", "naive2"))),
+          filter(!(approach %in% params$excluded_approaches)),
         x = num_recalcs,
         xlab = "Number of times limits re-established",
         binwidth = 1)
@@ -135,7 +152,7 @@ num_recalcs_hist
 
 ```{r}
 prop_recalcs_hist <- my_hist(full_results_all %>%
-          filter(!(approach %in% c("naive1", "naive2"))),
+          filter(!(approach %in% params$excluded_approaches)),
         x = num_actual_recals_by_potential_recals,
         xlab = paste0("Number of times limits re-established,\n",
                       "as a proportion of the maximum possible"),
@@ -147,7 +164,7 @@ prop_recalcs_hist
 
 ```{r}
 r2_pts_hist <- my_hist(full_results_all %>%
-          filter(!(approach %in% c("naive1", "naive2"))),
+          filter(!(approach %in% params$excluded_approaches)),
         x = num_rule2_points,
         xlab = "Number of points within shift rule breaks",
         binwidth = 5)
@@ -157,7 +174,7 @@ r2_pts_hist
 
 ```{r}
 r2_brks_hist <- my_hist(full_results_all %>%
-          filter(!(approach %in% c("naive1", "naive2"))),
+          filter(!(approach %in% params$excluded_approaches)),
         x = num_rule2_breaks,
         xlab = "Number of shift rule breaks",
         binwidth = 1)
@@ -167,7 +184,7 @@ r2_brks_hist
 
 ```{r}
 r1_pts_hist <- my_hist(full_results_all %>%
-          filter(!(approach %in% c("naive1", "naive2"))),
+          filter(!(approach %in% params$excluded_approaches)),
         x = num_rule1_points,
         xlab = "Number of points outside the control limits",
         binwidth = 5)
@@ -191,12 +208,40 @@ combined_results
 ```
 
 ```{r}
-ggsave(file.path("..", "plots", "combined_results.png"),
-       plot = combined_results,
-       width = 5,
-       height = 15,
-       units = "in")
+if(params$save_results) {
+  ggsave(file.path("..", "plots", "combined_results.png"),
+         plot = combined_results,
+         width = 5,
+         height = 15,
+         units = "in")
+}
 ```
 
+```{r fig.width = 14, fig.height=6}
+combined_results_wide <- ggpubr::ggarrange(
+  num_points_hist,
+  num_recalcs_hist + labs(y = NULL),
+  prop_recalcs_hist + labs(y = NULL),
+  r2_brks_hist,
+  r2_pts_hist + labs(y = NULL),
+  r1_pts_hist + labs(y = NULL),
+  ncol = 3,
+  nrow = 2,
+  align = "hv",
+  common.legend = TRUE,
+  legend = "bottom",
+  labels = "auto",
+  label.x = 0.075,
+  label.y = 1.025)
 
-
+combined_results_wide
+```
+```{r}
+if(params$save_results) {
+  ggsave(file.path("..", "plots", "combined_results_wide.png"),
+         plot = combined_results_wide,
+         width = 14,
+         height = 6,
+         units = "in")
+}
+```
