@@ -67,7 +67,13 @@ clean_perf_series_df <- function(df,
     filter(n_ok) %>% 
     mutate(Performance = if_else(mid_range_ok,
                                  Performance,
-                                 NA_real_)) %>% 
+                                 NA_real_),
+           Within_4h = if_else(mid_range_ok,
+                               Within_4h,
+                               NA_real_),
+           Greater_4h = if_else(mid_range_ok,
+                                Greater_4h,
+                                NA_real_)) %>% 
     select(-mid_range_ok,
            -n_ok)
   
