@@ -57,9 +57,13 @@ if(TRUE) {
                                          mid_range_min = 0.01,
                                          mid_range_width = 0.5)
   
+  perf_series_df_clean_filename <- paste0("perf_series_df_clean",
+                                    filename_suffix,
+                                    ".rds")
+  
   saveRDS(perf_series_df,
           file.path("data",
-                    paste0("clean", perf_series_df_filename)))
+                    perf_series_df_clean_filename))
 }
 
 ##Monthly C algorithm###############################################################################
