@@ -50,6 +50,17 @@ if(FALSE) { # SLOW
   
 }
 
+if(TRUE) {
+  source("R/perf_series_cleaning.R")
+  
+  perf_series_df <- clean_perf_series_df(perf_series_df,
+                                         mid_range_min = 0.01,
+                                         mid_range_width = 0.5)
+  
+  saveRDS(perf_series_df,
+          file.path("data",
+                    paste0("clean", perf_series_df_filename)))
+}
 
 ##Monthly C algorithm###############################################################################
 
