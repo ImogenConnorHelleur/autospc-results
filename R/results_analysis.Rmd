@@ -40,13 +40,26 @@ full_results_all <- full_results_all %>%
 
 ```
 
-
+## Number of points
 ```{r}
 full_results_all %>% 
   group_by(weeklyOrMonthly) %>% 
-  summarise(max_n = max(n), min_n = min(n))
+  summarise(num_series = n()/4,
+            median = median(n),
+            iqr = paste(quantile(n, 0.25),
+                        " - ",
+                        quantile(n, 0.75)),
+            max_n = max(n),
+            min_n = min(n)) %>% 
+  knitr::kable()
 ```
-
+```{r}
+full_results_all %>% 
+  filter(weeklyOrMonthly == "Weekly") %>% 
+  group_by(n) %>% 
+  summarise(num_series = n()/4) %>%
+  knitr::kable()
+```
 
 ```{r}
 df <- full_results_all %>% 
@@ -139,6 +152,33 @@ my_hist <- function(df,
 }
 ```
 
+```{r}
+summary_table <- function(df, x) {
+  st <- df %>%
+  filter(!(approach %in% params$excluded_approaches)) %>% 
+  group_by(weeklyOrMonthly,
+           approach) %>% 
+  summarise(
+    median = median({{ x }}),
+    iqr = paste(quantile({{ x }}, 0.25),
+                " - ",
+                quantile({{ x }}, 0.75)),
+    max_n = max({{ x }}),
+    min_n = min({{ x }})
+  ) %>%
+  knitr::kable()
+  
+  return(st)
+}
+```
+
+
+## Number of recalculations
+
+```{r}
+summary_table(full_results_all,
+              x = num_recalcs)
+```
 
 ```{r}
 num_recalcs_hist <- my_hist(full_results_all %>%
@@ -148,6 +188,11 @@ num_recalcs_hist <- my_hist(full_results_all %>%
         binwidth = 1)
 
 num_recalcs_hist
+```
+
+```{r}
+summary_table(full_results_all,
+              x = num_actual_recals_by_potential_recals)
 ```
 
 ```{r}
@@ -162,6 +207,13 @@ prop_recalcs_hist <- my_hist(full_results_all %>%
 prop_recalcs_hist
 ```
 
+## Remaining rule breaks
+
+```{r}
+summary_table(full_results_all,
+              x = num_rule2_points)
+```
+
 ```{r}
 r2_pts_hist <- my_hist(full_results_all %>%
           filter(!(approach %in% params$excluded_approaches)),
@@ -173,6 +225,11 @@ r2_pts_hist
 ```
 
 ```{r}
+summary_table(full_results_all,
+              x = num_rule2_breaks)
+```
+
+```{r}
 r2_brks_hist <- my_hist(full_results_all %>%
           filter(!(approach %in% params$excluded_approaches)),
         x = num_rule2_breaks,
@@ -180,6 +237,11 @@ r2_brks_hist <- my_hist(full_results_all %>%
         binwidth = 1)
 
 r2_brks_hist
+```
+
+```{r}
+summary_table(full_results_all,
+              x = num_rule1_points)
 ```
 
 ```{r}
