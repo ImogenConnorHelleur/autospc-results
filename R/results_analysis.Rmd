@@ -40,6 +40,24 @@ full_results_all <- full_results_all %>%
 
 ```
 
+```{r}
+full_results_all %>% 
+  group_by(weeklyOrMonthly,
+           chart_type) %>% 
+  summarise(num_series = n()/4) %>% 
+  knitr::kable()
+
+full_results_all %>% 
+  group_by(chart_type) %>% 
+  summarise(num_series = n()/4) %>% 
+  knitr::kable()
+
+full_results_all %>% 
+  group_by(weeklyOrMonthly) %>% 
+  summarise(num_series = n()/4) %>% 
+  knitr::kable()
+```
+
 ## Number of points
 ```{r}
 full_results_all %>% 
