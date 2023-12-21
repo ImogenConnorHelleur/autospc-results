@@ -74,8 +74,7 @@ clean_perf_series_df <- function(df,
            Greater_4h = if_else(mid_range_ok,
                                 Greater_4h,
                                 NA_real_)) %>% 
-    select(-mid_range_ok,
-           -n_ok)
+    select(-n_ok)
   
   print(paste0(n_problems, " Code-TimeGranularity pairings removed for insufficient data"))
   print(paste0(mid_range_problems, " Performance series removed for insufficient variation"))

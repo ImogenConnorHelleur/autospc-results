@@ -156,14 +156,14 @@ get_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
 
 ################################################################################
 plot_performance_from_perf_series_df <- function(data = perf_series_df,
-                                            Code_arg = "RYJ",
-                                            weeklyOrMonthly_arg = "Monthly",
-                                            measure_arg = "All",
-                                            onlyProvsReporting_arg = TRUE,
-                                            
-                                            periodMin = 21,
-                                            noRecals = FALSE,
-                                            development_recalc_at_every_break = FALSE){
+                                                 Code_arg = "RYJ",
+                                                 weeklyOrMonthly_arg = "Monthly",
+                                                 measure_arg = "All",
+                                                 onlyProvsReporting_arg = TRUE,
+                                                 
+                                                 periodMin = 21,
+                                                 noRecals = FALSE,
+                                                 development_recalc_at_every_break = FALSE){
   
   data <- data %>%
     dplyr::filter(Code == Code_arg,
@@ -173,28 +173,33 @@ plot_performance_from_perf_series_df <- function(data = perf_series_df,
   
   #dataLength <- nrow(data)
   
-  plot_auto_SPC(data,
-                x = Month_Start,
-                y = Within_4h,
-                n = Total_Att,
-                chartType = "P'",
-                periodMin = periodMin,#dataLength,
-                plotChart = TRUE,
-                noRecals = noRecals,
-                title = paste(Code_arg, weeklyOrMonthly_arg, "P"),
-                development_recalc_at_every_break = development_recalc_at_every_break)
+  if(!(sum(is.na(data$Within_4h)) == nrow(data))) {
+    plot_auto_SPC(data,
+                  x = Month_Start,
+                  y = Within_4h,
+                  n = Total_Att,
+                  chartType = "P'",
+                  periodMin = periodMin,#dataLength,
+                  plotChart = TRUE,
+                  noRecals = noRecals,
+                  title = paste(Code_arg, weeklyOrMonthly_arg, "P"),
+                  development_recalc_at_every_break = development_recalc_at_every_break)
+  } else {
+    print("Performance NA")
+    data_out <- data.frame()
+  }
 }
 
 ################################################################################
 get_peformance_from_perf_series_df <- function(data = perf_series_df,
-                                           Code_arg = "RYJ",
-                                           weeklyOrMonthly_arg = "Monthly",
-                                           measure_arg = "All",
-                                           onlyProvsReporting_arg = TRUE,
-                                           
-                                           periodMin = 21,
-                                           noRecals = FALSE,
-                                           development_recalc_at_every_break = FALSE){
+                                               Code_arg = "RYJ",
+                                               weeklyOrMonthly_arg = "Monthly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               
+                                               periodMin = 21,
+                                               noRecals = FALSE,
+                                               development_recalc_at_every_break = FALSE){
   
   data <- data %>%
     dplyr::filter(Code == Code_arg,
@@ -205,24 +210,29 @@ get_peformance_from_perf_series_df <- function(data = perf_series_df,
   #dataLength <- nrow(data)
   
   if(nrow(data) >= periodMin * 2){
-    data_out <- plot_auto_SPC(data,
-                              x = Month_Start,
-                              y = Within_4h,
-                              n = Total_Att,
-                              chartType = "P'",
-                              periodMin = periodMin, #dataLength,
-                              plotChart = FALSE,
-                              noRecals = noRecals,
-                              title = paste(Code_arg, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
-                              development_recalc_at_every_break = development_recalc_at_every_break)
-    
-    data_out <- data_out %>%
-      mutate(Code = Code_arg,
-             weeklyOrMonthly = weeklyOrMonthly_arg,
-             measure = measure_arg,
-             onlyProvsReporting = onlyProvsReporting_arg
-      )
-  }else{
+    if(!(sum(is.na(data$Within_4h)) == nrow(data))) {
+      data_out <- plot_auto_SPC(data,
+                                x = Month_Start,
+                                y = Within_4h,
+                                n = Total_Att,
+                                chartType = "P'",
+                                periodMin = periodMin, #dataLength,
+                                plotChart = FALSE,
+                                noRecals = noRecals,
+                                title = paste(Code_arg, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
+                                development_recalc_at_every_break = development_recalc_at_every_break)
+      
+      data_out <- data_out %>%
+        mutate(Code = Code_arg,
+               weeklyOrMonthly = weeklyOrMonthly_arg,
+               measure = measure_arg,
+               onlyProvsReporting = onlyProvsReporting_arg
+        )
+    } else {
+      print("Performance NA")
+      data_out <- data.frame()
+    }
+  } else {
     
     print("not enough points")
     data_out <- data.frame()
