@@ -35,12 +35,36 @@ if(FALSE) { # SLOW
                                                 data_scot = AE_Data_Scot,
                                                 measureArg = "All",
                                                 onlyProvsReportingArg = TRUE)
+  
+  perf_series_df_filename <- paste0("perf_series_df",
+                                    filename_suffix,
+                                    ".rds")
+  
+  saveRDS(perf_series_df,
+          file.path("data",
+                    perf_series_df_filename))
+  
 } else {
   perf_series_df <- readRDS(file.path("data",
                                       "perf_series_df.rds"))
   
 }
 
+if(TRUE) {
+  source("R/perf_series_cleaning.R")
+  
+  perf_series_df <- clean_perf_series_df(perf_series_df,
+                                         mid_range_min = 0.01,
+                                         mid_range_width = 0.5)
+  
+  perf_series_df_clean_filename <- paste0("perf_series_df_clean",
+                                    filename_suffix,
+                                    ".rds")
+  
+  saveRDS(perf_series_df,
+          file.path("data",
+                    perf_series_df_clean_filename))
+}
 
 ##Monthly C algorithm###############################################################################
 
@@ -711,40 +735,40 @@ saveRDS(full_results_all,
         file.path("data",
                   "outputs",
                   "full_results",
-                  paste0("full_results_all3",
+                  paste0("full_results_all",
                          filename_suffix,".rds")))
 
 writexl::write_xlsx(full_results_all,
                     file.path("data",
                               "outputs",
                               "full_results",
-                              paste0("full_results_all3",
+                              paste0("full_results_all",
                                      filename_suffix,".xlsx")))
 
 saveRDS(summary_results_all,
         file.path("data",
                   "outputs",
                   "full_results",
-                  paste0("summary_results_all3",
+                  paste0("summary_results_all",
                          filename_suffix,".rds")))
 
 writexl::write_xlsx(summary_results_all,
                     file.path("data",
                               "outputs",
                               "full_results",
-                              paste0("summary_results_all3",
+                              paste0("summary_results_all",
                                      filename_suffix,".xlsx")))
 
 saveRDS(summary_results_all_wm,
         file.path("data",
                   "outputs",
                   "full_results",
-                  paste0("summary_results_all3_wm",
+                  paste0("summary_results_all_wm",
                          filename_suffix,".rds")))
 
 writexl::write_xlsx(summary_results_all_wm,
                     file.path("data",
                               "outputs",
                               "full_results",
-                              paste0("summary_results_all3_wm",
+                              paste0("summary_results_all_wm",
                                      filename_suffix,".xlsx")))

@@ -1,5 +1,6 @@
 ###############################################################################
 require(lattice)
+require(magrittr)
 codes <- dplyr::distinct(perf_series_df, Code)
 #codes <- head(codes,3)
 
@@ -27,7 +28,9 @@ dev.off()
 
 ###############################################################################
 require(lattice)
-codes <- dplyr::distinct(perf_series_df, Code)
+codes <- perf_series_df %>% 
+  dplyr::filter(mid_range_ok) %>% 
+  dplyr::distinct(Code) 
 #codes <- head(codes,3)
 
 pdf(paste("P_algorithm", ".pdf", sep = ""),
@@ -80,7 +83,9 @@ dev.off()
 
 ###############################################################################
 require(lattice)
-codes <- dplyr::distinct(perf_series_df, Code)
+codes <- perf_series_df %>% 
+  dplyr::filter(mid_range_ok) %>% 
+  dplyr::distinct(Code) 
 #codes <- head(codes,3)
 
 pdf(paste("P_naive1", ".pdf", sep = ""),
@@ -134,7 +139,9 @@ dev.off()
 
 ###############################################################################
 require(lattice)
-codes <- dplyr::distinct(perf_series_df, Code)
+codes <- perf_series_df %>% 
+  dplyr::filter(mid_range_ok) %>% 
+  dplyr::distinct(Code) 
 #codes <- head(codes,3)
 
 pdf(paste("P_naive2", ".pdf", sep = ""),
@@ -188,7 +195,9 @@ dev.off()
 
 ###############################################################################
 require(lattice)
-codes <- dplyr::distinct(perf_series_df, Code)
+codes <- perf_series_df %>% 
+  dplyr::filter(mid_range_ok) %>% 
+  dplyr::distinct(Code) 
 #codes <- head(codes,3)
 
 pdf(paste("P_naive3", ".pdf", sep = ""),
