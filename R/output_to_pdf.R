@@ -3,6 +3,7 @@ require(lattice)
 require(magrittr)
 
 source(file.path("R", "results_functions.R"))
+perf_series_df <- readRDS(file.path("data", "perf_series_df_clean.rds"))
 
 codes <- dplyr::distinct(perf_series_df, Code)
 n_codes <- nrow(codes)
