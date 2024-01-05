@@ -8,7 +8,14 @@ plot_volume_from_perf_series_df <- function(data = perf_series_df,
                                             
                                             periodMin = 21,
                                             noRecals = FALSE,
-                                            development_recalc_at_every_break = FALSE){
+                                            development_recalc_at_every_break = FALSE,
+                                            pseudo_code = NULL){
+  
+  if(is.null(pseudo_code)) {
+    org_title <- Code_arg
+  } else {
+    org_title <- pseudo_code
+  }
   
   data <- data %>%
     dplyr::filter(Code == Code_arg,
@@ -26,7 +33,7 @@ plot_volume_from_perf_series_df <- function(data = perf_series_df,
                 periodMin = periodMin,#dataLength,
                 plotChart = TRUE,
                 noRecals = noRecals,
-                title = paste(Code_arg, weeklyOrMonthly_arg),
+                title = paste(org_title, weeklyOrMonthly_arg),
                 development_recalc_at_every_break = development_recalc_at_every_break)
 }
 
@@ -39,7 +46,14 @@ get_volume_from_perf_series_df <- function(data = perf_series_df,
                                             
                                             periodMin = 21,
                                             noRecals = FALSE,
-                                           development_recalc_at_every_break = FALSE){
+                                           development_recalc_at_every_break = FALSE,
+                                           pseudo_code = NULL){
+  
+  if(is.null(pseudo_code)) {
+    org_title <- Code_arg
+  } else {
+    org_title <- pseudo_code
+  }
   
   data <- data %>%
     dplyr::filter(Code == Code_arg,
@@ -57,7 +71,7 @@ get_volume_from_perf_series_df <- function(data = perf_series_df,
                               periodMin = periodMin,#dataLength,
                               plotChart = FALSE,
                               noRecals = noRecals,
-                              title = paste(Code_arg, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
+                              title = paste(org_title, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
                               development_recalc_at_every_break = development_recalc_at_every_break)
     
     data_out <- data_out %>%
@@ -84,7 +98,14 @@ plot_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                                             
                                             periodMin = 21,
                                             noRecals = FALSE,
-                                            development_recalc_at_every_break = FALSE){
+                                            development_recalc_at_every_break = FALSE,
+                                            pseudo_code = NULL){
+  
+  if(is.null(pseudo_code)) {
+    org_title <- Code_arg
+  } else {
+    org_title <- pseudo_code
+  }
   
   data <- data %>%
     dplyr::filter(Code == Code_arg,
@@ -102,7 +123,7 @@ plot_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                 periodMin = dataLength,
                 plotChart = TRUE,
                 noRecals = noRecals,
-                title = paste(Code_arg, weeklyOrMonthly_arg),
+                title = paste(org_title, weeklyOrMonthly_arg),
                 development_recalc_at_every_break = development_recalc_at_every_break)
 }
 
@@ -115,7 +136,14 @@ get_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                                                   
                                                   periodMin = 21,
                                                   noRecals = FALSE,
-                                                  development_recalc_at_every_break = FALSE){
+                                                  development_recalc_at_every_break = FALSE,
+                                                  pseudo_code = NULL){
+  
+  if(is.null(pseudo_code)) {
+    org_title <- Code_arg
+  } else {
+    org_title <- pseudo_code
+  }
   
   data <- data %>%
     dplyr::filter(Code == Code_arg,
@@ -133,7 +161,7 @@ get_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                               periodMin = dataLength,
                               plotChart = FALSE,
                               noRecals = TRUE,
-                              title = paste(Code_arg, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
+                              title = paste(org_title, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
                               development_recalc_at_every_break = development_recalc_at_every_break)
     
     data_out <- data_out %>%
@@ -163,7 +191,14 @@ plot_performance_from_perf_series_df <- function(data = perf_series_df,
                                                  
                                                  periodMin = 21,
                                                  noRecals = FALSE,
-                                                 development_recalc_at_every_break = FALSE){
+                                                 development_recalc_at_every_break = FALSE,
+                                                 pseudo_code = NULL){
+  
+  if(is.null(pseudo_code)) {
+    org_title <- Code_arg
+  } else {
+    org_title <- pseudo_code
+  }
   
   data <- data %>%
     dplyr::filter(Code == Code_arg,
@@ -182,7 +217,7 @@ plot_performance_from_perf_series_df <- function(data = perf_series_df,
                   periodMin = periodMin,#dataLength,
                   plotChart = TRUE,
                   noRecals = noRecals,
-                  title = paste(Code_arg, weeklyOrMonthly_arg, "P"),
+                  title = paste(org_title, weeklyOrMonthly_arg, "P"),
                   development_recalc_at_every_break = development_recalc_at_every_break)
   } else {
     print("Performance NA")
@@ -199,7 +234,14 @@ get_peformance_from_perf_series_df <- function(data = perf_series_df,
                                                
                                                periodMin = 21,
                                                noRecals = FALSE,
-                                               development_recalc_at_every_break = FALSE){
+                                               development_recalc_at_every_break = FALSE,
+                                               pseudo_code = NULL){
+  
+  if(is.null(pseudo_code)) {
+    org_title <- Code_arg
+  } else {
+    org_title <- pseudo_code
+  }
   
   data <- data %>%
     dplyr::filter(Code == Code_arg,
@@ -219,7 +261,7 @@ get_peformance_from_perf_series_df <- function(data = perf_series_df,
                                 periodMin = periodMin, #dataLength,
                                 plotChart = FALSE,
                                 noRecals = noRecals,
-                                title = paste(Code_arg, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
+                                title = paste(org_title, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
                                 development_recalc_at_every_break = development_recalc_at_every_break)
       
       data_out <- data_out %>%
@@ -249,7 +291,14 @@ plot_performance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                                                 
                                                 periodMin = 21,
                                                 noRecals = FALSE,
-                                                development_recalc_at_every_break = FALSE){
+                                                development_recalc_at_every_break = FALSE,
+                                                pseudo_code = NULL){
+  
+  if(is.null(pseudo_code)) {
+    org_title <- Code_arg
+  } else {
+    org_title <- pseudo_code
+  }
   
   data <- data %>%
     dplyr::filter(Code == Code_arg,
@@ -267,7 +316,7 @@ plot_performance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                 periodMin = dataLength,
                 plotChart = TRUE,
                 noRecals = noRecals,
-                title = paste(Code_arg, weeklyOrMonthly_arg, "P"),
+                title = paste(org_title, weeklyOrMonthly_arg, "P"),
                 development_recalc_at_every_break = development_recalc_at_every_break)
 }
 
@@ -280,7 +329,14 @@ get_peformance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                                                       
                                                       periodMin = 21,
                                                       noRecals = FALSE,
-                                                      development_recalc_at_every_break = FALSE){
+                                                      development_recalc_at_every_break = FALSE,
+                                                      pseudo_code = NULL){
+  
+  if(is.null(pseudo_code)) {
+    org_title <- Code_arg
+  } else {
+    org_title <- pseudo_code
+  }
   
   data <- data %>%
     dplyr::filter(Code == Code_arg,
@@ -299,7 +355,7 @@ get_peformance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                               periodMin = dataLength,
                               plotChart = FALSE,
                               noRecals = noRecals,
-                              title = paste(Code_arg, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
+                              title = paste(org_title, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
                               development_recalc_at_every_break = development_recalc_at_every_break)
     
     data_out <- data_out %>%
