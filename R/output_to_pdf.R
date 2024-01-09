@@ -1,6 +1,7 @@
 ###############################################################################
 require(lattice)
 require(magrittr)
+require(autospc)
 
 source(file.path("R", "results_functions.R"))
 perf_series_df <- readRDS(file.path("data", "perf_series_df_clean.rds"))
@@ -38,10 +39,22 @@ for(c in codes$Code) {
   pc <- get_pseudo_code(c, code_mapping = code_mapping)
   print(pc)
   tryCatch({
-    print(plot_volume_from_perf_series_df(Code_arg = c, pseudo_code = pc))
+    print(plot_volume_from_perf_series_df(data = perf_series_df,
+                                          Code_arg = c,
+                                          weeklyOrMonthly_arg = "Monthly",
+                                          measure_arg = "All",
+                                          onlyProvsReporting_arg = TRUE,
+                                          periodMin = 24,
+                                          pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
-    print(plot_volume_from_perf_series_df(Code_arg = c, pseudo_code = pc))
+    print(plot_volume_from_perf_series_df(data = perf_series_df,
+                                          Code_arg = c,
+                                          weeklyOrMonthly_arg = "Monthly",
+                                          measure_arg = "All",
+                                          onlyProvsReporting_arg = TRUE,
+                                          periodMin = 24,
+                                          pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -50,6 +63,36 @@ for(c in codes$Code) {
   })
   
 }
+
+for(c in codes$Code) {
+  pc <- get_pseudo_code(c, code_mapping = code_mapping)
+  print(pc)
+  tryCatch({
+    print(plot_volume_from_perf_series_df(data = perf_series_df,
+                                          Code_arg = c,
+                                          weeklyOrMonthly_arg = "Weekly",
+                                          measure_arg = "All",
+                                          onlyProvsReporting_arg = TRUE,
+                                          periodMin = 21,
+                                          pseudo_code = pc))
+    err <- FALSE
+  }, warning = function(w) {
+    print(plot_volume_from_perf_series_df(data = perf_series_df,
+                                          Code_arg = c,
+                                          weeklyOrMonthly_arg = "Weekly",
+                                          measure_arg = "All",
+                                          onlyProvsReporting_arg = TRUE,
+                                          periodMin = 21,
+                                          pseudo_code = pc))
+    err <- FALSE
+  }, error = function(e) {
+    err <- TRUE
+    plot.new()
+    text(x=.5, y=.5, paste("Too few points for", pc))
+  })
+  
+}
+
 dev.off()
 
 
@@ -76,10 +119,22 @@ for(c in codes_p$Code) {
   pc <- get_pseudo_code(c, code_mapping = code_mapping)
   print(pc)
   tryCatch({
-    print(plot_performance_from_perf_series_df(Code_arg = c, pseudo_code = pc))
+    print(plot_performance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Monthly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 24,
+                                               pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
-    print(plot_performance_from_perf_series_df(Code_arg = c, pseudo_code = pc))
+    print(plot_performance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Monthly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 24,
+                                               pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -88,6 +143,36 @@ for(c in codes_p$Code) {
   })
   
 }
+
+for(c in codes_p$Code) {
+  pc <- get_pseudo_code(c, code_mapping = code_mapping)
+  print(pc)
+  tryCatch({
+    print(plot_performance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Weekly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 21,
+                                               pseudo_code = pc))
+    err <- FALSE
+  }, warning = function(w) {
+    print(plot_performance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Weekly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 21,
+                                               pseudo_code = pc))
+    err <- FALSE
+  }, error = function(e) {
+    err <- TRUE
+    plot.new()
+    text(x=.5, y=.5, paste("Too few points for", pc))
+  })
+  
+}
+
 dev.off()
 
 ###############################################################################
@@ -100,10 +185,51 @@ for(c in codes$Code) {
   pc <- get_pseudo_code(c, code_mapping = code_mapping)
   print(pc)
   tryCatch({
-    print(plot_volume_from_perf_series_df_naive1(Code_arg = c, pseudo_code = pc))
+    print(plot_volume_from_perf_series_df_naive1(data = perf_series_df,
+                                                 Code_arg = c,
+                                                 weeklyOrMonthly_arg = "Monthly",
+                                                 measure_arg = "All",
+                                                 onlyProvsReporting_arg = TRUE,
+                                                 periodMin = 24,
+                                                 pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
-    print(plot_volume_from_perf_series_df_naive1(Code_arg = c, pseudo_code = pc))
+    print(plot_volume_from_perf_series_df_naive1(data = perf_series_df,
+                                                 Code_arg = c,
+                                                 weeklyOrMonthly_arg = "Monthly",
+                                                 measure_arg = "All",
+                                                 onlyProvsReporting_arg = TRUE,
+                                                 periodMin = 24,
+                                                 pseudo_code = pc))
+    err <- FALSE
+  }, error = function(e) {
+    err <- TRUE
+    plot.new()
+    text(x=.5, y=.5, paste("Too few points for", pc))
+  })
+  
+}
+
+for(c in codes$Code) {
+  pc <- get_pseudo_code(c, code_mapping = code_mapping)
+  print(pc)
+  tryCatch({
+    print(plot_volume_from_perf_series_df_naive1(data = perf_series_df,
+                                                 Code_arg = c,
+                                                 weeklyOrMonthly_arg = "Weekly",
+                                                 measure_arg = "All",
+                                                 onlyProvsReporting_arg = TRUE,
+                                                 periodMin = 21,
+                                                 pseudo_code = pc))
+    err <- FALSE
+  }, warning = function(w) {
+    print(plot_volume_from_perf_series_df_naive1(data = perf_series_df,
+                                                 Code_arg = c,
+                                                 weeklyOrMonthly_arg = "Weekly",
+                                                 measure_arg = "All",
+                                                 onlyProvsReporting_arg = TRUE,
+                                                 periodMin = 21,
+                                                 pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -125,10 +251,22 @@ for(c in codes_p$Code) {
   pc <- get_pseudo_code(c, code_mapping = code_mapping)
   print(pc)
   tryCatch({
-    print(plot_performance_from_perf_series_df_naive1(Code_arg = c, pseudo_code = pc))
+    print(plot_performance_from_perf_series_df_naive1(data = perf_series_df,
+                                                      Code_arg = c,
+                                                      weeklyOrMonthly_arg = "Monthly",
+                                                      measure_arg = "All",
+                                                      onlyProvsReporting_arg = TRUE,
+                                                      periodMin = 24,
+                                                      pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
-    print(plot_performance_from_perf_series_df_naive1(Code_arg = c, pseudo_code = pc))
+    print(plot_performance_from_perf_series_df_naive1(data = perf_series_df,
+                                                      Code_arg = c,
+                                                      weeklyOrMonthly_arg = "Monthly",
+                                                      measure_arg = "All",
+                                                      onlyProvsReporting_arg = TRUE,
+                                                      periodMin = 24,
+                                                      pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -137,6 +275,36 @@ for(c in codes_p$Code) {
   })
   
 }
+
+for(c in codes_p$Code) {
+  pc <- get_pseudo_code(c, code_mapping = code_mapping)
+  print(pc)
+  tryCatch({
+    print(plot_performance_from_perf_series_df_naive1(data = perf_series_df,
+                                                      Code_arg = c,
+                                                      weeklyOrMonthly_arg = "Weekly",
+                                                      measure_arg = "All",
+                                                      onlyProvsReporting_arg = TRUE,
+                                                      periodMin = 21,
+                                                      pseudo_code = pc))
+    err <- FALSE
+  }, warning = function(w) {
+    print(plot_performance_from_perf_series_df_naive1(data = perf_series_df,
+                                                      Code_arg = c,
+                                                      weeklyOrMonthly_arg = "Weekly",
+                                                      measure_arg = "All",
+                                                      onlyProvsReporting_arg = TRUE,
+                                                      periodMin = 21,
+                                                      pseudo_code = pc))
+    err <- FALSE
+  }, error = function(e) {
+    err <- TRUE
+    plot.new()
+    text(x=.5, y=.5, paste("Too few points for", pc))
+  })
+  
+}
+
 dev.off()
 
 
@@ -150,10 +318,55 @@ for(c in codes$Code) {
   pc <- get_pseudo_code(c, code_mapping = code_mapping)
   print(pc)
   tryCatch({
-    print(plot_volume_from_perf_series_df(Code_arg = c, noRecals = TRUE, pseudo_code = pc))
+    print(plot_volume_from_perf_series_df(data = perf_series_df,
+                                          Code_arg = c,
+                                          weeklyOrMonthly_arg = "Monthly",
+                                          measure_arg = "All",
+                                          onlyProvsReporting_arg = TRUE,
+                                          periodMin = 24,
+                                          noRecals = TRUE,
+                                          pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
-    print(plot_volume_from_perf_series_df(Code_arg = c, noRecals = TRUE, pseudo_code = pc))
+    print(plot_volume_from_perf_series_df(data = perf_series_df,
+                                          Code_arg = c,
+                                          weeklyOrMonthly_arg = "Monthly",
+                                          measure_arg = "All",
+                                          onlyProvsReporting_arg = TRUE,
+                                          periodMin = 24,
+                                          noRecals = TRUE,
+                                          pseudo_code = pc))
+    err <- FALSE
+  }, error = function(e) {
+    err <- TRUE
+    plot.new()
+    text(x=.5, y=.5, paste("Too few points for", pc))
+  })
+  
+}
+
+for(c in codes$Code) {
+  pc <- get_pseudo_code(c, code_mapping = code_mapping)
+  print(pc)
+  tryCatch({
+    print(plot_volume_from_perf_series_df(data = perf_series_df,
+                                          Code_arg = c,
+                                          weeklyOrMonthly_arg = "Weekly",
+                                          measure_arg = "All",
+                                          onlyProvsReporting_arg = TRUE,
+                                          periodMin = 21,
+                                          noRecals = TRUE,
+                                          pseudo_code = pc))
+    err <- FALSE
+  }, warning = function(w) {
+    print(plot_volume_from_perf_series_df(data = perf_series_df,
+                                          Code_arg = c,
+                                          weeklyOrMonthly_arg = "Weekly",
+                                          measure_arg = "All",
+                                          onlyProvsReporting_arg = TRUE,
+                                          periodMin = 21,
+                                          noRecals = TRUE,
+                                          pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -175,10 +388,24 @@ for(c in codes_p$Code) {
   pc <- get_pseudo_code(c, code_mapping = code_mapping)
   print(pc)
   tryCatch({
-    print(plot_performance_from_perf_series_df(Code_arg = c, noRecals = TRUE, pseudo_code = pc))
+    print(plot_performance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Monthly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 24,
+                                               noRecals = TRUE,
+                                               pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
-    print(plot_performance_from_perf_series_df(Code_arg = c, noRecals = TRUE, pseudo_code = pc))
+    print(plot_performance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Monthly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 24,
+                                               noRecals = TRUE,
+                                               pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -187,6 +414,37 @@ for(c in codes_p$Code) {
   })
   
 }
+for(c in codes_p$Code) {
+  pc <- get_pseudo_code(c, code_mapping = code_mapping)
+  print(pc)
+  tryCatch({
+    print(plot_performance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Weekly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 21,
+                                               noRecals = TRUE,
+                                               pseudo_code = pc))
+    err <- FALSE
+  }, warning = function(w) {
+    print(plot_performance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Weekly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 21,
+                                               noRecals = TRUE,
+                                               pseudo_code = pc))
+    err <- FALSE
+  }, error = function(e) {
+    err <- TRUE
+    plot.new()
+    text(x=.5, y=.5, paste("Too few points for", pc))
+  })
+  
+}
+
 dev.off()
 
 
@@ -200,10 +458,55 @@ for(c in codes$Code) {
   pc <- get_pseudo_code(c, code_mapping = code_mapping)
   print(pc)
   tryCatch({
-    print(plot_volume_from_perf_series_df(Code_arg = c, development_recalc_at_every_break = TRUE, pseudo_code = pc))
+    print(plot_volume_from_perf_series_df(data = perf_series_df,
+                                          Code_arg = c,
+                                          weeklyOrMonthly_arg = "Monthly",
+                                          measure_arg = "All",
+                                          onlyProvsReporting_arg = TRUE,
+                                          periodMin = 24,
+                                          development_recalc_at_every_break = TRUE,
+                                          pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
-    print(plot_volume_from_perf_series_df(Code_arg = c, development_recalc_at_every_break = TRUE, pseudo_code = pc))
+    print(plot_volume_from_perf_series_df(data = perf_series_df,
+                                          Code_arg = c,
+                                          weeklyOrMonthly_arg = "Monthly",
+                                          measure_arg = "All",
+                                          onlyProvsReporting_arg = TRUE,
+                                          periodMin = 24,
+                                          development_recalc_at_every_break = TRUE,
+                                          pseudo_code = pc))
+    err <- FALSE
+  }, error = function(e) {
+    err <- TRUE
+    plot.new()
+    text(x=.5, y=.5, paste("Too few points for", pc))
+  })
+  
+}
+
+for(c in codes$Code) {
+  pc <- get_pseudo_code(c, code_mapping = code_mapping)
+  print(pc)
+  tryCatch({
+    print(plot_volume_from_perf_series_df(data = perf_series_df,
+                                          Code_arg = c,
+                                          weeklyOrMonthly_arg = "Weekly",
+                                          measure_arg = "All",
+                                          onlyProvsReporting_arg = TRUE,
+                                          periodMin = 21,
+                                          development_recalc_at_every_break = TRUE,
+                                          pseudo_code = pc))
+    err <- FALSE
+  }, warning = function(w) {
+    print(plot_volume_from_perf_series_df(data = perf_series_df,
+                                          Code_arg = c,
+                                          weeklyOrMonthly_arg = "Weekly",
+                                          measure_arg = "All",
+                                          onlyProvsReporting_arg = TRUE,
+                                          periodMin = 21,
+                                          development_recalc_at_every_break = TRUE,
+                                          pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -226,10 +529,24 @@ for(c in codes_p$Code) {
   pc <- get_pseudo_code(c, code_mapping = code_mapping)
   print(pc)
   tryCatch({
-    print(plot_performance_from_perf_series_df(Code_arg = c, development_recalc_at_every_break = TRUE, pseudo_code = pc))
+    print(plot_performance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Monthly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 24,
+                                               development_recalc_at_every_break = TRUE,
+                                               pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
-    print(plot_performance_from_perf_series_df(Code_arg = c, development_recalc_at_every_break = TRUE, pseudo_code = pc))
+    print(plot_performance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Monthly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 24,
+                                               development_recalc_at_every_break = TRUE,
+                                               pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -238,4 +555,67 @@ for(c in codes_p$Code) {
   })
   
 }
+
+for(c in codes_p$Code) {
+  pc <- get_pseudo_code(c, code_mapping = code_mapping)
+  print(pc)
+  tryCatch({
+    print(plot_performance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Weekly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 21,
+                                               development_recalc_at_every_break = TRUE,
+                                               pseudo_code = pc))
+    err <- FALSE
+  }, warning = function(w) {
+    print(plot_performance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Weekly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 21,
+                                               development_recalc_at_every_break = TRUE,
+                                               pseudo_code = pc))
+    err <- FALSE
+  }, error = function(e) {
+    err <- TRUE
+    plot.new()
+    text(x=.5, y=.5, paste("Too few points for", pc))
+  })
+  
+}
+
 dev.off()
+
+###############################################################################
+
+remove_pdf_pages_with_no_text <- function(pdf_path) {
+  doc_txt <- pdftools::pdf_text(pdf = pdf_path)
+  
+  pages_with_no_text <- which(doc_txt == "")
+  
+  if(length(pages_with_no_text) == 0) {
+    return("All pages have text, none removed.")
+  }
+  
+  staplr::remove_pages(rmpages = pages_with_no_text,
+                       input_filepath = pdf_path,
+                       output_filepath = pdf_path,
+                       overwrite = TRUE)
+  
+  return(paste(pages_with_no_text, collapse = ", "))
+}
+
+fileNames <- Sys.glob('*.pdf')
+lapply(fileNames,
+       remove_pdf_pages_with_no_text)
+
+###############################################################################
+
+
+
+
+
+
