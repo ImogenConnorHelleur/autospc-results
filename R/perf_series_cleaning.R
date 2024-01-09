@@ -38,15 +38,22 @@ clean_perf_series_df <- function(df,
     group_by(Code, weeklyOrMonthly) %>% 
     summarise(num_rows = n(),
               mid_range = mid_range(v = Performance,
-                                    mid_range_width = mid_range_width)) %>% 
+                                    mid_range_width = mid_range_width),
+              mid_range_v = mid_range(v = Total_Att,
+                                      mid_range_width = mid_range_width)) %>% 
     mutate(mid_range_ok = case_when(
       is.na(mid_range) ~ FALSE,
       mid_range >= mid_range_min ~ TRUE,
       TRUE ~ FALSE),
+      mid_range_ok_v = case_when(
+        is.na(mid_range_v) ~ FALSE,
+        mid_range_v >= mid_range_min ~ TRUE,
+        TRUE ~ FALSE),
       n_ok = if_else(num_rows >= 48,
                      TRUE,
                      FALSE),
-      include = mid_range_ok & n_ok)
+      include = mid_range_ok & n_ok,
+      include_v = mid_range_ok_v & n_ok)
   
   n_problems <- exclusion_results %>% 
     filter(!n_ok) %>% 
@@ -56,11 +63,16 @@ clean_perf_series_df <- function(df,
     filter(!mid_range_ok) %>% 
     nrow()
   
+  mid_range_problems_v <- exclusion_results %>% 
+    filter(!mid_range_ok_v) %>% 
+    nrow()
+  
   df_out <- df %>%
     left_join(exclusion_results %>% 
                 select(Code,
                        weeklyOrMonthly,
                        mid_range_ok,
+                       mid_range_ok_v,
                        n_ok),
               by = c("Code" = "Code",
                      "weeklyOrMonthly" = "weeklyOrMonthly")) %>% 
@@ -73,7 +85,13 @@ clean_perf_series_df <- function(df,
                                NA_real_),
            Greater_4h = if_else(mid_range_ok,
                                 Greater_4h,
-                                NA_real_)) %>% 
+                                NA_real_),
+           Total_Att = if_else(mid_range_ok_v,
+                               Total_Att,
+                               NA_real_),
+           daily_ave_att = if_else(mid_range_ok_v,
+                               daily_ave_att,
+                               NA_real_)) %>% 
     select(-n_ok)
   
   print(paste0(n_problems, " Code-TimeGranularity pairings removed for insufficient data"))
