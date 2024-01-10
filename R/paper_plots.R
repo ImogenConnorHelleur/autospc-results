@@ -788,13 +788,25 @@ if(save_plots) {
   ggsave(file.path("plots", "p_naive2.png"), plot = p_naive2)
   ggsave(file.path("plots", "p_naive3.png"), plot = p_naive3)
   ggsave(file.path("plots", "p_algorithm.png"), plot = p_algorithm)
+  
   ggsave(file.path("plots", "p_fig1.png"), plot = p_fig1,
          width = 10, height = 10, units = "in")
+  ggsave(file.path("plots", "p_fig1.tiff"), plot = p_fig1,
+         width = 10, height = 10, units = "in", dpi = 300)
+  
   ggsave(file.path("plots", "p_fig2.png"), plot = p_fig2,
          width = 10, height = 7, units = "in")
-  ggsave(file.path("plots", "p_steps_fig5.png"), plot = p_steps,
-         width = 12, height = 7, units = "in")
+  ggsave(file.path("plots", "p_fig2.tiff"), plot = p_fig2,
+         width = 10, height = 7, units = "in", dpi = 300)
+  
   ggsave(file.path("plots", "p_approaches_fig3.png"), plot = p_approaches,
          width = 10, height = 7, units = "in")
+  ggsave(file.path("plots", "p_approaches_fig3.tiff"), plot = p_approaches,
+         width = 10, height = 7, units = "in", dpi = 300)
+  
+  ggsave(file.path("plots", "p_steps_fig5.png"), plot = p_steps,
+         width = 12, height = 7, units = "in")
+  ggsave(file.path("plots", "p_steps_fig5.tiff"), plot = p_steps,
+         width = 12, height = 7, units = "in", dpi = 300)
   
 }

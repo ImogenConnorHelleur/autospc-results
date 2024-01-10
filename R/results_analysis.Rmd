@@ -329,10 +329,17 @@ combined_results_wide
 ```
 ```{r}
 if(params$save_results) {
-  ggsave(file.path("..", "plots", "combined_results_wide.png"),
+  ggsave(file.path("..", "plots", "combined_results_wide_fig6.png"),
          plot = combined_results_wide,
          width = 14,
          height = 6,
          units = "in")
+  
+  ggsave(file.path("..", "plots", "combined_results_wide_fig6.tiff"),
+         plot = combined_results_wide,
+         width = 14,
+         height = 6,
+         units = "in",
+         dpi = 300)
 }
 ```
