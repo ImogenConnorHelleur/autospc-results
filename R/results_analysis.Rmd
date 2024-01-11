@@ -41,7 +41,7 @@ full_results_all <- readRDS(file.path("..",
 ```{r}
 full_results_all <- full_results_all %>%
   mutate(approach = case_when(
-    approach == "algorithm" ~ "Algorithm",
+    approach == "algorithm" ~ "Stable Shift Algorithm",
     approach == "naive3" ~ "On Shift Rule Break",
     TRUE ~ approach
   ))

@@ -662,7 +662,7 @@ plot_steps_facet <- function(all_steps = TRUE){
   
   if(all_steps) {
     data <- bind_rows(data, data5, data6)
-    plot_title <- "Algorithm steps"
+    plot_title <- "Stable Shift Algorithm steps"
   }
   
   data$step <- factor(data$step, levels = panel_captions)
@@ -710,7 +710,7 @@ plot_steps_facet <- function(all_steps = TRUE){
 ################################################################################
 plot_approaches_facet <- function(){
   
-  panel_captions <- c("(a) Algorithm",
+  panel_captions <- c("(a) Stable Shift Algorithm",
                       "(b) Whole period as calculation period",
                       "(c) Baseline calculation period extended to end",
                       "(d) Recalculation at every shift rule (rule 2) break")
