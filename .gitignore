@@ -54,3 +54,5 @@ rsconnect/
 # Plots
 plots/
 
+# sitreps data
+data-raw/sitreps
