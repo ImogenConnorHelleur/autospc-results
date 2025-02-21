@@ -1,4 +1,4 @@
-if(TRUE) { # Use timestamp and SHA in filenames?
+if(FALSE) { # Use timestamp and SHA in filenames?
   # TRUE - use if not committing outputs to git
   timestamp <- gsub(":","-",paste(strsplit(x = toString(Sys.time()),split = " ")[[1]], collapse = "-"))
   commit <- stringr::str_sub(system("git rev-parse HEAD", intern=TRUE), 1, 8)
@@ -66,7 +66,7 @@ if(TRUE) {
                     perf_series_df_clean_filename))
 }
 
-if(TRUE) { # Use only first 10 codes
+if(FALSE) { # Use only first 10 codes
   perf_series_df <- perf_series_df %>%
     filter(Code %in% (dplyr::distinct(perf_series_df, Code) %>%
                         head(10) %>%
