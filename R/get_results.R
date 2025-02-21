@@ -1,4 +1,4 @@
-if(FALSE) { # Use timestamp and SHA in filenames?
+if(TRUE) { # Use timestamp and SHA in filenames?
   # TRUE - use if not committing outputs to git
   timestamp <- gsub(":","-",paste(strsplit(x = toString(Sys.time()),split = " ")[[1]], collapse = "-"))
   commit <- stringr::str_sub(system("git rev-parse HEAD", intern=TRUE), 1, 8)
@@ -64,6 +64,13 @@ if(TRUE) {
   saveRDS(perf_series_df,
           file.path("data",
                     perf_series_df_clean_filename))
+}
+
+if(TRUE) { # Use only first 10 codes
+  perf_series_df <- perf_series_df %>%
+    filter(Code %in% (dplyr::distinct(perf_series_df, Code) %>%
+                        head(10) %>%
+                        pull(Code)))
 }
 
 ##Monthly C algorithm###############################################################################
@@ -454,7 +461,7 @@ for(c in codes$Code){
                                            onlyProvsReporting_arg = TRUE,
                                            periodMin = 24,
                                            noRecals = FALSE,
-                                           development_recalc_at_every_break = TRUE)
+                                           recalc_every_shift = TRUE)
   
   limits_table_output_Monthly_C_naive3 <- bind_rows(limits_table_output_Monthly_C_naive3, df_out)
   
@@ -484,7 +491,7 @@ for(c in codes$Code){
                                            onlyProvsReporting_arg = TRUE,
                                            periodMin = 21,
                                            noRecals = FALSE, 
-                                           development_recalc_at_every_break = TRUE)
+                                           recalc_every_shift = TRUE)
   
   limits_table_output_Weekly_C_naive3 <- bind_rows(limits_table_output_Weekly_C_naive3, df_out)
   
@@ -514,7 +521,7 @@ for(c in codes$Code){
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 24,
                                                noRecals = FALSE,
-                                               development_recalc_at_every_break = TRUE)
+                                               recalc_every_shift = TRUE)
   
   limits_table_output_Monthly_P_naive3 <- bind_rows(limits_table_output_Monthly_P_naive3, df_out)
   
@@ -544,7 +551,7 @@ for(c in codes$Code){
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 21,
                                                noRecals = FALSE,
-                                               development_recalc_at_every_break = TRUE)
+                                               recalc_every_shift = TRUE)
   
   limits_table_output_Weekly_P_naive3 <- bind_rows(limits_table_output_Weekly_P_naive3, df_out)
   

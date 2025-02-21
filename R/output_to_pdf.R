@@ -464,7 +464,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 24,
-                                          development_recalc_at_every_break = TRUE,
+                                          recalc_every_shift = TRUE,
                                           pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -474,7 +474,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 24,
-                                          development_recalc_at_every_break = TRUE,
+                                          recalc_every_shift = TRUE,
                                           pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -495,7 +495,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 21,
-                                          development_recalc_at_every_break = TRUE,
+                                          recalc_every_shift = TRUE,
                                           pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -505,7 +505,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 21,
-                                          development_recalc_at_every_break = TRUE,
+                                          recalc_every_shift = TRUE,
                                           pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -535,7 +535,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 24,
-                                               development_recalc_at_every_break = TRUE,
+                                               recalc_every_shift = TRUE,
                                                pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -545,7 +545,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 24,
-                                               development_recalc_at_every_break = TRUE,
+                                               recalc_every_shift = TRUE,
                                                pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -566,7 +566,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 21,
-                                               development_recalc_at_every_break = TRUE,
+                                               recalc_every_shift = TRUE,
                                                pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -576,7 +576,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 21,
-                                               development_recalc_at_every_break = TRUE,
+                                               recalc_every_shift = TRUE,
                                                pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {

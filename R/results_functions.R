@@ -8,7 +8,7 @@ plot_volume_from_perf_series_df <- function(data = perf_series_df,
                                             
                                             periodMin = 21,
                                             noRecals = FALSE,
-                                            development_recalc_at_every_break = FALSE,
+                                            recalc_every_shift = FALSE,
                                             pseudo_code = NULL){
   
   if(is.null(pseudo_code)) {
@@ -34,7 +34,7 @@ plot_volume_from_perf_series_df <- function(data = perf_series_df,
                 plotChart = TRUE,
                 noRecals = noRecals,
                 title = paste(org_title, weeklyOrMonthly_arg),
-                development_recalc_at_every_break = development_recalc_at_every_break)
+                recalc_every_shift = recalc_every_shift)
   } else {
     print("Volume NA")
     data_out <- data.frame()
@@ -50,7 +50,7 @@ get_volume_from_perf_series_df <- function(data = perf_series_df,
                                             
                                             periodMin = 21,
                                             noRecals = FALSE,
-                                           development_recalc_at_every_break = FALSE,
+                                           recalc_every_shift = FALSE,
                                            pseudo_code = NULL){
   
   if(is.null(pseudo_code)) {
@@ -77,7 +77,7 @@ get_volume_from_perf_series_df <- function(data = perf_series_df,
                               plotChart = FALSE,
                               noRecals = noRecals,
                               title = paste(org_title, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
-                              development_recalc_at_every_break = development_recalc_at_every_break)
+                              recalc_every_shift = recalc_every_shift)
     
     data_out <- data_out %>%
       mutate(Code = Code_arg,
@@ -107,7 +107,7 @@ plot_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                                             
                                             periodMin = 21,
                                             noRecals = FALSE,
-                                            development_recalc_at_every_break = FALSE,
+                                            recalc_every_shift = FALSE,
                                             pseudo_code = NULL){
   
   if(is.null(pseudo_code)) {
@@ -133,7 +133,7 @@ plot_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                 plotChart = TRUE,
                 noRecals = noRecals,
                 title = paste(org_title, weeklyOrMonthly_arg),
-                development_recalc_at_every_break = development_recalc_at_every_break)
+                recalc_every_shift = recalc_every_shift)
   } else {
     print("Volume NA")
     data_out <- data.frame()
@@ -149,7 +149,7 @@ get_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                                                   
                                                   periodMin = 21,
                                                   noRecals = FALSE,
-                                                  development_recalc_at_every_break = FALSE,
+                                                  recalc_every_shift = FALSE,
                                                   pseudo_code = NULL){
   
   if(is.null(pseudo_code)) {
@@ -176,7 +176,7 @@ get_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                               plotChart = FALSE,
                               noRecals = TRUE,
                               title = paste(org_title, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
-                              development_recalc_at_every_break = development_recalc_at_every_break)
+                              recalc_every_shift = recalc_every_shift)
     
     data_out <- data_out %>%
       mutate(Code = Code_arg,
@@ -209,7 +209,7 @@ plot_performance_from_perf_series_df <- function(data = perf_series_df,
                                                  
                                                  periodMin = 21,
                                                  noRecals = FALSE,
-                                                 development_recalc_at_every_break = FALSE,
+                                                 recalc_every_shift = FALSE,
                                                  pseudo_code = NULL){
   
   if(is.null(pseudo_code)) {
@@ -236,7 +236,7 @@ plot_performance_from_perf_series_df <- function(data = perf_series_df,
                   plotChart = TRUE,
                   noRecals = noRecals,
                   title = paste(org_title, weeklyOrMonthly_arg, "P"),
-                  development_recalc_at_every_break = development_recalc_at_every_break)
+                  recalc_every_shift = recalc_every_shift)
   } else {
     print("Performance NA")
     data_out <- data.frame()
@@ -252,7 +252,7 @@ get_peformance_from_perf_series_df <- function(data = perf_series_df,
                                                
                                                periodMin = 21,
                                                noRecals = FALSE,
-                                               development_recalc_at_every_break = FALSE,
+                                               recalc_every_shift = FALSE,
                                                pseudo_code = NULL){
   
   if(is.null(pseudo_code)) {
@@ -280,7 +280,7 @@ get_peformance_from_perf_series_df <- function(data = perf_series_df,
                                 plotChart = FALSE,
                                 noRecals = noRecals,
                                 title = paste(org_title, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
-                                development_recalc_at_every_break = development_recalc_at_every_break)
+                                recalc_every_shift = recalc_every_shift)
       
       data_out <- data_out %>%
         mutate(Code = Code_arg,
@@ -309,7 +309,7 @@ plot_performance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                                                 
                                                 periodMin = 21,
                                                 noRecals = FALSE,
-                                                development_recalc_at_every_break = FALSE,
+                                                recalc_every_shift = FALSE,
                                                 pseudo_code = NULL){
   
   if(is.null(pseudo_code)) {
@@ -335,7 +335,7 @@ plot_performance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                 plotChart = TRUE,
                 noRecals = noRecals,
                 title = paste(org_title, weeklyOrMonthly_arg, "P"),
-                development_recalc_at_every_break = development_recalc_at_every_break)
+                recalc_every_shift = recalc_every_shift)
 }
 
 ################################################################################
@@ -347,7 +347,7 @@ get_peformance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                                                       
                                                       periodMin = 21,
                                                       noRecals = FALSE,
-                                                      development_recalc_at_every_break = FALSE,
+                                                      recalc_every_shift = FALSE,
                                                       pseudo_code = NULL){
   
   if(is.null(pseudo_code)) {
@@ -374,7 +374,7 @@ get_peformance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                               plotChart = FALSE,
                               noRecals = noRecals,
                               title = paste(org_title, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
-                              development_recalc_at_every_break = development_recalc_at_every_break)
+                              recalc_every_shift = recalc_every_shift)
     
     data_out <- data_out %>%
       mutate(Code = Code_arg,
