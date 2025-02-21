@@ -25,7 +25,7 @@ plot_volume_from_perf_series_df <- function(data = perf_series_df,
                   onlyProvsReporting == onlyProvsReporting_arg)
   
   #dataLength <- nrow(data)
-
+  if(!(sum(is.na(data$daily_ave_att)) == nrow(data))) {
   plot_auto_SPC(data,
                 x = Month_Start,
                 y = daily_ave_att,
@@ -35,6 +35,10 @@ plot_volume_from_perf_series_df <- function(data = perf_series_df,
                 noRecals = noRecals,
                 title = paste(org_title, weeklyOrMonthly_arg),
                 development_recalc_at_every_break = development_recalc_at_every_break)
+  } else {
+    print("Volume NA")
+    data_out <- data.frame()
+  }
 }
 
 ################################################################################
@@ -64,6 +68,7 @@ get_volume_from_perf_series_df <- function(data = perf_series_df,
   #dataLength <- nrow(data)
   
   if(nrow(data) >= periodMin * 2){
+    if(!(sum(is.na(data$daily_ave_att)) == nrow(data))) {
     data_out <- plot_auto_SPC(data,
                               x = Month_Start,
                               y = daily_ave_att,
@@ -80,6 +85,10 @@ get_volume_from_perf_series_df <- function(data = perf_series_df,
              measure = measure_arg,
              onlyProvsReporting = onlyProvsReporting_arg
       )
+    } else {
+      print("Volume NA")
+      data_out <- data.frame()
+    }
   }else{
     
     print("not enough points")
@@ -115,7 +124,7 @@ plot_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                   onlyProvsReporting == onlyProvsReporting_arg)
   
   dataLength <- nrow(data)
-  
+  if(!(sum(is.na(data$daily_ave_att)) == nrow(data))) {
   plot_auto_SPC(data,
                 x = Month_Start,
                 y = daily_ave_att,
@@ -125,6 +134,10 @@ plot_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                 noRecals = noRecals,
                 title = paste(org_title, weeklyOrMonthly_arg),
                 development_recalc_at_every_break = development_recalc_at_every_break)
+  } else {
+    print("Volume NA")
+    data_out <- data.frame()
+  }
 }
 
 ################################################################################
@@ -154,6 +167,7 @@ get_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
   dataLength <- nrow(data)
   
   if(nrow(data) >= periodMin * 2){
+    if(!(sum(is.na(data$daily_ave_att)) == nrow(data))) {
     data_out <- plot_auto_SPC(data,
                               x = Month_Start,
                               y = daily_ave_att,
@@ -170,6 +184,10 @@ get_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
              measure = measure_arg,
              onlyProvsReporting = onlyProvsReporting_arg
       )
+    } else {
+      print("Volume NA")
+      data_out <- data.frame()
+    }
   }else{
     
     print("not enough points")

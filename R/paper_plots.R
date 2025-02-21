@@ -662,7 +662,7 @@ plot_steps_facet <- function(all_steps = TRUE){
   
   if(all_steps) {
     data <- bind_rows(data, data5, data6)
-    plot_title <- "Algorithm steps"
+    plot_title <- "Stable Shift Algorithm steps"
   }
   
   data$step <- factor(data$step, levels = panel_captions)
@@ -710,7 +710,7 @@ plot_steps_facet <- function(all_steps = TRUE){
 ################################################################################
 plot_approaches_facet <- function(){
   
-  panel_captions <- c("(a) Algorithm",
+  panel_captions <- c("(a) Stable Shift Algorithm",
                       "(b) Whole period as calculation period",
                       "(c) Baseline calculation period extended to end",
                       "(d) Recalculation at every shift rule (rule 2) break")
@@ -788,13 +788,25 @@ if(save_plots) {
   ggsave(file.path("plots", "p_naive2.png"), plot = p_naive2)
   ggsave(file.path("plots", "p_naive3.png"), plot = p_naive3)
   ggsave(file.path("plots", "p_algorithm.png"), plot = p_algorithm)
+  
   ggsave(file.path("plots", "p_fig1.png"), plot = p_fig1,
          width = 10, height = 10, units = "in")
+  ggsave(file.path("plots", "p_fig1.tiff"), plot = p_fig1,
+         width = 10, height = 10, units = "in", dpi = 300)
+  
   ggsave(file.path("plots", "p_fig2.png"), plot = p_fig2,
          width = 10, height = 7, units = "in")
-  ggsave(file.path("plots", "p_steps_fig5.png"), plot = p_steps,
-         width = 12, height = 7, units = "in")
+  ggsave(file.path("plots", "p_fig2.tiff"), plot = p_fig2,
+         width = 10, height = 7, units = "in", dpi = 300)
+  
   ggsave(file.path("plots", "p_approaches_fig3.png"), plot = p_approaches,
          width = 10, height = 7, units = "in")
+  ggsave(file.path("plots", "p_approaches_fig3.tiff"), plot = p_approaches,
+         width = 10, height = 7, units = "in", dpi = 300)
+  
+  ggsave(file.path("plots", "p_steps_fig5.png"), plot = p_steps,
+         width = 12, height = 7, units = "in")
+  ggsave(file.path("plots", "p_steps_fig5.tiff"), plot = p_steps,
+         width = 12, height = 7, units = "in", dpi = 300)
   
 }

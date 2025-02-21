@@ -20,6 +20,14 @@ print(params$excluded_approaches)
 ```
 
 
+Note that at present the repo is set up so that in this analysis (i.e. this
+document) the "correct" time series are included for algorithm and naive3 (aka
+re-establish at every shift) but NOT necessarily for naive1&2 - in particular 
+it looks as though the monthly naive1 P charts include some that should not be
+included - probably because the code that excludes series based on either number
+of data points or midrange width needs updating for naive1. Since this does not
+affect the paper I have left this for now (TW 9th Jan 2024).
+
 ```{r load-data}
 full_results_all <- readRDS(file.path("..",
                                       "data",
@@ -33,7 +41,7 @@ full_results_all <- readRDS(file.path("..",
 ```{r}
 full_results_all <- full_results_all %>%
   mutate(approach = case_when(
-    approach == "algorithm" ~ "Algorithm",
+    approach == "algorithm" ~ "Stable Shift Algorithm",
     approach == "naive3" ~ "On Shift Rule Break",
     TRUE ~ approach
   ))
@@ -43,18 +51,21 @@ full_results_all <- full_results_all %>%
 ```{r}
 full_results_all %>% 
   group_by(weeklyOrMonthly,
-           chart_type) %>% 
-  summarise(num_series = n()/4) %>% 
+           chart_type,
+           approach) %>% 
+  summarise(num_series = n()) %>% 
   knitr::kable()
 
 full_results_all %>% 
-  group_by(chart_type) %>% 
-  summarise(num_series = n()/4) %>% 
+  group_by(chart_type,
+           approach) %>% 
+  summarise(num_series = n()) %>% 
   knitr::kable()
 
 full_results_all %>% 
-  group_by(weeklyOrMonthly) %>% 
-  summarise(num_series = n()/4) %>% 
+  group_by(weeklyOrMonthly,
+           approach) %>% 
+  summarise(num_series = n()) %>% 
   knitr::kable()
 ```
 
@@ -318,10 +329,17 @@ combined_results_wide
 ```
 ```{r}
 if(params$save_results) {
-  ggsave(file.path("..", "plots", "combined_results_wide.png"),
+  ggsave(file.path("..", "plots", "combined_results_wide_fig6.png"),
          plot = combined_results_wide,
          width = 14,
          height = 6,
          units = "in")
+  
+  ggsave(file.path("..", "plots", "combined_results_wide_fig6.tiff"),
+         plot = combined_results_wide,
+         width = 14,
+         height = 6,
+         units = "in",
+         dpi = 300)
 }
 ```
