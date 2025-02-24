@@ -196,7 +196,7 @@
       "RemoteRepo": "autospc",
       "RemoteUsername": "HorridTom",
       "RemoteRef": "rule2-recalc-103",
-      "RemoteSha": "d94a5484cac2d5c3ccfac0b7bdac734976134dcd",
+      "RemoteSha": "fb7397deb32d6b11ab23e977f96119044d619c06",
       "Requirements": [
         "R",
         "dplyr",
@@ -211,7 +211,7 @@
         "rlang",
         "scales"
       ],
-      "Hash": "4b20ad88d80b25b7061ac03f747a5920"
+      "Hash": "624d14d132bd0599bd8243c445a52092"
     },
     "backports": {
       "Package": "backports",
