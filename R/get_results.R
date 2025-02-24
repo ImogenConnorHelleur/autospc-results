@@ -1,3 +1,18 @@
+################################################################################
+# This script applies various approaches to (re)calculation of control limits  #
+# to NHS England A&E data. This is achieved through the following steps:       #
+# 1. Derive and clean time series data from A&E data files produced by the     #
+#   nhsAEscraper package. This optional step can be skipped (load the result)  #                                                 #
+# 2. Apply the following four approaches to each resulting weekly/monthly      #
+#   timeseries:                                                                #
+#     a) The stable shift algorithm - with noRegrets and overhangingReversions #
+#     b) "Naive1" - limits derived from the whole timeseries                   #
+#     c) "Naive2" - limits derived from baseline and extended                  #
+#     d) "Naive3" - limits recalculated at every shift rule break, subject to  #
+#       the minimum number of points required to form limits                   #
+# 3. The results are then combined and saved, in raw and summarised form.      #
+################################################################################
+
 if(FALSE) { # Use timestamp and SHA in filenames?
   # TRUE - use if not committing outputs to git
   timestamp <- gsub(":","-",paste(strsplit(x = toString(Sys.time()),split = " ")[[1]], collapse = "-"))
