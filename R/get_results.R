@@ -10,10 +10,12 @@
 #     c) "Naive2" - limits derived from baseline and extended                  #
 #     d) "Naive3" - limits recalculated at every shift rule break, subject to  #
 #       the minimum number of points required to form limits                   #
+#     e) "Naive3b" - limits recalculated at every shift rule break, with no    #
+#       minimum number of points to form limits
 # 3. The results are then combined and saved, in raw and summarised form.      #
 ################################################################################
 
-if(FALSE) { # Use timestamp and SHA in filenames?
+if(TRUE) { # Use timestamp and SHA in filenames?
   # TRUE - use if not committing outputs to git
   timestamp <- gsub(":","-",paste(strsplit(x = toString(Sys.time()),split = " ")[[1]], collapse = "-"))
   commit <- stringr::str_sub(system("git rev-parse HEAD", intern=TRUE), 1, 8)
@@ -81,7 +83,7 @@ if(TRUE) {
                     perf_series_df_clean_filename))
 }
 
-if(FALSE) { # Use only first 10 codes
+if(TRUE) { # Use only first 10 codes
   perf_series_df <- perf_series_df %>%
     filter(Code %in% (dplyr::distinct(perf_series_df, Code) %>%
                         head(10) %>%
@@ -579,6 +581,134 @@ saveRDS(limits_table_output_Weekly_P_naive3,
 
 
 
+################################################################################
+##Monthly C naive3b###############################################################################
+
+#initialise blank results table
+limits_table_output_Monthly_C_naive3b <- data.frame()
+codes <- dplyr::distinct(perf_series_df, Code)
+#codes_short <- head(codes,14)
+
+for(c in codes$Code){
+  
+  print(c)
+  
+  df_out <- get_volume_from_perf_series_df(data = perf_series_df,
+                                           Code_arg = c,
+                                           weeklyOrMonthly_arg = "Monthly",
+                                           measure_arg = "All",
+                                           onlyProvsReporting_arg = TRUE,
+                                           periodMin = 24,
+                                           noRecals = FALSE,
+                                           recalc_every_shift = TRUE,
+                                           noPeriodMin = TRUE)
+  
+  limits_table_output_Monthly_C_naive3b <- bind_rows(limits_table_output_Monthly_C_naive3b, df_out)
+  
+}
+
+saveRDS(limits_table_output_Monthly_C_naive3b,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Monthly_C_naive3b",
+                         filename_suffix,".rds")))
+
+##Weekly C naive3b###############################################################################
+
+#initialise blank results table
+limits_table_output_Weekly_C_naive3b <- data.frame()
+codes <- dplyr::distinct(perf_series_df, Code)
+#codes_short <- head(codes,14)
+
+for(c in codes$Code){
+  
+  print(c)
+  
+  df_out <- get_volume_from_perf_series_df(data = perf_series_df,
+                                           Code_arg = c,
+                                           weeklyOrMonthly_arg = "Weekly",
+                                           measure_arg = "All",
+                                           onlyProvsReporting_arg = TRUE,
+                                           periodMin = 21,
+                                           noRecals = FALSE, 
+                                           recalc_every_shift = TRUE,
+                                           noPeriodMin = TRUE)
+  
+  limits_table_output_Weekly_C_naive3b <- bind_rows(limits_table_output_Weekly_C_naive3b, df_out)
+  
+}
+
+saveRDS(limits_table_output_Weekly_C_naive3b,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Weekly_C_naive3b",
+                         filename_suffix,".rds")))
+
+##Monthly P naive3b###############################################################################
+
+#initialise blank results table
+limits_table_output_Monthly_P_naive3b <- data.frame()
+codes <- dplyr::distinct(perf_series_df, Code)
+#codes_short <- head(codes,14)
+
+for(c in codes$Code){
+  
+  print(c)
+  
+  df_out <- get_peformance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Monthly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 24,
+                                               noRecals = FALSE,
+                                               recalc_every_shift = TRUE,
+                                               noPeriodMin = TRUE)
+  
+  limits_table_output_Monthly_P_naive3b <- bind_rows(limits_table_output_Monthly_P_naive3b, df_out)
+  
+  
+}
+saveRDS(limits_table_output_Monthly_P_naive3b,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Monthly_P_naive3b",
+                         filename_suffix,".rds")))
+
+##Weekly P naive3b###############################################################################
+
+#initialise blank results table
+limits_table_output_Weekly_P_naive3b <- data.frame()
+codes <- dplyr::distinct(perf_series_df, Code)
+#codes_short <- head(codes,14)
+
+for(c in codes$Code){
+  
+  print(c)
+  
+  df_out <- get_peformance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Weekly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 21,
+                                               noRecals = FALSE,
+                                               recalc_every_shift = TRUE,
+                                               noPeriodMin = TRUE)
+  
+  limits_table_output_Weekly_P_naive3b <- bind_rows(limits_table_output_Weekly_P_naive3b, df_out)
+  
+}
+saveRDS(limits_table_output_Weekly_P_naive3b,
+        file.path("data",
+                  "outputs",
+                  paste0("limits_table_output_Weekly_P_naive3b",
+                         filename_suffix,".rds")))
+
+
+
+
+################################################################################
 
 ################################################################################
 ################################################################################
@@ -594,6 +724,9 @@ limits_table_output_C_naive2 <- bind_rows(limits_table_output_Monthly_C_naive2,
 limits_table_output_C_naive3 <- bind_rows(limits_table_output_Monthly_C_naive3,
                                           limits_table_output_Weekly_C_naive3)
 
+limits_table_output_C_naive3b <- bind_rows(limits_table_output_Monthly_C_naive3b,
+                                          limits_table_output_Weekly_C_naive3b)
+
 limits_table_output_P_algorithm <- bind_rows(limits_table_output_Monthly_P_algorithm,
                                              limits_table_output_Weekly_P_algorithm)
 
@@ -606,37 +739,46 @@ limits_table_output_P_naive2 <- bind_rows(limits_table_output_Monthly_P_naive2,
 limits_table_output_P_naive3 <- bind_rows(limits_table_output_Monthly_P_naive3,
                                           limits_table_output_Weekly_P_naive3)
 
+limits_table_output_P_naive3b <- bind_rows(limits_table_output_Monthly_P_naive3b,
+                                          limits_table_output_Weekly_P_naive3b)
+
 ################################################################################
 results_summary_list_C_algoritm <- get_results_summary(limits_table_output_C_algorithm)
 results_summary_list_C_naive1 <- get_results_summary(limits_table_output_C_naive1)
 results_summary_list_C_naive2 <- get_results_summary(limits_table_output_C_naive2)
 results_summary_list_C_naive3 <- get_results_summary(limits_table_output_C_naive3)
+results_summary_list_C_naive3b <- get_results_summary(limits_table_output_C_naive3b)
 
 results_summary_list_P_algoritm <- get_results_summary(limits_table_output_P_algorithm)
 results_summary_list_P_naive1 <- get_results_summary(limits_table_output_P_naive1)
 results_summary_list_P_naive2 <- get_results_summary(limits_table_output_P_naive2)
 results_summary_list_P_naive3 <- get_results_summary(limits_table_output_P_naive3)
+results_summary_list_P_naive3b <- get_results_summary(limits_table_output_P_naive3b)
 
 ################################################################################
 results_summary_list_C_algoritm_w <- get_results_summary(limits_table_output_Weekly_C_algorithm)
 results_summary_list_C_naive1_w <- get_results_summary(limits_table_output_Weekly_C_naive1)
 results_summary_list_C_naive2_w <- get_results_summary(limits_table_output_Weekly_C_naive2)
 results_summary_list_C_naive3_w <- get_results_summary(limits_table_output_Weekly_C_naive3)
+results_summary_list_C_naive3b_w <- get_results_summary(limits_table_output_Weekly_C_naive3b)
 
 results_summary_list_P_algoritm_w <- get_results_summary(limits_table_output_Weekly_P_algorithm)
 results_summary_list_P_naive1_w <- get_results_summary(limits_table_output_Weekly_P_naive1)
 results_summary_list_P_naive2_w <- get_results_summary(limits_table_output_Weekly_P_naive2)
 results_summary_list_P_naive3_w <- get_results_summary(limits_table_output_Weekly_P_naive3)
+results_summary_list_P_naive3b_w <- get_results_summary(limits_table_output_Weekly_P_naive3b)
 
 results_summary_list_C_algoritm_m <- get_results_summary(limits_table_output_Monthly_C_algorithm)
 results_summary_list_C_naive1_m <- get_results_summary(limits_table_output_Monthly_C_naive1)
 results_summary_list_C_naive2_m <- get_results_summary(limits_table_output_Monthly_C_naive2)
 results_summary_list_C_naive3_m <- get_results_summary(limits_table_output_Monthly_C_naive3)
+results_summary_list_C_naive3b_m <- get_results_summary(limits_table_output_Monthly_C_naive3b)
 
 results_summary_list_P_algoritm_m <- get_results_summary(limits_table_output_Monthly_P_algorithm)
 results_summary_list_P_naive1_m <- get_results_summary(limits_table_output_Monthly_P_naive1)
 results_summary_list_P_naive2_m <- get_results_summary(limits_table_output_Monthly_P_naive2)
 results_summary_list_P_naive3_m <- get_results_summary(limits_table_output_Monthly_P_naive3)
+results_summary_list_P_naive3b_m <- get_results_summary(limits_table_output_Monthly_P_naive3b)
 ################################################################################
 
 full_results_C_algorithm <- results_summary_list_C_algoritm[[1]] %>%
@@ -647,6 +789,8 @@ full_results_C_naive2 <- results_summary_list_C_naive2[[1]] %>%
   mutate(results_set = "C naive2")
 full_results_C_naive3 <- results_summary_list_C_naive3[[1]] %>%
   mutate(results_set = "C naive3")
+full_results_C_naive3b <- results_summary_list_C_naive3b[[1]] %>%
+  mutate(results_set = "C naive3b")
 
 full_results_P_algorithm <- results_summary_list_P_algoritm[[1]] %>%
   mutate(results_set = "P algorithm")
@@ -656,6 +800,8 @@ full_results_P_naive2 <- results_summary_list_P_naive2[[1]] %>%
   mutate(results_set = "P naive2")
 full_results_P_naive3 <- results_summary_list_P_naive3[[1]] %>%
   mutate(results_set = "P naive3")
+full_results_P_naive3b <- results_summary_list_P_naive3b[[1]] %>%
+  mutate(results_set = "P naive3b")
 
 summary_results_C_algorithm <- results_summary_list_C_algoritm[[2]] %>%
   mutate(results_set = "C algorithm")
@@ -665,6 +811,8 @@ summary_results_C_naive2 <- results_summary_list_C_naive2[[2]] %>%
   mutate(results_set = "C naive2")
 summary_results_C_naive3 <- results_summary_list_C_naive3[[2]] %>%
   mutate(results_set = "C naive3")
+summary_results_C_naive3b <- results_summary_list_C_naive3b[[2]] %>%
+  mutate(results_set = "C naive3b")
 
 summary_results_P_algorithm <- results_summary_list_P_algoritm[[2]] %>%
   mutate(results_set = "P algorithm")
@@ -674,6 +822,8 @@ summary_results_P_naive2 <- results_summary_list_P_naive2[[2]] %>%
   mutate(results_set = "P naive2")
 summary_results_P_naive3 <- results_summary_list_P_naive3[[2]] %>%
   mutate(results_set = "P naive3")
+summary_results_P_naive3b <- results_summary_list_P_naive3b[[2]] %>%
+  mutate(results_set = "P naive3b")
 
 ################################################################################
 summary_results_C_algorithm_w <- results_summary_list_C_algoritm_w[[2]] %>%
@@ -684,6 +834,8 @@ summary_results_C_naive2_w <- results_summary_list_C_naive2_w[[2]] %>%
   mutate(results_set = "C naive2 weekly")
 summary_results_C_naive3_w <- results_summary_list_C_naive3_w[[2]] %>%
   mutate(results_set = "C naive3 weekly")
+summary_results_C_naive3b_w <- results_summary_list_C_naive3b_w[[2]] %>%
+  mutate(results_set = "C naive3b weekly")
 
 summary_results_P_algorithm_w <- results_summary_list_P_algoritm_w[[2]] %>%
   mutate(results_set = "P algorithm weekly")
@@ -693,6 +845,8 @@ summary_results_P_naive2_w <- results_summary_list_P_naive2_w[[2]] %>%
   mutate(results_set = "P naive2 weekly")
 summary_results_P_naive3_w <- results_summary_list_P_naive3_w[[2]] %>%
   mutate(results_set = "P naive3 weekly")
+summary_results_P_naive3b_w <- results_summary_list_P_naive3b_w[[2]] %>%
+  mutate(results_set = "P naive3b weekly")
 
 summary_results_C_algorithm_m <- results_summary_list_C_algoritm_m[[2]] %>%
   mutate(results_set = "C algorithm monthly")
@@ -702,6 +856,8 @@ summary_results_C_naive2_m <- results_summary_list_C_naive2_m[[2]] %>%
   mutate(results_set = "C naive2 monthly")
 summary_results_C_naive3_m <- results_summary_list_C_naive3_m[[2]] %>%
   mutate(results_set = "C naive3 monthly")
+summary_results_C_naive3b_m <- results_summary_list_C_naive3b_m[[2]] %>%
+  mutate(results_set = "C naive3b monthly")
 
 summary_results_P_algorithm_m <- results_summary_list_P_algoritm_m[[2]] %>%
   mutate(results_set = "P algorithm monthly")
@@ -711,44 +867,54 @@ summary_results_P_naive2_m <- results_summary_list_P_naive2_m[[2]] %>%
   mutate(results_set = "P naive2 monthly")
 summary_results_P_naive3_m <- results_summary_list_P_naive3_m[[2]] %>%
   mutate(results_set = "P naive3 monthly")
+summary_results_P_naive3b_m <- results_summary_list_P_naive3b_m[[2]] %>%
+  mutate(results_set = "P naive3b monthly")
 ################################################################################
 
 summary_results_all <- bind_rows(summary_results_C_algorithm,
                                  summary_results_C_naive1,
                                  summary_results_C_naive2,
                                  summary_results_C_naive3,
+                                 summary_results_C_naive3b,
                                  summary_results_P_algorithm,
                                  summary_results_P_naive1,
                                  summary_results_P_naive2,
-                                 summary_results_P_naive3) %>%
+                                 summary_results_P_naive3,
+                                 summary_results_P_naive3b) %>%
   select(results_set, num_charts, everything())
 
 summary_results_all_wm <- bind_rows(summary_results_C_algorithm_w,
                                     summary_results_C_naive1_w,
                                     summary_results_C_naive2_w,
                                     summary_results_C_naive3_w,
+                                    summary_results_C_naive3b_w,
                                     summary_results_P_algorithm_w,
                                     summary_results_P_naive1_w,
                                     summary_results_P_naive2_w,
                                     summary_results_P_naive3_w,
+                                    summary_results_P_naive3b_w,
                                     summary_results_C_algorithm_m,
                                     summary_results_C_naive1_m,
                                     summary_results_C_naive2_m,
                                     summary_results_C_naive3_m,
+                                    summary_results_C_naive3b_m,
                                     summary_results_P_algorithm_m,
                                     summary_results_P_naive1_m,
                                     summary_results_P_naive2_m,
-                                    summary_results_P_naive3_m) %>%
+                                    summary_results_P_naive3_m,
+                                    summary_results_P_naive3b_m) %>%
   select(results_set, num_charts, everything())
 
 full_results_all <- bind_rows(full_results_C_algorithm,
                               full_results_C_naive1,
                               full_results_C_naive2,
                               full_results_C_naive3,
+                              full_results_C_naive3b,
                               full_results_P_algorithm,
                               full_results_P_naive1,
                               full_results_P_naive2,
-                              full_results_P_naive3) %>%
+                              full_results_P_naive3,
+                              full_results_P_naive3b) %>%
   select(results_set, everything())
 
 
