@@ -41,8 +41,9 @@ full_results_all <- readRDS(file.path("..",
 ```{r}
 full_results_all <- full_results_all %>%
   mutate(approach = case_when(
-    approach == "algorithm" ~ "Stable Shift Algorithm",
-    approach == "naive3" ~ "On Shift Rule Break",
+    approach == "algorithm" ~ "Stable Shift Algorithm: Minimum Period ~ 3r",
+    approach == "naive3" ~ "On Shift Rule Break: Minimum Period ~ 3r",
+    approach == "naive3b" ~ "On Shift Rule Break: Minimum Period = r",
     TRUE ~ approach
   ))
 
@@ -130,6 +131,8 @@ my_hist <- function(df,
                     xlab,
                     x_perc = FALSE) {
   
+  my_palette <- see::palette_okabeito(palette = "full", order = c(2,3,6))(3)
+  
   df <- df %>% 
     group_by(weeklyOrMonthly,
              approach) %>% 
@@ -151,8 +154,10 @@ my_hist <- function(df,
     scale_y_continuous(labels = scales::percent) +
     # colScale +
     # fillScale +
-    see::scale_color_okabeito(guide = "none") +
-    see::scale_fill_okabeito(name = "Approach") +
+    #see::scale_color_okabeito(guide = "none") +
+    #see::scale_fill_okabeito(name = "Approach") +
+    scale_color_manual(values = my_palette) +
+    scale_fill_manual(values = my_palette) +
     labs(x = xlab,
          y = "Percentage of charts") +
     theme(

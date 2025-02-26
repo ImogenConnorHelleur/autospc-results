@@ -598,10 +598,10 @@ for(c in codes$Code){
                                            weeklyOrMonthly_arg = "Monthly",
                                            measure_arg = "All",
                                            onlyProvsReporting_arg = TRUE,
-                                           periodMin = 24,
+                                           periodMin = 8,
                                            noRecals = FALSE,
                                            recalc_every_shift = TRUE,
-                                           noPeriodMin = TRUE)
+                                           noPeriodMin = FALSE)
   
   limits_table_output_Monthly_C_naive3b <- bind_rows(limits_table_output_Monthly_C_naive3b, df_out)
   
@@ -629,10 +629,10 @@ for(c in codes$Code){
                                            weeklyOrMonthly_arg = "Weekly",
                                            measure_arg = "All",
                                            onlyProvsReporting_arg = TRUE,
-                                           periodMin = 21,
+                                           periodMin = 8,
                                            noRecals = FALSE, 
                                            recalc_every_shift = TRUE,
-                                           noPeriodMin = TRUE)
+                                           noPeriodMin = FALSE)
   
   limits_table_output_Weekly_C_naive3b <- bind_rows(limits_table_output_Weekly_C_naive3b, df_out)
   
@@ -660,10 +660,10 @@ for(c in codes$Code){
                                                weeklyOrMonthly_arg = "Monthly",
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
-                                               periodMin = 24,
+                                               periodMin = 8,
                                                noRecals = FALSE,
                                                recalc_every_shift = TRUE,
-                                               noPeriodMin = TRUE)
+                                               noPeriodMin = FALSE)
   
   limits_table_output_Monthly_P_naive3b <- bind_rows(limits_table_output_Monthly_P_naive3b, df_out)
   
@@ -691,10 +691,10 @@ for(c in codes$Code){
                                                weeklyOrMonthly_arg = "Weekly",
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
-                                               periodMin = 21,
+                                               periodMin = 8,
                                                noRecals = FALSE,
                                                recalc_every_shift = TRUE,
-                                               noPeriodMin = TRUE)
+                                               noPeriodMin = FALSE)
   
   limits_table_output_Weekly_P_naive3b <- bind_rows(limits_table_output_Weekly_P_naive3b, df_out)
   
