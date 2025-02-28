@@ -599,6 +599,7 @@ for(c in codes$Code){
                                            measure_arg = "All",
                                            onlyProvsReporting_arg = TRUE,
                                            periodMin = 8,
+                                           baseline = 24,
                                            noRecals = FALSE,
                                            recalc_every_shift = TRUE,
                                            noPeriodMin = FALSE)
@@ -630,6 +631,7 @@ for(c in codes$Code){
                                            measure_arg = "All",
                                            onlyProvsReporting_arg = TRUE,
                                            periodMin = 8,
+                                           baseline = 21,
                                            noRecals = FALSE, 
                                            recalc_every_shift = TRUE,
                                            noPeriodMin = FALSE)
@@ -661,6 +663,7 @@ for(c in codes$Code){
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 8,
+                                               baseline = 24,
                                                noRecals = FALSE,
                                                recalc_every_shift = TRUE,
                                                noPeriodMin = FALSE)
@@ -692,6 +695,7 @@ for(c in codes$Code){
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 8,
+                                               baseline = 21,
                                                noRecals = FALSE,
                                                recalc_every_shift = TRUE,
                                                noPeriodMin = FALSE)

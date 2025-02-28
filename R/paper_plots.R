@@ -2,7 +2,7 @@ library(tidyverse)
 library(autospc)
 library(ggh4x)
 
-save_plots <- TRUE
+save_plots <- FALSE
 hospital_name <- "Hospital A"
 
 perf_series_df <- readRDS("data/perf_series_df.rds")

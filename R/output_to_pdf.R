@@ -608,6 +608,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 8,
+                                          baseline = 24,
                                           recalc_every_shift = TRUE,
                                           noPeriodMin = FALSE,
                                           pseudo_code = pc))
@@ -619,6 +620,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 8,
+                                          baseline = 24,
                                           recalc_every_shift = TRUE,
                                           noPeriodMin = FALSE,
                                           pseudo_code = pc))
@@ -641,6 +643,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 8,
+                                          baseline = 21,
                                           recalc_every_shift = TRUE,
                                           noPeriodMin = FALSE,
                                           pseudo_code = pc))
@@ -652,6 +655,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 8,
+                                          baseline = 21,
                                           recalc_every_shift = TRUE,
                                           noPeriodMin = FALSE,
                                           pseudo_code = pc))
@@ -686,6 +690,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 8,
+                                               baseline = 24,
                                                recalc_every_shift = TRUE,
                                                noPeriodMin = FALSE,
                                                pseudo_code = pc))
@@ -697,6 +702,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 8,
+                                               baseline = 24,
                                                recalc_every_shift = TRUE,
                                                noPeriodMin = FALSE,
                                                pseudo_code = pc))
@@ -719,6 +725,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 8,
+                                               baseline = 21,
                                                recalc_every_shift = TRUE,
                                                noPeriodMin = FALSE,
                                                pseudo_code = pc))
@@ -730,6 +737,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 8,
+                                               baseline = 21,
                                                recalc_every_shift = TRUE,
                                                noPeriodMin = FALSE,
                                                pseudo_code = pc))
