@@ -2,7 +2,7 @@ library(tidyverse)
 library(autospc)
 library(ggh4x)
 
-save_plots <- TRUE
+save_plots <- FALSE
 hospital_name <- "Hospital A"
 
 perf_series_df <- readRDS("data/perf_series_df.rds")
@@ -191,7 +191,7 @@ p6 <- plot_auto_SPC(df = head(G513H_data, 97),
                     noRecals = FALSE,
                     override_y_lim = 300,
                     includeAnnotations = FALSE,
-                    development_recalc_at_every_break = TRUE)
+                    recalc_every_shift = TRUE)
 
 p7 <- plot_auto_SPC(df = head(G513H_data, 97),
                     periodMin = 21,
@@ -287,7 +287,7 @@ p_naive3 <- plot_auto_SPC(df = G513H_data,
                           noRecals = FALSE,
                           override_y_lim = 300,
                           includeAnnotations = FALSE,
-                          development_recalc_at_every_break = TRUE)
+                          recalc_every_shift = TRUE)
 
 
 
@@ -461,7 +461,7 @@ data6 <- plot_auto_SPC(df = head(G513H_data, 97),
                     noRecals = FALSE,
                     override_y_lim = 300,
                     includeAnnotations = FALSE,
-                    development_recalc_at_every_break = TRUE)
+                    recalc_every_shift = TRUE)
 
 
 data7 <- plot_auto_SPC(df = head(G513H_data, 97),
@@ -558,7 +558,7 @@ data_naive3 <- plot_auto_SPC(df = G513H_data,
                           noRecals = FALSE,
                           override_y_lim = 300,
                           includeAnnotations = FALSE,
-                          development_recalc_at_every_break = TRUE)
+                          recalc_every_shift = TRUE)
 
 
 

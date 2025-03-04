@@ -1,4 +1,5 @@
 ###############################################################################
+require(tidyverse)
 require(lattice)
 require(magrittr)
 require(autospc)
@@ -464,7 +465,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 24,
-                                          development_recalc_at_every_break = TRUE,
+                                          recalc_every_shift = TRUE,
                                           pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -474,7 +475,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 24,
-                                          development_recalc_at_every_break = TRUE,
+                                          recalc_every_shift = TRUE,
                                           pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -495,7 +496,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 21,
-                                          development_recalc_at_every_break = TRUE,
+                                          recalc_every_shift = TRUE,
                                           pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -505,7 +506,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 21,
-                                          development_recalc_at_every_break = TRUE,
+                                          recalc_every_shift = TRUE,
                                           pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -535,7 +536,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 24,
-                                               development_recalc_at_every_break = TRUE,
+                                               recalc_every_shift = TRUE,
                                                pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -545,7 +546,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 24,
-                                               development_recalc_at_every_break = TRUE,
+                                               recalc_every_shift = TRUE,
                                                pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -566,7 +567,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 21,
-                                               development_recalc_at_every_break = TRUE,
+                                               recalc_every_shift = TRUE,
                                                pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -576,7 +577,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 21,
-                                               development_recalc_at_every_break = TRUE,
+                                               recalc_every_shift = TRUE,
                                                pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -590,6 +591,170 @@ for(c in codes_p$Code) {
 dev.off()
 
 ###############################################################################
+
+###############################################################################
+
+pdf(paste("C_naive3b", ".pdf", sep = ""),
+    width = 10,
+    height = 5)
+
+for(c in codes$Code) {
+  pc <- get_pseudo_code(c, code_mapping = code_mapping)
+  print(pc)
+  tryCatch({
+    print(plot_volume_from_perf_series_df(data = perf_series_df,
+                                          Code_arg = c,
+                                          weeklyOrMonthly_arg = "Monthly",
+                                          measure_arg = "All",
+                                          onlyProvsReporting_arg = TRUE,
+                                          periodMin = 8,
+                                          baseline = 24,
+                                          recalc_every_shift = TRUE,
+                                          noPeriodMin = FALSE,
+                                          pseudo_code = pc))
+    err <- FALSE
+  }, warning = function(w) {
+    print(plot_volume_from_perf_series_df(data = perf_series_df,
+                                          Code_arg = c,
+                                          weeklyOrMonthly_arg = "Monthly",
+                                          measure_arg = "All",
+                                          onlyProvsReporting_arg = TRUE,
+                                          periodMin = 8,
+                                          baseline = 24,
+                                          recalc_every_shift = TRUE,
+                                          noPeriodMin = FALSE,
+                                          pseudo_code = pc))
+    err <- FALSE
+  }, error = function(e) {
+    err <- TRUE
+    plot.new()
+    text(x=.5, y=.5, paste("Too few points for", pc))
+  })
+  
+}
+
+for(c in codes$Code) {
+  pc <- get_pseudo_code(c, code_mapping = code_mapping)
+  print(pc)
+  tryCatch({
+    print(plot_volume_from_perf_series_df(data = perf_series_df,
+                                          Code_arg = c,
+                                          weeklyOrMonthly_arg = "Weekly",
+                                          measure_arg = "All",
+                                          onlyProvsReporting_arg = TRUE,
+                                          periodMin = 8,
+                                          baseline = 21,
+                                          recalc_every_shift = TRUE,
+                                          noPeriodMin = FALSE,
+                                          pseudo_code = pc))
+    err <- FALSE
+  }, warning = function(w) {
+    print(plot_volume_from_perf_series_df(data = perf_series_df,
+                                          Code_arg = c,
+                                          weeklyOrMonthly_arg = "Weekly",
+                                          measure_arg = "All",
+                                          onlyProvsReporting_arg = TRUE,
+                                          periodMin = 8,
+                                          baseline = 21,
+                                          recalc_every_shift = TRUE,
+                                          noPeriodMin = FALSE,
+                                          pseudo_code = pc))
+    err <- FALSE
+  }, error = function(e) {
+    err <- TRUE
+    plot.new()
+    text(x=.5, y=.5, paste("Too few points for", pc))
+  })
+  
+}
+dev.off()
+
+
+###############################################################################
+
+
+###############################################################################
+require(lattice)
+
+pdf(paste("P_naive3b", ".pdf", sep = ""),
+    width = 10,
+    height = 5)
+
+for(c in codes_p$Code) {
+  pc <- get_pseudo_code(c, code_mapping = code_mapping)
+  print(pc)
+  tryCatch({
+    print(plot_performance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Monthly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 8,
+                                               baseline = 24,
+                                               recalc_every_shift = TRUE,
+                                               noPeriodMin = FALSE,
+                                               pseudo_code = pc))
+    err <- FALSE
+  }, warning = function(w) {
+    print(plot_performance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Monthly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 8,
+                                               baseline = 24,
+                                               recalc_every_shift = TRUE,
+                                               noPeriodMin = FALSE,
+                                               pseudo_code = pc))
+    err <- FALSE
+  }, error = function(e) {
+    err <- TRUE
+    plot.new()
+    text(x=.5, y=.5, paste("Too few points for", pc))
+  })
+  
+}
+
+for(c in codes_p$Code) {
+  pc <- get_pseudo_code(c, code_mapping = code_mapping)
+  print(pc)
+  tryCatch({
+    print(plot_performance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Weekly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 8,
+                                               baseline = 21,
+                                               recalc_every_shift = TRUE,
+                                               noPeriodMin = FALSE,
+                                               pseudo_code = pc))
+    err <- FALSE
+  }, warning = function(w) {
+    print(plot_performance_from_perf_series_df(data = perf_series_df,
+                                               Code_arg = c,
+                                               weeklyOrMonthly_arg = "Weekly",
+                                               measure_arg = "All",
+                                               onlyProvsReporting_arg = TRUE,
+                                               periodMin = 8,
+                                               baseline = 21,
+                                               recalc_every_shift = TRUE,
+                                               noPeriodMin = FALSE,
+                                               pseudo_code = pc))
+    err <- FALSE
+  }, error = function(e) {
+    err <- TRUE
+    plot.new()
+    text(x=.5, y=.5, paste("Too few points for", pc))
+  })
+  
+}
+
+dev.off()
+
+###############################################################################
+
+
 
 remove_pdf_pages_with_no_text <- function(pdf_path) {
   doc_txt <- pdftools::pdf_text(pdf = pdf_path)
