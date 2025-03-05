@@ -245,9 +245,15 @@ plot_performance_from_perf_series_df <- function(data = perf_series_df,
                   measure == measure_arg,
                   onlyProvsReporting == onlyProvsReporting_arg)
   
-  #dataLength <- nrow(data)
+  num_not_missing <- sum(!is.na(data$Within_4h) & !is.na(data$Total_Att))
   
-  if(!(sum(is.na(data$Within_4h)) == nrow(data))) {
+  if((num_not_missing >= periodMin * 2) &
+     !(sum(is.na(data$Within_4h)) == nrow(data))) {
+    
+    data <- data %>%
+      filter(!is.na(Within_4h),
+             !is.na(Total_Att))
+    
     plot_auto_SPC(data,
                   x = Month_Start,
                   y = Within_4h,
@@ -294,10 +300,15 @@ get_peformance_from_perf_series_df <- function(data = perf_series_df,
                   measure == measure_arg,
                   onlyProvsReporting == onlyProvsReporting_arg)
   
-  #dataLength <- nrow(data)
+  num_not_missing <- sum(!is.na(data$Within_4h) & !is.na(data$Total_Att))
   
-  if(nrow(data) >= periodMin * 2){
+  if(num_not_missing >= periodMin * 2){
     if(!(sum(is.na(data$Within_4h)) == nrow(data))) {
+      
+      data <- data %>%
+        filter(!is.na(Within_4h),
+               !is.na(Total_Att))
+      
       data_out <- plot_auto_SPC(data,
                                 x = Month_Start,
                                 y = Within_4h,
