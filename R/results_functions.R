@@ -247,7 +247,13 @@ plot_performance_from_perf_series_df <- function(data = perf_series_df,
   
   num_not_missing <- sum(!is.na(data$Within_4h) & !is.na(data$Total_Att))
   
-  if((num_not_missing >= periodMin * 2) &
+  min_data_length <- if(weeklyOrMonthly_arg == "Monthly") {
+    48L
+  } else {
+    42L
+  }
+  
+  if((num_not_missing >= min_data_length) &
      !(sum(is.na(data$Within_4h)) == nrow(data))) {
     
     data <- data %>%
@@ -302,7 +308,13 @@ get_peformance_from_perf_series_df <- function(data = perf_series_df,
   
   num_not_missing <- sum(!is.na(data$Within_4h) & !is.na(data$Total_Att))
   
-  if(num_not_missing >= periodMin * 2){
+  min_data_length <- if(weeklyOrMonthly_arg == "Monthly") {
+    48L
+  } else {
+    42L
+  }
+  
+  if(num_not_missing >= min_data_length){
     if(!(sum(is.na(data$Within_4h)) == nrow(data))) {
       
       data <- data %>%
