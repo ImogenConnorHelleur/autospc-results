@@ -5,7 +5,6 @@ plot_volume_from_perf_series_df <- function(data = perf_series_df,
                                             weeklyOrMonthly_arg = "Monthly",
                                             measure_arg = "All",
                                             onlyProvsReporting_arg = TRUE,
-                                            
                                             periodMin = 21,
                                             baseline = NULL,
                                             noRecals = FALSE,
@@ -33,6 +32,8 @@ plot_volume_from_perf_series_df <- function(data = perf_series_df,
                 y = daily_ave_att,
                 chartType = "C'",
                 periodMin = periodMin,#dataLength,
+                runRuleLength = 8L,
+                maxNoOfExclusions = 0L,
                 baseline = baseline,
                 plotChart = TRUE,
                 noRecals = noRecals,
@@ -80,6 +81,8 @@ get_volume_from_perf_series_df <- function(data = perf_series_df,
                               y = daily_ave_att,
                               chartType = "C'",
                               periodMin = periodMin,#dataLength,
+                              runRuleLength = 8L,
+                              maxNoOfExclusions = 0L,
                               baseline = baseline,
                               plotChart = FALSE,
                               noRecals = noRecals,
@@ -139,6 +142,8 @@ plot_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                 y = daily_ave_att,
                 chartType = "C'",
                 periodMin = dataLength,
+                runRuleLength = 8L,
+                maxNoOfExclusions = 0L,
                 plotChart = TRUE,
                 noRecals = noRecals,
                 title = paste(org_title, weeklyOrMonthly_arg),
@@ -184,6 +189,8 @@ get_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                               y = daily_ave_att,
                               chartType = "C'",
                               periodMin = dataLength,
+                              runRuleLength = 8L,
+                              maxNoOfExclusions = 0L,
                               plotChart = FALSE,
                               noRecals = TRUE,
                               title = paste(org_title, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
@@ -238,15 +245,29 @@ plot_performance_from_perf_series_df <- function(data = perf_series_df,
                   measure == measure_arg,
                   onlyProvsReporting == onlyProvsReporting_arg)
   
-  #dataLength <- nrow(data)
+  num_not_missing <- sum(!is.na(data$Within_4h) & !is.na(data$Total_Att))
   
-  if(!(sum(is.na(data$Within_4h)) == nrow(data))) {
+  min_data_length <- if(weeklyOrMonthly_arg == "Monthly") {
+    48L
+  } else {
+    42L
+  }
+  
+  if((num_not_missing >= min_data_length) &
+     !(sum(is.na(data$Within_4h)) == nrow(data))) {
+    
+    data <- data %>%
+      filter(!is.na(Within_4h),
+             !is.na(Total_Att))
+    
     plot_auto_SPC(data,
                   x = Month_Start,
                   y = Within_4h,
                   n = Total_Att,
                   chartType = "P'",
                   periodMin = periodMin,#dataLength,
+                  runRuleLength = 8L,
+                  maxNoOfExclusions = 0L,
                   baseline = baseline,
                   plotChart = TRUE,
                   noRecals = noRecals,
@@ -285,16 +306,29 @@ get_peformance_from_perf_series_df <- function(data = perf_series_df,
                   measure == measure_arg,
                   onlyProvsReporting == onlyProvsReporting_arg)
   
-  #dataLength <- nrow(data)
+  num_not_missing <- sum(!is.na(data$Within_4h) & !is.na(data$Total_Att))
   
-  if(nrow(data) >= periodMin * 2){
+  min_data_length <- if(weeklyOrMonthly_arg == "Monthly") {
+    48L
+  } else {
+    42L
+  }
+  
+  if(num_not_missing >= min_data_length){
     if(!(sum(is.na(data$Within_4h)) == nrow(data))) {
+      
+      data <- data %>%
+        filter(!is.na(Within_4h),
+               !is.na(Total_Att))
+      
       data_out <- plot_auto_SPC(data,
                                 x = Month_Start,
                                 y = Within_4h,
                                 n = Total_Att,
                                 chartType = "P'",
                                 periodMin = periodMin, #dataLength,
+                                runRuleLength = 8L,
+                                maxNoOfExclusions = 0L,
                                 baseline = baseline,
                                 plotChart = FALSE,
                                 noRecals = noRecals,
@@ -352,6 +386,8 @@ plot_performance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                 n = Total_Att,
                 chartType = "P'",
                 periodMin = dataLength,
+                runRuleLength = 8L,
+                maxNoOfExclusions = 0L,
                 plotChart = TRUE,
                 noRecals = noRecals,
                 title = paste(org_title, weeklyOrMonthly_arg, "P"),
@@ -391,6 +427,8 @@ get_peformance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                               n = Total_Att,
                               chartType = "P'",
                               periodMin = dataLength,
+                              runRuleLength = 8L,
+                              maxNoOfExclusions = 0L,
                               plotChart = FALSE,
                               noRecals = noRecals,
                               title = paste(org_title, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
