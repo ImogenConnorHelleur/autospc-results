@@ -40,7 +40,8 @@ plot_volume_from_perf_series_df <- function(data = perf_series_df,
                 title = paste(org_title, weeklyOrMonthly_arg),
                 recalc_every_shift = recalc_every_shift,
                 noPeriodMin = noPeriodMin,
-                x_break = "6 month")
+                x_break = "6 month",
+                x_date_format = "%b %Y")
   } else {
     print("Volume NA")
     data_out <- data.frame()
@@ -150,7 +151,8 @@ plot_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                 title = paste(org_title, weeklyOrMonthly_arg),
                 recalc_every_shift = recalc_every_shift,
                 noPeriodMin = noPeriodMin,
-                x_break = "6 month")
+                x_break = "6 month",
+                x_date_format = "%b %Y")
   } else {
     print("Volume NA")
     data_out <- data.frame()
@@ -276,7 +278,8 @@ plot_performance_from_perf_series_df <- function(data = perf_series_df,
                   title = paste(org_title, weeklyOrMonthly_arg, "P"),
                   recalc_every_shift = recalc_every_shift,
                   noPeriodMin = noPeriodMin,
-                  x_break = "6 month")
+                  x_break = "6 month",
+                  x_date_format = "%b %Y")
   } else {
     print("Performance NA")
     data_out <- data.frame()
@@ -395,7 +398,8 @@ plot_performance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                 noRecals = noRecals,
                 title = paste(org_title, weeklyOrMonthly_arg, "P"),
                 recalc_every_shift = recalc_every_shift,
-                x_break = "6 month")
+                x_break = "6 month",
+                x_date_format = "%b %Y")
 }
 
 ################################################################################
