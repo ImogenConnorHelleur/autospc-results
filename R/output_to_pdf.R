@@ -5,6 +5,35 @@ require(magrittr)
 require(autospc)
 
 source(file.path("R", "results_functions.R"))
+
+c_algorithm_title = paste("\nSupplementary Appendix A: Number of Attendances\n",
+                          " - Stable Shift Algorithm")
+
+c_algorithm_tx = paste("\n",
+                       "This document contains C-prime charts for time series",
+                       "of number of attendances at each Accident and\n",
+                       "Emergency department in England and Scotland,",
+                       "excluding those with insufficient data. Centre lines\n",
+                       "and control limits were re-established using the",
+                       "Stable Shift Algorithm, as described in the main",
+                       "article.")
+
+p_algorithm_title = paste("\nSupplementary Appendix B: Four-Hour Performance\n",
+                          " - Stable Shift Algorithm")
+
+p_algorithm_tx = paste("\n",
+                       "This document contains P-prime charts for time series",
+                       "of four-hour performance at each Accident and\n",
+                       "Emergency department in England and Scotland,",
+                       "excluding those with insufficient data. Centre lines\n",
+                       "and control limits were re-established using the",
+                       "Stable Shift Algorithm, as described in the main\n",
+                       "article. Note that since p-prime limits depend upon",
+                       "the size of the denominator, the width of control\n",
+                       "limits on these charts varies with the number of",
+                       "attendances")
+
+
 perf_series_df <- readRDS(file.path("data", "perf_series_df_clean.rds"))
 
 codes <- dplyr::distinct(perf_series_df, Code)
@@ -35,6 +64,18 @@ get_pseudo_code <- function(c, code_mapping) {
 pdf(paste("C_algorithm", ".pdf", sep = ""),
     width = 10,
     height = 5)
+
+ggplot() + 
+  annotate("text",
+           x = c(1,0), 
+           y = c(28,19),
+           size=c(8,5),
+           hjust = c(0, 0),
+           label = c(c_algorithm_title,
+                     c_algorithm_tx)) + 
+  xlim(0,10) +
+  ylim(0,30) +
+  theme_void()
 
 for(c in codes$Code) {
   pc <- get_pseudo_code(c, code_mapping = code_mapping)
@@ -115,6 +156,19 @@ codes_p <- codes_p %>%
 pdf(paste("P_algorithm", ".pdf", sep = ""),
     width = 10,
     height = 5)
+
+ggplot() + 
+  annotate("text",
+           x = c(1,0), 
+           y = c(28,19),
+           size=c(8,5),
+           hjust = c(0, 0),
+           label = c(p_algorithm_title,
+                     p_algorithm_tx)) + 
+  xlim(0,10) +
+  ylim(0,30) +
+  theme_void()
+
 
 for(c in codes_p$Code) {
   pc <- get_pseudo_code(c, code_mapping = code_mapping)
