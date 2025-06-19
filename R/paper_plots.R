@@ -289,6 +289,27 @@ p_naive3 <- plot_auto_SPC(df = G513H_data,
                           includeAnnotations = FALSE,
                           recalc_every_shift = TRUE)
 
+p_naive3b <- plot_auto_SPC(df = G513H_data,
+                           periodMin = 8,
+                           baseline = 21,
+                           runRuleLength = 8,
+                           maxNoOfExclusions = 0,
+                           highlightExclusions = TRUE,
+                           title = "Average daily A&E attendances per month",
+                           subtitle = paste0(hospital_name, "\nNaive Approach 3b"),
+                           plotChart = TRUE,
+                           writeTable = FALSE,
+                           noRegrets = TRUE,
+                           chartType = "C'",
+                           x = Month_Start,
+                           y = daily_ave_att,
+                           x_break = 210,
+                           x_pad_end = as.Date("2023-03-01"),
+                           noRecals = FALSE,
+                           override_y_lim = 300,
+                           includeAnnotations = FALSE,
+                           recalc_every_shift = TRUE,
+                           noPeriodMin = FALSE)
 
 
 
@@ -546,7 +567,7 @@ data_naive3 <- plot_auto_SPC(df = G513H_data,
                           maxNoOfExclusions = 0,
                           highlightExclusions = TRUE,
                           title = "Average daily A&E attendances per month",
-                          subtitle = paste0(hospital_name, "\nNaive Approach 2"),
+                          subtitle = paste0(hospital_name, "\nNaive Approach 3"),
                           plotChart = FALSE,
                           writeTable = FALSE,
                           noRegrets = TRUE,
@@ -559,6 +580,29 @@ data_naive3 <- plot_auto_SPC(df = G513H_data,
                           override_y_lim = 300,
                           includeAnnotations = FALSE,
                           recalc_every_shift = TRUE)
+
+
+data_naive3b <- plot_auto_SPC(df = G513H_data,
+                             periodMin = 8,
+                             baseline = 21,
+                             runRuleLength = 8,
+                             maxNoOfExclusions = 0,
+                             highlightExclusions = TRUE,
+                             title = "Average daily A&E attendances per month",
+                             subtitle = paste0(hospital_name, "\nNaive Approach 3b"),
+                             plotChart = FALSE,
+                             writeTable = FALSE,
+                             noRegrets = TRUE,
+                             chartType = "C'",
+                             x = Month_Start,
+                             y = daily_ave_att,
+                             x_break = 210,
+                             x_pad_end = as.Date("2023-03-01"),
+                             noRecals = FALSE,
+                             override_y_lim = 300,
+                             includeAnnotations = FALSE,
+                             recalc_every_shift = TRUE,
+                             noPeriodMin = FALSE)
 
 
 
@@ -711,27 +755,37 @@ plot_steps_facet <- function(all_steps = TRUE){
 plot_approaches_facet <- function(){
   
   panel_captions <- c("(a) Stable Shift Algorithm",
-                      "(b) Whole period as calculation period",
-                      "(c) Baseline calculation period extended to end",
-                      "(d) Recalculation at every shift rule (rule 2) break")
+                      #"(b) Whole period as calculation period",
+                      #"(c) Baseline calculation period extended to end",
+                      "(b) Recalculation at every shift: min. period 21",
+                      "(c) Recalculation at every shift: min. period 8")
   
   data_algorithm <- data_algorithm %>%
     mutate(step = panel_captions[1])
   
-  data_naive1 <- data_naive1 %>%
-    mutate(step = panel_captions[2])
-  
-  data_naive2 <- data_naive2 %>%
-    mutate(step = panel_captions[3])
+  # data_naive1 <- data_naive1 %>%
+  #   mutate(step = panel_captions[2])
+  # 
+  # data_naive2 <- data_naive2 %>%
+  #   mutate(step = panel_captions[3])
   
   data_naive3 <- data_naive3 %>%
-    mutate(step = panel_captions[4])
+    mutate(step = panel_captions[2])
   
-  data <- bind_rows(data_algorithm, data_naive1, data_naive2, data_naive3)
+  data_naive3b <- data_naive3b %>%
+    mutate(step = panel_captions[3])
+  
+  data <- bind_rows(data_algorithm,
+                    #data_naive1,
+                    #data_naive2,
+                    data_naive3,
+                    data_naive3b)
   
   data$step <- factor(data$step, levels = panel_captions)
   
-  strip <- strip_themed(background_x = elem_list_rect(fill = c("#CACC90", "#F4EBBE", "#F4EBBE",
+  strip <- strip_themed(background_x = elem_list_rect(fill = c("#CACC90",
+                                                               #"#F4EBBE",
+                                                               "#F4EBBE",
                                                                "#F4EBBE")))
   plot <-  ggplot2::ggplot(data, 
                            ggplot2::aes(x = x, y = y)) +
@@ -757,7 +811,9 @@ plot_approaches_facet <- function(){
       breaks = scales::breaks_pretty(),
       labels = scales::number_format(accuracy = 1,
                                      big.mark = ",")) +
-    facet_wrap2(vars(step), strip = strip)
+    facet_wrap2(vars(step),
+                strip = strip,
+                ncol = 1L)
   
   plot <- autospc:::format_SPC(cht = plot, 
                      df = data, 
@@ -787,26 +843,30 @@ if(save_plots) {
   ggsave(file.path("plots", "p_naive1.png"), plot = p_naive1)
   ggsave(file.path("plots", "p_naive2.png"), plot = p_naive2)
   ggsave(file.path("plots", "p_naive3.png"), plot = p_naive3)
+  ggsave(file.path("plots", "p_naive3b.png"), plot = p_naive3b)
   ggsave(file.path("plots", "p_algorithm.png"), plot = p_algorithm)
   
-  ggsave(file.path("plots", "p_fig1.png"), plot = p_fig1,
+  # File names updated to reflect revised figure numbering, with suffix _r -
+  # object names remain as per original submission for now
+  
+  ggsave(file.path("plots", "p_supp_fig1_r.png"), plot = p_fig1,
          width = 10, height = 10, units = "in")
-  ggsave(file.path("plots", "p_fig1.tiff"), plot = p_fig1,
+  ggsave(file.path("plots", "p_supp_fig1_r.tiff"), plot = p_fig1,
          width = 10, height = 10, units = "in", dpi = 300)
   
-  ggsave(file.path("plots", "p_fig2.png"), plot = p_fig2,
+  ggsave(file.path("plots", "p_fig1_r.png"), plot = p_fig2,
          width = 10, height = 7, units = "in")
-  ggsave(file.path("plots", "p_fig2.tiff"), plot = p_fig2,
+  ggsave(file.path("plots", "p_fig1_r.tiff"), plot = p_fig2,
          width = 10, height = 7, units = "in", dpi = 300)
   
-  ggsave(file.path("plots", "p_approaches_fig3.png"), plot = p_approaches,
-         width = 10, height = 7, units = "in")
-  ggsave(file.path("plots", "p_approaches_fig3.tiff"), plot = p_approaches,
-         width = 10, height = 7, units = "in", dpi = 300)
+  ggsave(file.path("plots", "p_approaches_fig3_r.png"), plot = p_approaches,
+         width = 10, height = 10, units = "in")
+  ggsave(file.path("plots", "p_approaches_fig3_r.tiff"), plot = p_approaches,
+         width = 10, height = 10, units = "in", dpi = 300)
   
-  ggsave(file.path("plots", "p_steps_fig5.png"), plot = p_steps,
+  ggsave(file.path("plots", "p_steps_fig2_r.png"), plot = p_steps,
          width = 12, height = 7, units = "in")
-  ggsave(file.path("plots", "p_steps_fig5.tiff"), plot = p_steps,
+  ggsave(file.path("plots", "p_steps_fig2_r.tiff"), plot = p_steps,
          width = 12, height = 7, units = "in", dpi = 300)
   
 }
