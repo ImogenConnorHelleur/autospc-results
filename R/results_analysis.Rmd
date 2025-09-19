@@ -41,11 +41,13 @@ full_results_all <- readRDS(file.path("..",
 ```{r}
 full_results_all <- full_results_all %>%
   mutate(approach = case_when(
-    approach == "algorithm" ~ "Stable Shift Algorithm: Minimum Period ~ 3r",
-    approach == "naive3" ~ "On Shift Rule Break: Minimum Period ~ 3r",
-    approach == "naive3b" ~ "On Shift Rule Break: Minimum Period = r",
+    approach == "algorithm" ~ "Stable Shift Algorithm",
+    approach == "naive3" ~ "On Shift Rule Break",
+    approach == "naive3b" ~ "On Shift Rule Break: Min. Period = 8",
     TRUE ~ approach
-  ))
+  ),
+  approach = factor(str_wrap(approach, width = 20)),
+  approach = fct_reorder(approach, -num_recalcs))
 
 ```
 
@@ -101,14 +103,14 @@ num_points_hist <- df %>%
   ggplot(aes(x = n)) +
   geom_histogram(aes(y = after_stat(density*10)),
                  binwidth = 10,
-                 colour = see::palette_okabeito(palette = "full")(4)[3],
-                 fill = see::palette_okabeito(palette = "full")(4)[3],
+                 colour = see::palette_okabeito(palette = "full")(9)[9],
+                 fill = see::palette_okabeito(palette = "full")(9)[9],
                  alpha = 0.33) +
   facet_wrap(~ weeklyOrMonthly) +
-  geom_vline(aes(xintercept=median_x),
-             colour = see::palette_okabeito(palette = "full")(4)[3],
-             linetype = "solid",
-             linewidth = 0.5) +
+  # geom_vline(aes(xintercept=median_x),
+  #            colour = see::palette_okabeito(palette = "full")(9)[8],
+  #            linetype = "solid",
+  #            linewidth = 0.5) +
   scale_x_continuous(limits = c(0, NA),
                      oob = scales::oob_keep) +
   scale_y_continuous(labels = scales::percent) +
@@ -129,7 +131,10 @@ my_hist <- function(df,
                     binwidth = 1,
                     show_mean = FALSE,
                     xlab,
-                    x_perc = FALSE) {
+                    x_perc = FALSE,
+                    scales_freedom = "fixed",
+                    ymax = NA,
+                    hist = TRUE) {
   
   my_palette <- see::palette_okabeito(palette = "full", order = c(2,3,6))(3)
   
@@ -139,31 +144,64 @@ my_hist <- function(df,
     mutate(mean_x = mean({{ x }}),
            median_x = median({{ x }}))
   
-  plt <- df %>% 
-    ggplot(aes(x = {{ x }},
-               fill = approach)) +
-    geom_histogram(aes(y = after_stat(density*binwidth),
-                       colour = approach),
-                   position = "identity",
-                   alpha = 0.33,
-                   binwidth = binwidth) +
-    facet_wrap(~ weeklyOrMonthly) +
-    geom_vline(aes(xintercept=median_x,
-                   colour = approach),
-               linetype = "solid", linewidth = 0.5) +
-    scale_y_continuous(labels = scales::percent) +
-    # colScale +
-    # fillScale +
-    #see::scale_color_okabeito(guide = "none") +
-    #see::scale_fill_okabeito(name = "Approach") +
-    scale_color_manual(values = my_palette) +
-    scale_fill_manual(values = my_palette) +
-    labs(x = xlab,
-         y = "Percentage of charts") +
-    theme(
-      panel.grid.major = element_blank(),
-      panel.grid.minor = element_blank()
-    )
+  if(hist) {
+    plt <- df %>% 
+      ggplot(aes(x = {{ x }},
+                 fill = approach)) +
+      geom_histogram(aes(y = after_stat(density*binwidth),
+                         colour = approach),
+                     position = "identity",
+                     alpha = 0.28,
+                     binwidth = binwidth) +
+      facet_wrap(~ weeklyOrMonthly,
+                 scales = scales_freedom) +
+      geom_vline(aes(xintercept=median_x,
+                     colour = approach),
+                 linetype = "solid", linewidth = 0.5) +
+      scale_y_continuous(labels = scales::percent,
+                         limits = c(0, ymax)) +
+      # colScale +
+      # fillScale +
+      #see::scale_color_okabeito(guide = "none") +
+      #see::scale_fill_okabeito(name = "Approach") +
+      scale_color_manual(values = my_palette) +
+      scale_fill_manual(values = my_palette) +
+      labs(x = xlab,
+           y = "Percentage of charts") +
+      theme(
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()
+      )
+  } else {
+    plt <- df %>% 
+      ggplot(aes(x = {{ x }},
+                 fill = approach)) +
+      geom_density(aes(
+                         colour = approach),
+                     position = "identity",
+                     alpha = 0.33) +
+      facet_wrap(~ weeklyOrMonthly,
+                 scales = scales_freedom) +
+      geom_vline(aes(xintercept=median_x,
+                     colour = approach),
+                 linetype = "solid", linewidth = 0.5) +
+      scale_y_continuous(labels = scales::percent,
+                         limits = c(0, ymax)) +
+      # colScale +
+      # fillScale +
+      #see::scale_color_okabeito(guide = "none") +
+      #see::scale_fill_okabeito(name = "Approach") +
+      scale_color_manual(values = my_palette) +
+      scale_fill_manual(values = my_palette) +
+      labs(x = xlab,
+           y = "Percentage of charts") +
+      theme(
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()
+      )
+    
+    
+  }
   
   if(show_mean) {
     plt <- plt + geom_vline(aes(xintercept=mean_x,
@@ -184,6 +222,55 @@ my_hist <- function(df,
   
   return(plt)
 }
+
+
+my_viol <- function(df,
+                    y,
+                    ylab,
+                    y_perc = FALSE,
+                    scales_freedom = "fixed",
+                    ymax = NA) {
+  
+  my_palette <- see::palette_okabeito(palette = "full", order = c(2,3,6))(3)
+  
+  viol_plt <- df %>%
+    ggplot(aes(x = approach,
+               y ={{ y }})) +
+    geom_violin(aes(color = approach,
+                    fill = approach),
+                adjust = 2.5,
+                alpha = 0.33) +
+    geom_boxplot(width=.15,
+                 aes(color = approach,
+                     fill = approach),
+                 alpha = 0) +
+    facet_wrap(~ weeklyOrMonthly,
+               scales = scales_freedom) +
+    scale_color_manual(values = my_palette) +
+    scale_fill_manual(values = my_palette) + 
+    labs(y = ylab) +
+    theme(axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank())
+  
+  
+  if(y_perc) {
+    viol_plt <- viol_plt +
+      scale_y_continuous(limits = c(0, ymax),
+                         labels = scales::percent,
+                         oob = scales::oob_keep)
+  } else {
+    viol_plt <- viol_plt +
+      scale_y_continuous(limits = c(0, ymax),
+                         oob = scales::oob_keep)
+  }
+  
+  return(viol_plt)
+  
+}
+
 ```
 
 ```{r}
@@ -218,11 +305,36 @@ summary_table(full_results_all,
 num_recalcs_hist <- my_hist(full_results_all %>%
           filter(!(approach %in% params$excluded_approaches)),
         x = num_recalcs,
-        xlab = "Number of times limits re-established",
-        binwidth = 1)
+        xlab = "Number of times\nlimits re-established",
+        binwidth = 1,
+        scales_freedom = "free_x")
 
 num_recalcs_hist
 ```
+
+```{r}
+num_recalcs_dens <- my_hist(full_results_all %>%
+          filter(!(approach %in% params$excluded_approaches)),
+        x = num_recalcs,
+        xlab = "Number of times\nlimits re-established",
+        hist = FALSE,
+        scales_freedom = "free")
+
+num_recalcs_dens
+```
+
+
+```{r}
+num_recalcs_viol <- my_viol(full_results_all %>%
+          filter(!(approach %in% params$excluded_approaches)),
+        y = num_recalcs,
+        ylab = "Number of times\nlimits re-established",
+        scales_freedom = "free_y")
+
+num_recalcs_viol
+```
+
+
 
 ```{r}
 summary_table(full_results_all,
@@ -230,15 +342,43 @@ summary_table(full_results_all,
 ```
 
 ```{r}
+full_results_all <- full_results_all %>%
+  mutate(num_recalcs_by_points = num_recalcs/n)
+
 prop_recalcs_hist <- my_hist(full_results_all %>%
           filter(!(approach %in% params$excluded_approaches)),
-        x = num_actual_recals_by_potential_recals,
-        xlab = paste0("Number of times limits re-established,\n",
-                      "as a proportion of the maximum possible"),
+        x = num_recalcs_by_points,
+        xlab = paste0("Number of times\nlimits re-established,\n",
+                      "per point"),
         x_perc = TRUE,
-        binwidth = 0.05)
+        binwidth = 0.005,
+        scales_freedom = "free_x")
 
 prop_recalcs_hist
+```
+
+```{r}
+prop_recalcs_dens <- my_hist(full_results_all %>%
+          filter(!(approach %in% params$excluded_approaches)),
+        x = num_recalcs_by_points,
+        xlab = paste0("Number of times\nlimits re-established,\n",
+                      "per point"),
+        hist = FALSE,
+        scales_freedom = "free")
+
+prop_recalcs_dens
+```
+
+
+```{r}
+prop_recalcs_viol <- my_viol(full_results_all %>%
+          filter(!(approach %in% params$excluded_approaches)),
+        y = num_recalcs_by_points,
+        ylab = paste0("Number of times limits\nre-established,",
+                      "per point"),
+        scales_freedom = "free_y")
+
+prop_recalcs_viol
 ```
 
 ## Remaining rule breaks
@@ -259,6 +399,28 @@ r2_pts_hist
 ```
 
 ```{r}
+r2_pts_dens <- my_hist(full_results_all %>%
+          filter(!(approach %in% params$excluded_approaches)),
+        x = num_rule2_points,
+        xlab = "Number of points within shift rule breaks",
+        hist = FALSE)
+
+r2_pts_dens
+```
+
+
+```{r}
+r2_pts_viol <- my_viol(full_results_all %>%
+          filter(!(approach %in% params$excluded_approaches)),
+        y = num_rule2_points,
+        ylab = "Number of points\nwithin shift rule breaks",
+        scales_freedom = "free_y")
+
+r2_pts_viol
+```
+
+
+```{r}
 summary_table(full_results_all,
               x = num_rule2_breaks)
 ```
@@ -274,6 +436,26 @@ r2_brks_hist
 ```
 
 ```{r}
+r2_brks_dens <- my_hist(full_results_all %>%
+          filter(!(approach %in% params$excluded_approaches)),
+        x = num_rule2_breaks,
+        xlab = "Number of shift rule breaks",
+        hist = FALSE)
+
+r2_brks_dens
+```
+
+
+```{r}
+r2_brks_viol <- my_viol(full_results_all %>%
+          filter(!(approach %in% params$excluded_approaches)),
+        y = num_rule2_breaks,
+        ylab = "Number of shift rule breaks")
+
+r2_brks_viol
+```
+
+```{r}
 summary_table(full_results_all,
               x = num_rule1_points)
 ```
@@ -286,6 +468,26 @@ r1_pts_hist <- my_hist(full_results_all %>%
         binwidth = 5)
 
 r1_pts_hist
+```
+
+```{r}
+r1_pts_dens <- my_hist(full_results_all %>%
+          filter(!(approach %in% params$excluded_approaches)),
+        x = num_rule1_points,
+        xlab = "Number of points outside the control limits",
+        hist = FALSE)
+
+r1_pts_dens
+```
+
+
+```{r}
+r1_pts_viol <- my_viol(full_results_all %>%
+          filter(!(approach %in% params$excluded_approaches)),
+        y = num_rule1_points,
+        ylab = "Number of points\noutside the control limits")
+
+r1_pts_viol
 ```
 
 ```{r fig.width = 5, fig.height=15}
@@ -332,6 +534,48 @@ combined_results_wide <- ggpubr::ggarrange(
 
 combined_results_wide
 ```
+
+```{r fig.width = 14, fig.height=6}
+combined_results_wide_dens <- ggpubr::ggarrange(
+  num_points_hist,
+  num_recalcs_dens + labs(y = NULL),
+  prop_recalcs_dens + labs(y = NULL),
+  r2_brks_dens,
+  r2_pts_dens + labs(y = NULL),
+  r1_pts_dens + labs(y = NULL),
+  ncol = 3,
+  nrow = 2,
+  align = "hv",
+  common.legend = TRUE,
+  legend = "bottom",
+  labels = "auto",
+  label.x = 0.075,
+  label.y = 1.025)
+
+combined_results_wide_dens
+```
+
+```{r fig.width = 14, fig.height=6}
+combined_results_wide_viol <- ggpubr::ggarrange(
+  num_points_hist,
+  num_recalcs_viol,
+  prop_recalcs_viol,
+  r2_brks_viol,
+  r2_pts_viol,
+  r1_pts_viol,
+  ncol = 3,
+  nrow = 2,
+  align = "hv",
+  common.legend = TRUE,
+  legend = "bottom",
+  labels = "auto",
+  label.x = 0.075,
+  label.y = 1.025)
+
+combined_results_wide_viol
+```
+
+
 ```{r}
 if(params$save_results) {
   ggsave(file.path("..", "plots", "combined_results_wide_fig6.png"),
@@ -342,6 +586,32 @@ if(params$save_results) {
   
   ggsave(file.path("..", "plots", "combined_results_wide_fig6.tiff"),
          plot = combined_results_wide,
+         width = 14,
+         height = 6,
+         units = "in",
+         dpi = 300)
+  
+   ggsave(file.path("..", "plots", "combined_results_wide_dens_fig6.png"),
+         plot = combined_results_wide_dens,
+         width = 14,
+         height = 6,
+         units = "in")
+  
+  ggsave(file.path("..", "plots", "combined_results_wide_dens_fig6.tiff"),
+         plot = combined_results_wide_dens,
+         width = 14,
+         height = 6,
+         units = "in",
+         dpi = 300)
+  
+  ggsave(file.path("..", "plots", "combined_results_wide_viol_fig6.png"),
+         plot = combined_results_wide_viol,
+         width = 14,
+         height = 6,
+         units = "in")
+  
+  ggsave(file.path("..", "plots", "combined_results_wide_viol_fig6.tiff"),
+         plot = combined_results_wide_viol,
          width = 14,
          height = 6,
          units = "in",
