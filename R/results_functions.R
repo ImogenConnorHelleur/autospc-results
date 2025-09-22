@@ -8,7 +8,7 @@ plot_volume_from_perf_series_df <- function(data = perf_series_df,
                                             periodMin = 21,
                                             baseline = NULL,
                                             noRecals = FALSE,
-                                            recalc_every_shift = FALSE,
+                                            recalEveryShift = FALSE,
                                             noPeriodMin = FALSE,
                                             pseudo_code = NULL){
   
@@ -38,7 +38,7 @@ plot_volume_from_perf_series_df <- function(data = perf_series_df,
                 plotChart = TRUE,
                 noRecals = noRecals,
                 title = paste(org_title, weeklyOrMonthly_arg),
-                recalc_every_shift = recalc_every_shift,
+                recalEveryShift = recalEveryShift,
                 noPeriodMin = noPeriodMin,
                 x_break = "6 month",
                 x_date_format = "%b %Y")
@@ -58,7 +58,7 @@ get_volume_from_perf_series_df <- function(data = perf_series_df,
                                             periodMin = 21,
                                            baseline = NULL,
                                             noRecals = FALSE,
-                                           recalc_every_shift = FALSE,
+                                           recalEveryShift = FALSE,
                                            noPeriodMin = FALSE,
                                            pseudo_code = NULL){
   
@@ -89,7 +89,7 @@ get_volume_from_perf_series_df <- function(data = perf_series_df,
                               plotChart = FALSE,
                               noRecals = noRecals,
                               title = paste(org_title, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
-                              recalc_every_shift = recalc_every_shift,
+                              recalEveryShift = recalEveryShift,
                               noPeriodMin = noPeriodMin)
     
     data_out <- data_out %>%
@@ -120,7 +120,7 @@ plot_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                                             
                                             periodMin = 21,
                                             noRecals = FALSE,
-                                            recalc_every_shift = FALSE,
+                                            recalEveryShift = FALSE,
                                             noPeriodMin = FALSE,
                                             pseudo_code = NULL){
   
@@ -149,7 +149,7 @@ plot_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                 plotChart = TRUE,
                 noRecals = noRecals,
                 title = paste(org_title, weeklyOrMonthly_arg),
-                recalc_every_shift = recalc_every_shift,
+                recalEveryShift = recalEveryShift,
                 noPeriodMin = noPeriodMin,
                 x_break = "6 month",
                 x_date_format = "%b %Y")
@@ -168,7 +168,7 @@ get_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                                                   
                                                   periodMin = 21,
                                                   noRecals = FALSE,
-                                                  recalc_every_shift = FALSE,
+                                                  recalEveryShift = FALSE,
                                                   noPeriodMin = FALSE,
                                                   pseudo_code = NULL){
   
@@ -198,7 +198,7 @@ get_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                               plotChart = FALSE,
                               noRecals = TRUE,
                               title = paste(org_title, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
-                              recalc_every_shift = recalc_every_shift,
+                              recalEveryShift = recalEveryShift,
                               noPeriodMin = noPeriodMin)
     
     data_out <- data_out %>%
@@ -233,7 +233,7 @@ plot_performance_from_perf_series_df <- function(data = perf_series_df,
                                                  periodMin = 21,
                                                  baseline = NULL,
                                                  noRecals = FALSE,
-                                                 recalc_every_shift = FALSE,
+                                                 recalEveryShift = FALSE,
                                                  noPeriodMin = FALSE,
                                                  pseudo_code = NULL){
   
@@ -276,7 +276,7 @@ plot_performance_from_perf_series_df <- function(data = perf_series_df,
                   plotChart = TRUE,
                   noRecals = noRecals,
                   title = paste(org_title, weeklyOrMonthly_arg, "P"),
-                  recalc_every_shift = recalc_every_shift,
+                  recalEveryShift = recalEveryShift,
                   noPeriodMin = noPeriodMin,
                   x_break = "6 month",
                   x_date_format = "%b %Y")
@@ -296,7 +296,7 @@ get_peformance_from_perf_series_df <- function(data = perf_series_df,
                                                periodMin = 21,
                                                baseline = NULL,
                                                noRecals = FALSE,
-                                               recalc_every_shift = FALSE,
+                                               recalEveryShift = FALSE,
                                                noPeriodMin = FALSE,
                                                pseudo_code = NULL){
   
@@ -339,7 +339,7 @@ get_peformance_from_perf_series_df <- function(data = perf_series_df,
                                 plotChart = FALSE,
                                 noRecals = noRecals,
                                 title = paste(org_title, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
-                                recalc_every_shift = recalc_every_shift,
+                                recalEveryShift = recalEveryShift,
                                 noPeriodMin = noPeriodMin)
       
       data_out <- data_out %>%
@@ -369,7 +369,7 @@ plot_performance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                                                 
                                                 periodMin = 21,
                                                 noRecals = FALSE,
-                                                recalc_every_shift = FALSE,
+                                                recalEveryShift = FALSE,
                                                 pseudo_code = NULL){
   
   if(is.null(pseudo_code)) {
@@ -397,7 +397,7 @@ plot_performance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                 plotChart = TRUE,
                 noRecals = noRecals,
                 title = paste(org_title, weeklyOrMonthly_arg, "P"),
-                recalc_every_shift = recalc_every_shift,
+                recalEveryShift = recalEveryShift,
                 x_break = "6 month",
                 x_date_format = "%b %Y")
 }
@@ -411,7 +411,7 @@ get_peformance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                                                       
                                                       periodMin = 21,
                                                       noRecals = FALSE,
-                                                      recalc_every_shift = FALSE,
+                                                      recalEveryShift = FALSE,
                                                       pseudo_code = NULL){
   
   if(is.null(pseudo_code)) {
@@ -440,7 +440,7 @@ get_peformance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                               plotChart = FALSE,
                               noRecals = noRecals,
                               title = paste(org_title, weeklyOrMonthly_arg, measure_arg, onlyProvsReporting_arg),
-                              recalc_every_shift = recalc_every_shift)
+                              recalEveryShift = recalEveryShift)
     
     data_out <- data_out %>%
       mutate(Code = Code_arg,

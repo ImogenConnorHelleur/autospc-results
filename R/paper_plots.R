@@ -191,7 +191,7 @@ p6 <- plot_auto_SPC(df = head(G513H_data, 97),
                     noRecals = FALSE,
                     override_y_lim = 300,
                     includeAnnotations = FALSE,
-                    recalc_every_shift = TRUE)
+                    recalEveryShift = TRUE)
 
 p7 <- plot_auto_SPC(df = head(G513H_data, 97),
                     periodMin = 21,
@@ -287,7 +287,7 @@ p_naive3 <- plot_auto_SPC(df = G513H_data,
                           noRecals = FALSE,
                           override_y_lim = 300,
                           includeAnnotations = FALSE,
-                          recalc_every_shift = TRUE)
+                          recalEveryShift = TRUE)
 
 p_naive3b <- plot_auto_SPC(df = G513H_data,
                            periodMin = 8,
@@ -308,7 +308,7 @@ p_naive3b <- plot_auto_SPC(df = G513H_data,
                            noRecals = FALSE,
                            override_y_lim = 300,
                            includeAnnotations = FALSE,
-                           recalc_every_shift = TRUE,
+                           recalEveryShift = TRUE,
                            noPeriodMin = FALSE)
 
 
@@ -482,7 +482,7 @@ data6 <- plot_auto_SPC(df = head(G513H_data, 97),
                     noRecals = FALSE,
                     override_y_lim = 300,
                     includeAnnotations = FALSE,
-                    recalc_every_shift = TRUE)
+                    recalEveryShift = TRUE)
 
 
 data7 <- plot_auto_SPC(df = head(G513H_data, 97),
@@ -579,7 +579,7 @@ data_naive3 <- plot_auto_SPC(df = G513H_data,
                           noRecals = FALSE,
                           override_y_lim = 300,
                           includeAnnotations = FALSE,
-                          recalc_every_shift = TRUE)
+                          recalEveryShift = TRUE)
 
 
 data_naive3b <- plot_auto_SPC(df = G513H_data,
@@ -601,7 +601,7 @@ data_naive3b <- plot_auto_SPC(df = G513H_data,
                              noRecals = FALSE,
                              override_y_lim = 300,
                              includeAnnotations = FALSE,
-                             recalc_every_shift = TRUE,
+                             recalEveryShift = TRUE,
                              noPeriodMin = FALSE)
 
 

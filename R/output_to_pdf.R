@@ -519,7 +519,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 24,
-                                          recalc_every_shift = TRUE,
+                                          recalEveryShift = TRUE,
                                           pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -529,7 +529,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 24,
-                                          recalc_every_shift = TRUE,
+                                          recalEveryShift = TRUE,
                                           pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -550,7 +550,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 21,
-                                          recalc_every_shift = TRUE,
+                                          recalEveryShift = TRUE,
                                           pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -560,7 +560,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 21,
-                                          recalc_every_shift = TRUE,
+                                          recalEveryShift = TRUE,
                                           pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -590,7 +590,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 24,
-                                               recalc_every_shift = TRUE,
+                                               recalEveryShift = TRUE,
                                                pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -600,7 +600,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 24,
-                                               recalc_every_shift = TRUE,
+                                               recalEveryShift = TRUE,
                                                pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -621,7 +621,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 21,
-                                               recalc_every_shift = TRUE,
+                                               recalEveryShift = TRUE,
                                                pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -631,7 +631,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 21,
-                                               recalc_every_shift = TRUE,
+                                               recalEveryShift = TRUE,
                                                pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -663,7 +663,7 @@ for(c in codes$Code) {
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 8,
                                           baseline = 24,
-                                          recalc_every_shift = TRUE,
+                                          recalEveryShift = TRUE,
                                           noPeriodMin = FALSE,
                                           pseudo_code = pc))
     err <- FALSE
@@ -675,7 +675,7 @@ for(c in codes$Code) {
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 8,
                                           baseline = 24,
-                                          recalc_every_shift = TRUE,
+                                          recalEveryShift = TRUE,
                                           noPeriodMin = FALSE,
                                           pseudo_code = pc))
     err <- FALSE
@@ -698,7 +698,7 @@ for(c in codes$Code) {
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 8,
                                           baseline = 21,
-                                          recalc_every_shift = TRUE,
+                                          recalEveryShift = TRUE,
                                           noPeriodMin = FALSE,
                                           pseudo_code = pc))
     err <- FALSE
@@ -710,7 +710,7 @@ for(c in codes$Code) {
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 8,
                                           baseline = 21,
-                                          recalc_every_shift = TRUE,
+                                          recalEveryShift = TRUE,
                                           noPeriodMin = FALSE,
                                           pseudo_code = pc))
     err <- FALSE
@@ -745,7 +745,7 @@ for(c in codes_p$Code) {
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 8,
                                                baseline = 24,
-                                               recalc_every_shift = TRUE,
+                                               recalEveryShift = TRUE,
                                                noPeriodMin = FALSE,
                                                pseudo_code = pc))
     err <- FALSE
@@ -757,7 +757,7 @@ for(c in codes_p$Code) {
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 8,
                                                baseline = 24,
-                                               recalc_every_shift = TRUE,
+                                               recalEveryShift = TRUE,
                                                noPeriodMin = FALSE,
                                                pseudo_code = pc))
     err <- FALSE
@@ -780,7 +780,7 @@ for(c in codes_p$Code) {
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 8,
                                                baseline = 21,
-                                               recalc_every_shift = TRUE,
+                                               recalEveryShift = TRUE,
                                                noPeriodMin = FALSE,
                                                pseudo_code = pc))
     err <- FALSE
@@ -792,7 +792,7 @@ for(c in codes_p$Code) {
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 8,
                                                baseline = 21,
-                                               recalc_every_shift = TRUE,
+                                               recalEveryShift = TRUE,
                                                noPeriodMin = FALSE,
                                                pseudo_code = pc))
     err <- FALSE
