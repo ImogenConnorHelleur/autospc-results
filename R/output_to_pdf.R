@@ -664,7 +664,6 @@ for(c in codes$Code) {
                                           periodMin = 8,
                                           baseline = 24,
                                           recalEveryShift = TRUE,
-                                          noPeriodMin = FALSE,
                                           pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -676,7 +675,6 @@ for(c in codes$Code) {
                                           periodMin = 8,
                                           baseline = 24,
                                           recalEveryShift = TRUE,
-                                          noPeriodMin = FALSE,
                                           pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -699,7 +697,6 @@ for(c in codes$Code) {
                                           periodMin = 8,
                                           baseline = 21,
                                           recalEveryShift = TRUE,
-                                          noPeriodMin = FALSE,
                                           pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -711,7 +708,6 @@ for(c in codes$Code) {
                                           periodMin = 8,
                                           baseline = 21,
                                           recalEveryShift = TRUE,
-                                          noPeriodMin = FALSE,
                                           pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -746,7 +742,6 @@ for(c in codes_p$Code) {
                                                periodMin = 8,
                                                baseline = 24,
                                                recalEveryShift = TRUE,
-                                               noPeriodMin = FALSE,
                                                pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -758,7 +753,6 @@ for(c in codes_p$Code) {
                                                periodMin = 8,
                                                baseline = 24,
                                                recalEveryShift = TRUE,
-                                               noPeriodMin = FALSE,
                                                pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -781,7 +775,6 @@ for(c in codes_p$Code) {
                                                periodMin = 8,
                                                baseline = 21,
                                                recalEveryShift = TRUE,
-                                               noPeriodMin = FALSE,
                                                pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -793,7 +786,6 @@ for(c in codes_p$Code) {
                                                periodMin = 8,
                                                baseline = 21,
                                                recalEveryShift = TRUE,
-                                               noPeriodMin = FALSE,
                                                pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {

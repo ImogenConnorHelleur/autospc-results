@@ -601,8 +601,7 @@ for(c in codes$Code){
                                            periodMin = 8,
                                            baseline = 24,
                                            noRecals = FALSE,
-                                           recalEveryShift = TRUE,
-                                           noPeriodMin = FALSE)
+                                           recalEveryShift = TRUE)
   
   limits_table_output_Monthly_C_naive3b <- bind_rows(limits_table_output_Monthly_C_naive3b, df_out)
   
@@ -633,8 +632,7 @@ for(c in codes$Code){
                                            periodMin = 8,
                                            baseline = 21,
                                            noRecals = FALSE, 
-                                           recalEveryShift = TRUE,
-                                           noPeriodMin = FALSE)
+                                           recalEveryShift = TRUE)
   
   limits_table_output_Weekly_C_naive3b <- bind_rows(limits_table_output_Weekly_C_naive3b, df_out)
   
@@ -665,8 +663,7 @@ for(c in codes$Code){
                                                periodMin = 8,
                                                baseline = 24,
                                                noRecals = FALSE,
-                                               recalEveryShift = TRUE,
-                                               noPeriodMin = FALSE)
+                                               recalEveryShift = TRUE)
   
   limits_table_output_Monthly_P_naive3b <- bind_rows(limits_table_output_Monthly_P_naive3b, df_out)
   
@@ -697,8 +694,7 @@ for(c in codes$Code){
                                                periodMin = 8,
                                                baseline = 21,
                                                noRecals = FALSE,
-                                               recalEveryShift = TRUE,
-                                               noPeriodMin = FALSE)
+                                               recalEveryShift = TRUE)
   
   limits_table_output_Weekly_P_naive3b <- bind_rows(limits_table_output_Weekly_P_naive3b, df_out)
   

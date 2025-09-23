@@ -308,8 +308,7 @@ p_naive3b <- plot_auto_SPC(df = G513H_data,
                            noRecals = FALSE,
                            override_y_lim = 300,
                            includeAnnotations = FALSE,
-                           recalEveryShift = TRUE,
-                           noPeriodMin = FALSE)
+                           recalEveryShift = TRUE)
 
 
 
@@ -601,8 +600,7 @@ data_naive3b <- plot_auto_SPC(df = G513H_data,
                              noRecals = FALSE,
                              override_y_lim = 300,
                              includeAnnotations = FALSE,
-                             recalEveryShift = TRUE,
-                             noPeriodMin = FALSE)
+                             recalEveryShift = TRUE)
 
 
 
