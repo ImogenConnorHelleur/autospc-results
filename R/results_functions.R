@@ -9,7 +9,9 @@ plot_volume_from_perf_series_df <- function(data = perf_series_df,
                                             baseline = NULL,
                                             noRecals = FALSE,
                                             recalEveryShift = FALSE,
-                                            pseudo_code = NULL){
+                                            pseudo_code = NULL,
+                                            point_size = 2,
+                                            line_width_sf = 1){
   
   if(is.null(pseudo_code)) {
     org_title <- Code_arg
@@ -39,7 +41,9 @@ plot_volume_from_perf_series_df <- function(data = perf_series_df,
                 title = paste(org_title, weeklyOrMonthly_arg),
                 recalEveryShift = recalEveryShift,
                 x_break = "6 month",
-                x_date_format = "%b %Y")
+                x_date_format = "%b %Y",
+                point_size = point_size,
+                line_width_sf = line_width_sf)
   } else {
     print("Volume NA")
     data_out <- data.frame()
@@ -117,7 +121,9 @@ plot_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                                             periodMin = 21,
                                             noRecals = FALSE,
                                             recalEveryShift = FALSE,
-                                            pseudo_code = NULL){
+                                            pseudo_code = NULL,
+                                            point_size = 2,
+                                            line_width_sf = 1){
   
   if(is.null(pseudo_code)) {
     org_title <- Code_arg
@@ -146,7 +152,9 @@ plot_volume_from_perf_series_df_naive1 <- function(data = perf_series_df,
                 title = paste(org_title, weeklyOrMonthly_arg),
                 recalEveryShift = recalEveryShift,
                 x_break = "6 month",
-                x_date_format = "%b %Y")
+                x_date_format = "%b %Y",
+                point_size = point_size,
+                line_width_sf = line_width_sf)
   } else {
     print("Volume NA")
     data_out <- data.frame()
@@ -221,12 +229,13 @@ plot_performance_from_perf_series_df <- function(data = perf_series_df,
                                                  weeklyOrMonthly_arg = "Monthly",
                                                  measure_arg = "All",
                                                  onlyProvsReporting_arg = TRUE,
-                                                 
                                                  periodMin = 21,
                                                  baseline = NULL,
                                                  noRecals = FALSE,
                                                  recalEveryShift = FALSE,
-                                                 pseudo_code = NULL){
+                                                 pseudo_code = NULL,
+                                                 point_size = 2,
+                                                 line_width_sf = 1){
   
   if(is.null(pseudo_code)) {
     org_title <- Code_arg
@@ -269,7 +278,9 @@ plot_performance_from_perf_series_df <- function(data = perf_series_df,
                   title = paste(org_title, weeklyOrMonthly_arg, "P"),
                   recalEveryShift = recalEveryShift,
                   x_break = "6 month",
-                  x_date_format = "%b %Y")
+                  x_date_format = "%b %Y",
+                  point_size = point_size,
+                  line_width_sf = line_width_sf)
   } else {
     print("Performance NA")
     data_out <- data.frame()
@@ -354,11 +365,12 @@ plot_performance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                                                 weeklyOrMonthly_arg = "Monthly",
                                                 measure_arg = "All",
                                                 onlyProvsReporting_arg = TRUE,
-                                                
                                                 periodMin = 21,
                                                 noRecals = FALSE,
                                                 recalEveryShift = FALSE,
-                                                pseudo_code = NULL){
+                                                pseudo_code = NULL,
+                                                point_size = 2,
+                                                line_width_sf = 1){
   
   if(is.null(pseudo_code)) {
     org_title <- Code_arg
@@ -387,7 +399,9 @@ plot_performance_from_perf_series_df_naive1 <- function(data = perf_series_df,
                 title = paste(org_title, weeklyOrMonthly_arg, "P"),
                 recalEveryShift = recalEveryShift,
                 x_break = "6 month",
-                x_date_format = "%b %Y")
+                x_date_format = "%b %Y",
+                point_size = point_size,
+                line_width_sf = line_width_sf)
 }
 
 ################################################################################
