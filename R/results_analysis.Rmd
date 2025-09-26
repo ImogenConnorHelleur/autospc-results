@@ -246,8 +246,10 @@ my_viol <- function(df,
                  alpha = 0) +
     facet_wrap(~ weeklyOrMonthly,
                scales = scales_freedom) +
-    scale_color_manual(values = my_palette) +
-    scale_fill_manual(values = my_palette) + 
+    scale_color_manual(values = my_palette,
+                       name = "Approach") +
+    scale_fill_manual(values = my_palette,
+                      name = "Approach") + 
     labs(y = ylab) +
     theme(axis.text.x = element_blank(),
           axis.title.x = element_blank(),

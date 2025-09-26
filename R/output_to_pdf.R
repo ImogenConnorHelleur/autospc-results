@@ -1,8 +1,8 @@
 ###############################################################################
-require(tidyverse)
-require(lattice)
-require(magrittr)
-require(autospc)
+library(tidyverse)
+library(lattice)
+library(magrittr)
+library(autospc)
 
 source(file.path("R", "results_functions.R"))
 
@@ -116,7 +116,9 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 21,
-                                          pseudo_code = pc))
+                                          pseudo_code = pc,
+                                          point_size = 0.75,
+                                          line_width_sf = 0.5))
     err <- FALSE
   }, warning = function(w) {
     print(plot_volume_from_perf_series_df(data = perf_series_df,
@@ -125,7 +127,9 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 21,
-                                          pseudo_code = pc))
+                                          pseudo_code = pc,
+                                          point_size = 0.75,
+                                          line_width_sf = 0.5))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -139,7 +143,7 @@ dev.off()
 
 
 ###############################################################################
-require(lattice)
+library(lattice)
 codes_p <- perf_series_df %>% 
   dplyr::filter(mid_range_ok) %>% 
   dplyr::distinct(Code) 
@@ -209,7 +213,9 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 21,
-                                               pseudo_code = pc))
+                                               pseudo_code = pc,
+                                               point_size = 0.75,
+                                               line_width_sf = 0.5))
     err <- FALSE
   }, warning = function(w) {
     print(plot_performance_from_perf_series_df(data = perf_series_df,
@@ -218,7 +224,9 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 21,
-                                               pseudo_code = pc))
+                                               pseudo_code = pc,
+                                               point_size = 0.75,
+                                               line_width_sf = 0.5))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -275,7 +283,9 @@ for(c in codes$Code) {
                                                  measure_arg = "All",
                                                  onlyProvsReporting_arg = TRUE,
                                                  periodMin = 21,
-                                                 pseudo_code = pc))
+                                                 pseudo_code = pc,
+                                                 point_size = 0.75,
+                                                 line_width_sf = 0.5))
     err <- FALSE
   }, warning = function(w) {
     print(plot_volume_from_perf_series_df_naive1(data = perf_series_df,
@@ -284,7 +294,9 @@ for(c in codes$Code) {
                                                  measure_arg = "All",
                                                  onlyProvsReporting_arg = TRUE,
                                                  periodMin = 21,
-                                                 pseudo_code = pc))
+                                                 pseudo_code = pc,
+                                                 point_size = 0.75,
+                                                 line_width_sf = 0.5))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -341,7 +353,9 @@ for(c in codes_p$Code) {
                                                       measure_arg = "All",
                                                       onlyProvsReporting_arg = TRUE,
                                                       periodMin = 21,
-                                                      pseudo_code = pc))
+                                                      pseudo_code = pc,
+                                                      point_size = 0.75,
+                                                      line_width_sf = 0.5))
     err <- FALSE
   }, warning = function(w) {
     print(plot_performance_from_perf_series_df_naive1(data = perf_series_df,
@@ -350,7 +364,9 @@ for(c in codes_p$Code) {
                                                       measure_arg = "All",
                                                       onlyProvsReporting_arg = TRUE,
                                                       periodMin = 21,
-                                                      pseudo_code = pc))
+                                                      pseudo_code = pc,
+                                                      point_size = 0.75,
+                                                      line_width_sf = 0.5))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -411,7 +427,9 @@ for(c in codes$Code) {
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 21,
                                           noRecals = TRUE,
-                                          pseudo_code = pc))
+                                          pseudo_code = pc,
+                                          point_size = 0.75,
+                                          line_width_sf = 0.5))
     err <- FALSE
   }, warning = function(w) {
     print(plot_volume_from_perf_series_df(data = perf_series_df,
@@ -421,7 +439,9 @@ for(c in codes$Code) {
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 21,
                                           noRecals = TRUE,
-                                          pseudo_code = pc))
+                                          pseudo_code = pc,
+                                          point_size = 0.75,
+                                          line_width_sf = 0.5))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -480,7 +500,9 @@ for(c in codes_p$Code) {
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 21,
                                                noRecals = TRUE,
-                                               pseudo_code = pc))
+                                               pseudo_code = pc,
+                                               point_size = 0.75,
+                                               line_width_sf = 0.5))
     err <- FALSE
   }, warning = function(w) {
     print(plot_performance_from_perf_series_df(data = perf_series_df,
@@ -490,7 +512,9 @@ for(c in codes_p$Code) {
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 21,
                                                noRecals = TRUE,
-                                               pseudo_code = pc))
+                                               pseudo_code = pc,
+                                               point_size = 0.75,
+                                               line_width_sf = 0.5))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -519,7 +543,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 24,
-                                          recalc_every_shift = TRUE,
+                                          recalEveryShift = TRUE,
                                           pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -529,7 +553,7 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 24,
-                                          recalc_every_shift = TRUE,
+                                          recalEveryShift = TRUE,
                                           pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -550,8 +574,10 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 21,
-                                          recalc_every_shift = TRUE,
-                                          pseudo_code = pc))
+                                          recalEveryShift = TRUE,
+                                          pseudo_code = pc,
+                                          point_size = 0.75,
+                                          line_width_sf = 0.5))
     err <- FALSE
   }, warning = function(w) {
     print(plot_volume_from_perf_series_df(data = perf_series_df,
@@ -560,8 +586,10 @@ for(c in codes$Code) {
                                           measure_arg = "All",
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 21,
-                                          recalc_every_shift = TRUE,
-                                          pseudo_code = pc))
+                                          recalEveryShift = TRUE,
+                                          pseudo_code = pc,
+                                          point_size = 0.75,
+                                          line_width_sf = 0.5))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -574,7 +602,7 @@ dev.off()
 
 
 ###############################################################################
-require(lattice)
+library(lattice)
 
 pdf(paste("P_naive3", ".pdf", sep = ""),
     width = 10,
@@ -590,7 +618,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 24,
-                                               recalc_every_shift = TRUE,
+                                               recalEveryShift = TRUE,
                                                pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -600,7 +628,7 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 24,
-                                               recalc_every_shift = TRUE,
+                                               recalEveryShift = TRUE,
                                                pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -621,8 +649,10 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 21,
-                                               recalc_every_shift = TRUE,
-                                               pseudo_code = pc))
+                                               recalEveryShift = TRUE,
+                                               pseudo_code = pc,
+                                               point_size = 0.75,
+                                               line_width_sf = 0.5))
     err <- FALSE
   }, warning = function(w) {
     print(plot_performance_from_perf_series_df(data = perf_series_df,
@@ -631,8 +661,10 @@ for(c in codes_p$Code) {
                                                measure_arg = "All",
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 21,
-                                               recalc_every_shift = TRUE,
-                                               pseudo_code = pc))
+                                               recalEveryShift = TRUE,
+                                               pseudo_code = pc,
+                                               point_size = 0.75,
+                                               line_width_sf = 0.5))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -663,8 +695,7 @@ for(c in codes$Code) {
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 8,
                                           baseline = 24,
-                                          recalc_every_shift = TRUE,
-                                          noPeriodMin = FALSE,
+                                          recalEveryShift = TRUE,
                                           pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -675,8 +706,7 @@ for(c in codes$Code) {
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 8,
                                           baseline = 24,
-                                          recalc_every_shift = TRUE,
-                                          noPeriodMin = FALSE,
+                                          recalEveryShift = TRUE,
                                           pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -698,9 +728,10 @@ for(c in codes$Code) {
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 8,
                                           baseline = 21,
-                                          recalc_every_shift = TRUE,
-                                          noPeriodMin = FALSE,
-                                          pseudo_code = pc))
+                                          recalEveryShift = TRUE,
+                                          pseudo_code = pc,
+                                          point_size = 0.75,
+                                          line_width_sf = 0.5))
     err <- FALSE
   }, warning = function(w) {
     print(plot_volume_from_perf_series_df(data = perf_series_df,
@@ -710,9 +741,10 @@ for(c in codes$Code) {
                                           onlyProvsReporting_arg = TRUE,
                                           periodMin = 8,
                                           baseline = 21,
-                                          recalc_every_shift = TRUE,
-                                          noPeriodMin = FALSE,
-                                          pseudo_code = pc))
+                                          recalEveryShift = TRUE,
+                                          pseudo_code = pc,
+                                          point_size = 0.75,
+                                          line_width_sf = 0.5))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
@@ -728,7 +760,7 @@ dev.off()
 
 
 ###############################################################################
-require(lattice)
+library(lattice)
 
 pdf(paste("P_naive3b", ".pdf", sep = ""),
     width = 10,
@@ -745,8 +777,7 @@ for(c in codes_p$Code) {
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 8,
                                                baseline = 24,
-                                               recalc_every_shift = TRUE,
-                                               noPeriodMin = FALSE,
+                                               recalEveryShift = TRUE,
                                                pseudo_code = pc))
     err <- FALSE
   }, warning = function(w) {
@@ -757,8 +788,7 @@ for(c in codes_p$Code) {
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 8,
                                                baseline = 24,
-                                               recalc_every_shift = TRUE,
-                                               noPeriodMin = FALSE,
+                                               recalEveryShift = TRUE,
                                                pseudo_code = pc))
     err <- FALSE
   }, error = function(e) {
@@ -780,9 +810,10 @@ for(c in codes_p$Code) {
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 8,
                                                baseline = 21,
-                                               recalc_every_shift = TRUE,
-                                               noPeriodMin = FALSE,
-                                               pseudo_code = pc))
+                                               recalEveryShift = TRUE,
+                                               pseudo_code = pc,
+                                               point_size = 0.75,
+                                               line_width_sf = 0.5))
     err <- FALSE
   }, warning = function(w) {
     print(plot_performance_from_perf_series_df(data = perf_series_df,
@@ -792,9 +823,10 @@ for(c in codes_p$Code) {
                                                onlyProvsReporting_arg = TRUE,
                                                periodMin = 8,
                                                baseline = 21,
-                                               recalc_every_shift = TRUE,
-                                               noPeriodMin = FALSE,
-                                               pseudo_code = pc))
+                                               recalEveryShift = TRUE,
+                                               pseudo_code = pc,
+                                               point_size = 0.75,
+                                               line_width_sf = 0.5))
     err <- FALSE
   }, error = function(e) {
     err <- TRUE
