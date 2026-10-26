@@ -567,52 +567,14 @@
     },
     "autospc": {
       "Package": "autospc",
-      "Version": "0.0.0.9030",
+      "Version": "0.0.0.9031",
       "Source": "GitHub",
-      "Title": "Automatically Partitioned SPC Charts",
-      "Authors@R": "c( person(\"Thomas\", \"Woodcock\", , \"woodcock.thomas@gmail.com\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0002-4735-4856\")), person(\"Imogen\", \"O'Connor\", , \"imogen.connor-helleur@imperial.ac.uk\", role = \"aut\") )",
-      "Description": "Creates spc charts with control limits and centre line calculations partitioned into distinct periods.",
-      "License": "GPL-3",
-      "Imports": [
-        "DiagrammeR",
-        "dplyr (>= 1.1.1)",
-        "fpCompare",
-        "ggplot2 (>= 3.4.2)",
-        "ggpp",
-        "ggpubr (>= 0.6.0)",
-        "ggrepel",
-        "lifecycle (>= 1.0.3)",
-        "magrittr (>= 2.0.3)",
-        "rlang (>= 1.1.0)",
-        "scales (>= 1.2.1)",
-        "stringr",
-        "tibble",
-        "tidyr",
-        "tools"
-      ],
-      "Suggests": [
-        "knitr",
-        "rmarkdown",
-        "testthat (>= 3.1.7)"
-      ],
-      "Config/testthat/edition": "3",
-      "Encoding": "UTF-8",
-      "LazyData": "true",
-      "Roxygen": "list(markdown = TRUE)",
-      "RoxygenNote": "7.3.2",
-      "Depends": [
-        "R (>= 3.5.0)"
-      ],
-      "VignetteBuilder": "knitr",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteRepo": "autospc",
       "RemoteUsername": "HorridTom",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "15f52195dbcc4fb7b189ec25d26752d600e4f0da",
-      "NeedsCompilation": "no",
-      "Author": "Thomas Woodcock [aut, cre] (ORCID: <https://orcid.org/0000-0002-4735-4856>), Imogen O'Connor [aut]",
-      "Maintainer": "Thomas Woodcock <woodcock.thomas@gmail.com>"
+      "RemoteRepo": "autospc",
+      "RemoteRef": "v0.0.0.9031",
+      "RemoteSha": "d885f756141bb9523abf95052ade7d98a0c26196"
     },
     "backports": {
       "Package": "backports",
